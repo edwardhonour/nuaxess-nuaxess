@@ -1,0 +1,272 @@
+<!-- Loading bar -->
+<fuse-loading-bar></fuse-loading-bar>
+<!-- Navigation -->
+<fuse-vertical-navigation
+    class="dark bg-gray-900 print:hidden"
+    [mode]="isScreenSmall ? 'over' : 'side'"
+    [name]="'mainNavigation'"
+    [navigation]="navigation.default"
+    [opened]="!isScreenSmall">
+    <!-- Navigation header hook -->
+    <ng-container fuseVerticalNavigationContentHeader>
+        <div class="flex items-center w-full p-4 pl-6">
+            <!-- Logo -->
+            <div class="flex items-center justify-center">
+                <img
+                    class="w-8"
+                    src="assets/images/logo/logo.png">
+            </div>
+            <!-- Components -->
+            <div class="flex items-center ml-auto">
+                <notifications></notifications>
+                <user [showAvatar]="false"></user>
+            </div>
+        </div>
+        <!-- User -->
+        <div class="flex flex-col items-center w-full p-4">
+            <div class="relative w-24 h-24">
+                <img
+                    class="w-full h-full rounded-full"
+                    *ngIf="user.avatar"
+                    [src]="user.avatar"
+                    alt="User avatar">
+                <mat-icon
+                    class="icon-size-24"
+                    *ngIf="!user.avatar"
+                    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+            </div>
+            <div class="flex flex-col items-center justify-center w-full mt-6">
+                <div class="w-full whitespace-nowrap overflow-ellipsis overflow-hidden text-center leading-normal font-medium">
+                    {{user.name}}
+                </div>
+                <div class="w-full mt-0.5 whitespace-nowrap overflow-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-secondary">
+                    {{user.email}}
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <!-- Navigation footer hook -->
+    <ng-container fuseVerticalNavigationContentFooter>
+        <div class="flex flex-0 items-center justify-center h-16 pr-6 pl-2 mt-2 mb-4 opacity-12">
+            <img
+                class="max-w-36"
+                src="assets/images/logo/logo-text-on-dark.png">
+        </div>
+    </ng-container>
+</fuse-vertical-navigation>
+
+<div class="flex flex-col flex-auto min-w-0">
+<!--- THIS IS MOVED INSIDE THE MAIN SECTION AFTER THE FIRST LINE -->
+<div class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+    <!-- Navigation toggle button -->
+    <button
+        mat-icon-button
+        (click)="toggleNavigation('mainNavigation')">
+        <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+    </button>
+    <!-- Components -->
+    <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
+        <languages></languages>
+        <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
+        <search [appearance]="'bar'"></search>
+        <shortcuts></shortcuts>
+        <messages></messages>
+    </div>
+</div>
+<!--- THIS IS MOVED INSIDE THE MAIN SECTION AFTER THE FIRST LINE -->
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <div class="mt-2">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-4 sm:leading-10 truncate">
+                    Enter Invoice
+                </h2>
+                <p style="line-height: 30px !important;" class="text-1xl md:text-2xl font-extrabold tracking-tight leading-4 sm:leading-10 truncate">
+                    {{ data.company['company_name'] }}<br>
+                    {{ data.company['address'] }}<br>
+                    {{ data.company['city'] }},  {{ data.company['state'] }}  {{ data.company['zip'] }}<br>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="row">
+        <div class="col-xl-5">
+            <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden" autocomplete="off">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Company</mat-label>
+                        <mat-select  id="company_id" name="company_id" [(ngModel)]="data.formData['company_id']">
+                            <mat-option *ngFor="let m of data.select" value="{{ m.value }}">{{ m.name }}</mat-option>
+                        </mat-select>
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Invoice Number</mat-label>
+                        <input matInput id="invoice_no" name="invoice_no" [(ngModel)]="data.formData['invoice_no']" autocomplete="new-password">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Billing Month</mat-label>
+                        <mat-select  id="month_id" name="month_id" [(ngModel)]="data.formData['month_id']">
+                            <mat-option value="01">January</mat-option>
+                            <mat-option value="02">February</mat-option>
+                            <mat-option value="03">March</mat-option>
+                            <mat-option value="04">April</mat-option>
+                            <mat-option value="05">May</mat-option>
+                            <mat-option value="06">June</mat-option>
+                            <mat-option value="07">July</mat-option>
+                            <mat-option value="08">August</mat-option>
+                            <mat-option value="09">September</mat-option>
+                            <mat-option value="10">October</mat-option>
+                            <mat-option value="11">Novenber</mat-option>
+                            <mat-option value="12">December</mat-option>
+                        </mat-select>
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Billing Year</mat-label>
+                        <mat-select  id="year_id" name="year_id" [(ngModel)]="data.formData['year_id']">
+                            <mat-option value="22">2022</mat-option>
+                            <mat-option value="21">2021</mat-option>
+                        </mat-select>
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pl-3">
+                        <mat-label>Billing Date (MM/DD/YYYY)</mat-label>
+                        <input matInput id="invoice_date" name="invoice_date" [(ngModel)]="data.formData['invoice_date']"  autocomplete="new-password">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>                    
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pl-3">
+                        <mat-label>Due Date (MM/DD/YYYY)</mat-label>
+                        <input matInput id="due_date" name="due_date" [(ngModel)]="data.formData['due_date']"  autocomplete="new-password">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pl-3">
+                        <mat-label>Grand Total (No dollar sign or commas)</mat-label>
+                        <input matInput id="grand_total" name="grand_total" [(ngModel)]="data.formData['grand_total']"  autocomplete="new-password">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                </div>
+            </form>
+</div>
+<div class="col-xl-5">
+            <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Medical Total  (No dollar sign or commas)</mat-label>
+                        <input matInput id="medical_total" name="medical_total" [(ngModel)]="data.formData['medical_total']"  autocomplete="new-password">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pl-3">
+                        <mat-label>Dental Total  (No dollar sign or commas)</mat-label>
+                        <input matInput id="dental_total" name="dental_total" [(ngModel)]="data.formData['dental_total']"  autocomplete="new-password">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Vision Total  (No dollar sign or commas)</mat-label>
+                        <input matInput id="vision_total" name="vision_total" [(ngModel)]="data.formData['vision_total']"  autocomplete="new-password">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pl-3">
+                        <mat-label>AD&D Total  (No dollar sign or commas)</mat-label>
+                        <input matInput id="add_total" name="add_total" [(ngModel)]="data.formData['add_total']"  autocomplete="new-password">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Life Total  (No dollar sign or commas)</mat-label>
+                        <input matInput id="life_total" name="life_total" [(ngModel)]="data.formData['life_total']"  autocomplete="new-password">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Adjustment Total  (No dollar sign or commas)</mat-label>
+                        <input matInput id="adj_total" name="adj_total" [(ngModel)]="data.formData['adj_total']"  autocomplete="new-password">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                    <button mat-button>
+                        Cancel
+                    </button>
+                    <button
+                        class="px-6 ml-3"
+                        mat-flat-button
+                        [color]="'primary'" (click)="postForm()">
+                        Save
+                    </button>
+                </div>
+            </form>
+</div>
+</div>

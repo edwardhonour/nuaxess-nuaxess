@@ -1,0 +1,276 @@
+<!-- Loading bar -->
+<fuse-loading-bar></fuse-loading-bar>
+<!-- Navigation -->
+<fuse-vertical-navigation
+    class="dark bg-gray-900 print:hidden"
+    [mode]="isScreenSmall ? 'over' : 'side'"
+    [name]="'mainNavigation'"
+    [navigation]="navigation.default"
+    [opened]="!isScreenSmall">
+    <!-- Navigation header hook -->
+    <ng-container fuseVerticalNavigationContentHeader>
+        <div class="flex items-center w-full p-4 pl-6">
+            <!-- Logo -->
+            <div class="flex items-center justify-center">
+                <img
+                    class="w-8"
+                    src="assets/images/logo/logo.png">
+            </div>
+            <!-- Components -->
+            <div class="flex items-center ml-auto">
+                <notifications></notifications>
+                <user [showAvatar]="false"></user>
+            </div>
+        </div>
+        <!-- User -->
+        <div class="flex flex-col items-center w-full p-4">
+            <div class="relative w-24 h-24">
+                <img
+                    class="w-full h-full rounded-full"
+                    *ngIf="user.avatar"
+                    [src]="user.avatar"
+                    alt="User avatar">
+                <mat-icon
+                    class="icon-size-24"
+                    *ngIf="!user.avatar"
+                    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+            </div>
+            <div class="flex flex-col items-center justify-center w-full mt-6">
+                <div class="w-full whitespace-nowrap overflow-ellipsis overflow-hidden text-center leading-normal font-medium">
+                    {{user.name}}
+                </div>
+                <div class="w-full mt-0.5 whitespace-nowrap overflow-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-secondary">
+                    {{user.email}}
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <!-- Navigation footer hook -->
+    <ng-container fuseVerticalNavigationContentFooter>
+        <div class="flex flex-0 items-center justify-center h-16 pr-6 pl-2 mt-2 mb-4 opacity-12">
+            <img
+                class="max-w-36"
+                src="assets/images/logo/logo-text-on-dark.png">
+        </div>
+    </ng-container>
+</fuse-vertical-navigation>
+
+<div class="flex flex-col flex-auto min-w-0">
+<!--- THIS IS MOVED INSIDE THE MAIN SECTION AFTER THE FIRST LINE -->
+<div class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+    <!-- Navigation toggle button -->
+    <button
+        mat-icon-button
+        (click)="toggleNavigation('mainNavigation')">
+        <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+    </button>
+    <!-- Components -->
+    <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
+        <languages></languages>
+        <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
+        <search [appearance]="'bar'"></search>
+        <shortcuts></shortcuts>
+        <messages></messages>
+    </div>
+</div>
+<!--- THIS IS MOVED INSIDE THE MAIN SECTION AFTER THE FIRST LINE -->
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <div class="mt-2">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    View / Edit Employee Census Data
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!-- Main -->
+    <div class="row">
+        <div class="col-xl-5">
+            <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden" autocomplete="off">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-hint>Cannot be edited - Make Changes in Prism</mat-hint>
+                        <mat-label>Company Name</mat-label>
+                        <input matInput id="company_name" name="company_name" [(ngModel)]="data.formData['company_name']" autocomplete="new-password" readonly>
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-hint>Cannot be edited - Make Changes in Prism</mat-hint>
+                        <mat-label>Member First Name</mat-label>
+                        <input matInput id="first_name" name="first_name" [(ngModel)]="data.formData['first_name']" autocomplete="new-password" readonly>
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Member Last Name</mat-label>
+                        <mat-hint>Cannot be edited - Make Changes in Prism</mat-hint>
+                        <input matInput id="last_name" name="last_name" [(ngModel)]="data.formData['last_name']" autocomplete="new-password" readonly>
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Member Middle Initial</mat-label>
+                        <mat-hint>Cannot be edited - Make Changes in Prism</mat-hint>
+                        <input matInput id="middle_initial" name="middle_initial" [(ngModel)]="data.formData['middle_initial']" autocomplete="new-password" readonly>
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pl-3">
+                        <mat-label><span style="color: red">SSN</span></mat-label>
+                        <mat-hint><span style="color: red">Please update if necessary</span></mat-hint>
+                        <input matInput id="ssn" name="ssn" [(ngModel)]="data.formData['ssn']"  autocomplete="new-password">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pl-3">
+                        <mat-label><span style="color: red">DOB</span></mat-label>
+                        <mat-hint><span style="color: red">Please update if necessary</span></mat-hint>
+                        <input matInput id="dob" name="dob" [(ngModel)]="data.formData['dob']"  autocomplete="new-password">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>                   
+                </div>
+                <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                    <button mat-button *ngIf="data.formData.source=='additions'" [routerLink]="['/current-additons',data.formData['month_id']]">
+                        Cancel
+                    </button>
+                    <button mat-button *ngIf="data.formData.source=='terminations'" [routerLink]="['/current-terminations',data.formData['month_id']]">
+                        Cancel
+                    </button>
+                    <button mat-button *ngIf="data.formData.source=='census'" [routerLink]="['/current-terminations',data.formData['month_id']]">
+                        Cancel
+                    </button>  
+                    <button
+                        class="px-6 ml-3"
+                        mat-flat-button
+                        [color]="'primary'" (click)="postForm()">
+                        Save
+                    </button>
+                </div>
+                <mat-form-field
+                [ngClass]="formFieldHelpers"
+                class="flex-auto gt-xs:pl-3">
+                <mat-label>Client ID</mat-label>
+                <mat-hint>Cannot be edited - Make Changes in Prism</mat-hint>
+                <input matInput id="client_id" name="client_id" [(ngModel)]="data.formData['client_id']"  autocomplete="new-password">
+                <mat-icon
+                    class="icon-size-5"
+                    matSuffix
+                    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+            </mat-form-field> 
+            <mat-form-field
+            [ngClass]="formFieldHelpers"
+            class="flex-auto gt-xs:pl-3">
+            <mat-label>Employee Code</mat-label>
+            <input matInput id="employee_code" name="employee_code" [(ngModel)]="data.formData['employee_code']"  autocomplete="new-password">
+            <mat-icon
+                class="icon-size-5"
+                matSuffix
+                [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+        </mat-form-field> 
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        class="flex-auto gt-xs:pl-3">
+        <mat-label>Dependent Code</mat-label>
+        <mat-hint>Cannot be edited - Make Changes in Prism</mat-hint>
+        <input matInput id="dependent_code" name="dependent_code" [(ngModel)]="data.formData['dependent_code']"  autocomplete="new-password">
+        <mat-icon
+            class="icon-size-5"
+            matSuffix
+            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+    </mat-form-field> 
+    <mat-form-field
+    [ngClass]="formFieldHelpers"
+    class="flex-auto gt-xs:pl-3">
+    <mat-label>Gender</mat-label>
+    <mat-hint>Cannot be edited - Make Changes in Prism</mat-hint>
+    <input matInput id="gender" name="gender" [(ngModel)]="data.formData['gender']"  autocomplete="new-password" readonly>
+    <mat-icon
+        class="icon-size-5"
+        matSuffix
+        [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+</mat-form-field> 
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto gt-xs:pl-3">
+<mat-label>Effective Date</mat-label>
+<mat-hint>Cannot be edited - Make Changes in Prism</mat-hint>
+<input matInput id="eff_dt" name="eff_dt" [(ngModel)]="data.formData['eff_dt']"  autocomplete="new-password" readonly>
+<mat-icon
+    class="icon-size-5"
+    matSuffix
+    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+</mat-form-field> 
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto gt-xs:pl-3">
+<mat-label>Termination Date</mat-label>
+<mat-hint>Cannot be edited - Make Changes in Prism</mat-hint>
+<input matInput id="term_dt" name="term_dt" [(ngModel)]="data.formData['term_dt']"  autocomplete="new-password" readonly>
+<mat-icon
+    class="icon-size-5"
+    matSuffix
+    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+</mat-form-field> 
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto gt-xs:pr-3">
+<mat-label>Plan ID</mat-label>
+<mat-hint>Cannot be edited - Make Changes in Prism</mat-hint>
+<input matInput id="client_plan" name="client_plan" [(ngModel)]="data.formData['client_plan']" autocomplete="new-password" readonly>
+<mat-icon
+    class="icon-size-5"
+    matSuffix
+    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+</mat-form-field>
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto gt-xs:pr-3">
+<mat-label>Coverage Level</mat-label>
+<input matInput id="coverage_level" name="coverage_level" [(ngModel)]="data.formData['coverage_level']" autocomplete="new-password" readonly>
+<mat-icon
+    class="icon-size-5"
+    matSuffix
+    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+    <mat-hint>Cannot be edited - Make Changes in Prism</mat-hint>
+</mat-form-field>
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto gt-xs:pr-3">
+<mat-label>Coverage Price</mat-label>
+<mat-hint>Cannot be edited - Make Changes in Prism</mat-hint>
+<input matInput id="coverage_price" name="coverage_price" [(ngModel)]="data.formData['coverage_price']" autocomplete="new-password" readonly>
+<mat-icon
+    class="icon-size-5"
+    matSuffix
+    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+</mat-form-field>
+            </form>
+</div>
+</div>
