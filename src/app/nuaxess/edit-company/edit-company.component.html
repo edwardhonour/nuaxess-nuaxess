@@ -79,7 +79,7 @@
         <div class="flex-1 min-w-0">
             <div class="mt-2">
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    Edit Company / Prospect
+                    Edit Company / Employer
                 </h2>
             </div>
         </div>
@@ -199,12 +199,6 @@
                             [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
                     </mat-form-field>
                 </div>
-            </form>
-
-
-        </div>
-        <div class="col-xl-5">
-            <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
                 <div class="flex">
                     <mat-form-field
                         [ngClass]="formFieldHelpers"
@@ -241,6 +235,22 @@
                             matSuffix
                             [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
                     </mat-form-field>
+                                    <div class="flex">
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto">
+                        <mat-label>Postal code</mat-label>
+                        <input
+                            matInput
+                            maxlength="15"
+                            #postalCode
+                            id="zip" name="zip" [(ngModel)]="data.formData['zip']">
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+                    </mat-form-field>
+                </div>
                 </div>
                 <div class="flex">
                     <mat-form-field
@@ -257,18 +267,42 @@
                             matSuffix
                             [svgIcon]="'heroicons_solid:mail'"></mat-icon>
                     </mat-form-field>
-                </div>
-                <div class="flex flex-col gt-md:flex-row">
+                    </div>
+                    <div class="flex">
                     <mat-form-field
                         [ngClass]="formFieldHelpers"
-                        class="flex-auto gt-md:pr-3">
-                        <mat-label>Website</mat-label>
-                        <input matInput  id="website" name="website" [(ngModel)]="data.formData['website']">
+                        class="fuse-mat-textarea flex-auto">
+                        <mat-label>Notes</mat-label>
+                        <textarea
+                            matInput
+                            [rows]="3"
+                            matTextareaAutosize
+                            id="dsc" name="dsc" [(ngModel)]="data.formData['dsc']"></textarea>
                         <mat-icon
                             class="icon-size-5"
                             matSuffix
                             [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
                     </mat-form-field>
+                    </div>
+                    <div class="flex">
+                    <mat-form-field
+                    [ngClass]="formFieldHelpers"
+                    class="flex-auto gt-md:pr-3">
+                    <mat-label>Website</mat-label>
+                    <input matInput  id="website" name="website" [(ngModel)]="data.formData['website']">
+                    <mat-icon
+                        class="icon-size-5"
+                        matSuffix
+                        [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                </mat-form-field>
+                </div>
+            </form>
+
+
+        </div>
+        <div class="col-xl-5">
+            <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
+                <div class="flex flex-col gt-md:flex-row">
                     <mat-form-field
                         [ngClass]="formFieldHelpers"
                         class="flex-auto gt-xs:pr-3">
@@ -287,18 +321,197 @@
                     </mat-form-field>
                     <mat-form-field
                         [ngClass]="formFieldHelpers"
-                        class="fuse-mat-textarea flex-auto">
-                        <mat-label>Notes</mat-label>
-                        <textarea
-                            matInput
-                            [rows]="3"
-                            matTextareaAutosize
-                            id="dsc" name="dsc" [(ngModel)]="data.formData['dsc']"></textarea>
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Invoicing</mat-label>
+                        <mat-select  id="status" name="invoicing" [(ngModel)]="data.formData['invoicing']">
+                            <mat-option value="Y">Yes</mat-option>
+                            <mat-option value="N">No</mat-option>
+                        </mat-select>
                         <mat-icon
                             class="icon-size-5"
-                            matSuffix
+                            matPrefix
                             [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
                     </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Invoice Paid By</mat-label>
+                        <mat-select  id="invoice_paid_by" name="invoice_paid_by" [(ngModel)]="data.formData['invoice_paid_by']">
+                            <mat-option value="Company">Company</mat-option>
+                            <mat-option value="Organization">Organization</mat-option>
+                        </mat-select>
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field
+                    [ngClass]="formFieldHelpers"
+                    class="flex-auto">
+                    <mat-label>Invoice Contact Name</mat-label>
+                    <input
+                        matInput
+                        maxlength="15"
+                        #postalCode
+                        id="invoice_contact_name" name="invoice_contact_name" [(ngModel)]="data.formData['invoice_contact_name']">
+                    <mat-icon
+                        class="icon-size-5"
+                        matSuffix
+                        [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+                </mat-form-field>
+                <mat-form-field
+                [ngClass]="formFieldHelpers"
+                class="flex-auto">
+                <mat-label>Mailing Address</mat-label>
+                <input
+                    matInput
+                    maxlength="15"
+                    #postalCode
+                    id="invoice_mailing_address" name="invoice_mailing_address" [(ngModel)]="data.formData['invoice_mailing_address']">
+                <mat-icon
+                    class="icon-size-5"
+                    matSuffix
+                    [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+            </mat-form-field>
+            <mat-form-field
+            [ngClass]="formFieldHelpers"
+            class="flex-auto">
+            <mat-label>City</mat-label>
+            <input
+                matInput
+                maxlength="15"
+                #postalCode
+                id="invoice_city" name="invoice_city" [(ngModel)]="data.formData['invoice_city']">
+            <mat-icon
+                class="icon-size-5"
+                matSuffix
+                [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+        </mat-form-field>
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        class="flex-auto">
+        <mat-label>State</mat-label>
+        <input
+            matInput
+            maxlength="15"
+            #postalCode
+            id="invoice_state" name="invoice_state" [(ngModel)]="data.formData['invoice_state']">
+        <mat-icon
+            class="icon-size-5"
+            matSuffix
+            [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+    </mat-form-field>
+    <mat-form-field
+    [ngClass]="formFieldHelpers"
+    class="flex-auto">
+    <mat-label>Zip</mat-label>
+    <input
+        matInput
+        maxlength="15"
+        #postalCode
+        id="invoice_zip" name="invoice_zip" [(ngModel)]="data.formData['invoice_zip']">
+    <mat-icon
+        class="icon-size-5"
+        matSuffix
+        [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+</mat-form-field>
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto">
+<mat-label>Invoice Email</mat-label>
+<input
+    matInput
+    maxlength="15"
+    #postalCode
+    id="invoice_email" name="invoice_email" [(ngModel)]="data.formData['invoice_email']">
+<mat-icon
+    class="icon-size-5"
+    matSuffix
+    [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+</mat-form-field>
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto">
+<mat-label>Invoice Contact Phone</mat-label>
+<input
+    matInput
+    maxlength="15"
+    #postalCode
+    id="invoice_contact_phone" name="invoice_contact_phone" [(ngModel)]="data.formData['invoice_contact_phone']">
+<mat-icon
+    class="icon-size-5"
+    matSuffix
+    [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+</mat-form-field>
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto">
+<mat-label>EDF Bank Name</mat-label>
+<input
+    matInput
+    maxlength="15"
+    #postalCode
+    id="edf_bank_name" name="edf_bank_name" [(ngModel)]="data.formData['edf_bank_name']">
+<mat-icon
+    class="icon-size-5"
+    matSuffix
+    [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+</mat-form-field>
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto">
+<mat-label>EDF Account Name</mat-label>
+<input
+    matInput
+    maxlength="15"
+    #postalCode
+    id="edf_bank_name" name="edf_bank_name" [(ngModel)]="data.formData['edf_bank_name']">
+<mat-icon
+    class="icon-size-5"
+    matSuffix
+    [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+</mat-form-field>
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto gt-xs:pr-3">
+<mat-label>EDF Account Type</mat-label>
+<mat-select  id="edf_account_type" name="edf_account_type" [(ngModel)]="data.formData['edf_account_type']">
+    <mat-option value="Company">Checking</mat-option>
+    <mat-option value="Organization">Savings</mat-option>
+</mat-select>
+<mat-icon
+    class="icon-size-5"
+    matPrefix
+    [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+</mat-form-field>
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto">
+<mat-label>Routing Number</mat-label>
+<input
+    matInput
+    maxlength="15"
+    #postalCode
+    id="edf_routing" name="invoice_contact_phone" [(ngModel)]="data.formData['invoice_contact_phone']">
+<mat-icon
+    class="icon-size-5"
+    matSuffix
+    [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+</mat-form-field>
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto">
+<mat-label>Account Number</mat-label>
+<input
+    matInput
+    maxlength="15"
+    #postalCode
+    id="edf_account" name="edf_account" [(ngModel)]="data.formData['edf_account']">
+<mat-icon
+    class="icon-size-5"
+    matSuffix
+    [svgIcon]="'heroicons_solid:mail'"></mat-icon>
+</mat-form-field>
                 </div>
                 <mat-form-field
                 [ngClass]="formFieldHelpers"

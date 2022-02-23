@@ -241,7 +241,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <h1 style="font-size: 24px; font-weight: bold;">Active Companies</h1>
+                                <h1 style="font-size: 24px; font-weight: bold;">Active Organizations</h1>
                             </div>
                             <div class="col-md-12">
                                 <div class="table-responsive">
@@ -252,29 +252,21 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Company</th>
-                                                <th style="text-align: right;">Medical</th>
-                                                <th style="text-align: right;">Dental</th>
-                                                <th style="text-align: right;">Vision</th>
-                                                <th style="text-align: right;">AD&D/Life</th>
-                                                <th style="text-align: right;">Insured Employees</th>
-                                                <th style="text-align: right;">Insured Lives</th>
-                                                <th style="text-align: right;">Monthly Total</th>
+                                                <th>Organization</th>
+                                                <th style="text-align: right;">Description</th>
+                                                <th style="text-align: right;">Type</th>
+                                                <th style="text-align: right;"></th>
+                                                <th style="text-align: right;"></th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let m of data.active | filter: term | paginate: { currentPage: p , itemsPerPage: 25}">
+                                            <tr *ngFor="let m of data.orgs | filter: term | paginate: { currentPage: p , itemsPerPage: 25}">
                                                 <td>{{ m.id }}</td>
-                                                <td>{{ m.company_name }} {{ m.infinity_id }}</td>
-                                                <td style="text-align: right;">{{ m.medical_count }}</td>
-                                                <td style="text-align: right;">{{ m.dental_count }}</td>
-                                                <td style="text-align: right;">{{ m.vision_count }}</td>
-                                                <td style="text-align: right;">{{ m.add_count }}</td>
-                                                <td style="text-align: right;">{{ m.insured_employees }}</td>
-                                                <td style="text-align: right;">{{ m.insured_lives }}</td>
-                                                <td style="text-align: right;">${{ m.monthly_total }}</td>
-                                                <td><button [routerLink]="['/company-dashboard',m.id]" class="btn btn-primary">View</button></td>
+                                                <td>{{ m.org_name }}</td>
+                                                <td style="text-align: right;">{{ m.description }}</td>
+                                                <td style="text-align: right;">{{ m.type }}</td>
+                                                <td><button [routerLink]="['/org-dashboard',m.id]" class="btn btn-primary">View</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -285,7 +277,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <h1 style="font-size: 24px; font-weight: bold;">Pending/Enrolling Companies</h1>
+                                <h1 style="font-size: 24px; font-weight: bold;">Problem Companies</h1>
                             </div>
                             <div class="col-md-12">
                                 <div class="table-responsive">
@@ -297,27 +289,23 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Company</th>
-                                                <th style="text-align: right;">Medical</th>
-                                                <th style="text-align: right;">Dental</th>
-                                                <th style="text-align: right;">Vision</th>
-                                                <th style="text-align: right;">AD&D/Life</th>
-                                                <th style="text-align: right;">Insured Employees</th>
-                                                <th style="text-align: right;">Insured Lives</th>
-                                                <th style="text-align: right;">Monthly Total</th>
+                                                <th style="text-align: right;">Address</th>
+                                                <th style="text-align: right;">City</th>
+                                                <th style="text-align: right;">State</th>
+                                                <th style="text-align: right;">Zip</th>
+                                                <th style="text-align: right;">Status</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let m of data.pending | filter: term">
+                                            <tr *ngFor="let m of data.companies | filter: term">
                                                 <td>{{ m.id }}</td>
                                                 <td>{{ m.company_name }}</td>
-                                                <td style="text-align: right;">{{ m.medical_count }}</td>
-                                                <td style="text-align: right;">{{ m.dental_count }}</td>
-                                                <td style="text-align: right;">{{ m.vision_count }}</td>
-                                                <td style="text-align: right;">{{ m.add_count }}</td>
-                                                <td style="text-align: right;">{{ m.insured_employees }}</td>
-                                                <td style="text-align: right;">{{ m.insured_lives }}</td>
-                                                <td style="text-align: right;">${{ m.monthly_total }}</td>
+                                                <td style="text-align: right;">{{ m.address }}</td>
+                                                <td style="text-align: right;">{{ m.city }}</td>
+                                                <td style="text-align: right;">{{ m.state }}</td>
+                                                <td style="text-align: right;">{{ m.zip }}</td>
+                                                <td style="text-align: right;">{{ m.status }}</td>
                                                 <td><button [routerLink]="['/company-dashboard',m.id]" class="btn btn-primary">View</button></td>
                                             </tr>
                                         </tbody>

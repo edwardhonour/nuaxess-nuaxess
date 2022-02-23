@@ -79,7 +79,7 @@
         <div class="flex-1 min-w-0">
             <div class="mt-2">
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    Company / Prospect List 
+                    Company / Employer List 
                 </h2>
             </div>
         </div>
@@ -88,7 +88,7 @@
         <div class="flex-1 min-w-0">
             <div class="mt-2">
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    <button class="btn btn-primary" [routerLink]="['/add-company/data.user.org_id']">Add Prospect</button>
+                    <button class="btn btn-primary" [routerLink]="['/add-company/data.user.org_id']">Add Company</button>
                 </h2>
             </div>
         </div>
@@ -115,11 +115,11 @@
                                 <th>Prospect</th>
                                 <th>Organization</th>
                                 <th>Contact Name</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th>Enrollment</th>
-                                <th>Accepted Quote</th>
+                                <th>Invoicing</th>
+                                <th>Insured Employees</th>
+                                <th>Insured Lives</th>
                                 <th>Status</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -129,13 +129,12 @@
                                 <td>{{ m.company_name }}</td>
                                 <td>{{ m.org_name }}</td>
                                 <td>{{ m.first_name }} {{ m.last_name }}</td>
-                                <td>{{ m.contact_phone }}</td>
-                                <td>{{ m.email }}</td>
-                                <td>{{ m.enrollment_count }}</td>
-                                <td>{{ m.has_accepted_quote }}</td>
+                                <td>{{ m.invoicing }}</td>
+                                <td>{{ m.insured_employees }}</td>
+                                <td>{{ m.insured_lives }}</td>
                                 <td>{{ m.status }}</td>
-                                <td><button *ngIf="data.id!='apa'" [routerLink]="['/company-dashboard',m.id]" class="btn btn-primary">View</button></td>
-                                <td><button *ngIf="data.id=='apa'" [routerLink]="['/apa-company-dashboard',m.id]" class="btn btn-danger">View</button></td>
+                                <td><button [routerLink]="['/company-dashboard',m.id]" class="btn btn-primary">View</button></td>
+                                <td><button [routerLink]="['/edit-company',m.id]" class="btn btn-primary">Edit</button></td>
                             </tr>
                         </tbody>
                     </table>
