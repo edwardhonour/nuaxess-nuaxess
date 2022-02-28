@@ -289,19 +289,13 @@
                         Company Name
                     </th>
                     <th>
-                        Contact
-                    </th>
-                    <th>
-                        Email
-                    </th>
-                    <th>
-                        Phone
-                    </th>
-                    <th>
                         Accepted
                     </th>
                     <th>
                         Enrolled
+                    </th>
+                    <th>
+                        Invoicing
                     </th>
                     <th>
                         Status
@@ -320,19 +314,13 @@
             {{ m.company_name }}
         </td>
         <td>
-            {{ m.first_name }} {{ m.last_name }}
-        </td>
-        <td>
-            {{ m.contact_email }}
-        </td>
-        <td>
-            {{ m.phone }}
-        </td>
-        <td>
             {{ m.has_accepted_quote }}
         </td>
         <td>
             {{ m.enrolled }}
+        </td>
+        <td>
+            {{ m.invoicing }}
         </td>
         <td>
             {{ m.status }}

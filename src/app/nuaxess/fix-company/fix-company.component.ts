@@ -13,11 +13,11 @@ import { HttpClient } from '@angular/common/http';
 import { NgLocalization } from '@angular/common';
 
 @Component({
-  selector: 'app-company-dashboard',
-  templateUrl: './company-dashboard.component.html',
-  styleUrls: ['./company-dashboard.component.scss']
+  selector: 'app-fix-company',
+  templateUrl: './fix-company.component.html',
+  styleUrls: ['./fix-company.component.scss']
 })
-export class CompanyDashboardComponent implements OnInit, OnDestroy {
+export class FixCompanyComponent implements OnInit, OnDestroy {
   navigation: Navigation;
   isScreenSmall: boolean;
   term: any;
@@ -43,8 +43,6 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     inactive: any;
     active: any;
     history: any;
-    plans:any;
-
     /**
      * Constructor
      */
@@ -68,14 +66,6 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     }
   }
   
-  showPlans() {
-    if (this.plans=='Y') {
-       this.plans='N';
-    } else {
-      this.plans='Y'
-    }
-  }
-
     ngOnInit(): void
     {   
       this.dsc='';
@@ -85,11 +75,9 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
       this.inactive='N';
       this.active='N';
       this.history='N';
-      this.plans='N';
       this._activatedRoute.data.subscribe(({ 
         data, menudata, userdata })=> { 
           this.data=data;
-          console.log(this.data.formData3)
           this.user=userdata;
           if (this.data.user.force_logout>0) {
             localStorage.removeItem('uid');
@@ -381,17 +369,6 @@ showActive() {
           }
         });
       }
-
-      postForm3() {
-        this._dataService.postForm("post-add-client-plan", this.data['formData3']).subscribe((data:any)=>{
-          if (data.error_code=="0") {
-            location.reload();
-          } else {     
-//            this.error=data.error_message
-          }
-        });
-      }
-
 
       //------------------------------
       // Upload Form

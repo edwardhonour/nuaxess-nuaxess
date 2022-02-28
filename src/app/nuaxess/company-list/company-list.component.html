@@ -114,10 +114,10 @@
                                 <th>ID</th>
                                 <th>Prospect</th>
                                 <th>Organization</th>
-                                <th>Contact Name</th>
                                 <th>Invoicing</th>
                                 <th>Insured Employees</th>
                                 <th>Insured Lives</th>
+                                <th>Plan Count</th>
                                 <th>Status</th>
                                 <th></th>
                                 <th></th>
@@ -128,10 +128,10 @@
                                 <td>{{ m.id }}</td>
                                 <td>{{ m.company_name }}</td>
                                 <td>{{ m.org_name }}</td>
-                                <td>{{ m.first_name }} {{ m.last_name }}</td>
                                 <td>{{ m.invoicing }}</td>
                                 <td>{{ m.insured_employees }}</td>
                                 <td>{{ m.insured_lives }}</td>
+                                <td>{{ m.plan_count }}</td>
                                 <td>{{ m.status }}</td>
                                 <td><button [routerLink]="['/company-dashboard',m.id]" class="btn btn-primary">View</button></td>
                                 <td><button [routerLink]="['/edit-company',m.id]" class="btn btn-primary">Edit</button></td>

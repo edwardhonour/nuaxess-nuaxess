@@ -67,6 +67,10 @@ import { CensusDashboardComponent } from './nuaxess/census-dashboard/census-dash
 import { UserSettingsComponent } from './nuaxess/user-settings/user-settings.component';
 import { UserProfileComponent } from './nuaxess/user-profile/user-profile.component';
 import { UserLogoutComponent } from './nuaxess/user-logout/user-logout.component';
+import { FixCompanyComponent } from './nuaxess/fix-company/fix-company.component';
+import { AddClientPlanComponent } from './nuaxess/add-client-plan/add-client-plan.component';
+import { EditClientPlanComponent } from './nuaxess/edit-client-plan/edit-client-plan.component';
+import { DuplicateEmployeesComponent } from './nuaxess/duplicate-employees/duplicate-employees.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -130,6 +134,9 @@ export const appRoutes: Route[] = [
             {path: 'user-list/:id', component: UserListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'user-dashboard/:id', component: UserDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'user-dashboard/:id/:id2', component: UserDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'add-client-plan', component: AddClientPlanComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'add-client-plan/:id', component: AddClientPlanComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'edit-client-plan/:id/:id2', component: EditClientPlanComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'add-org', component: AddOrgComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'add-org/:id', component: AddOrgComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'add-org/:id/:id2', component: AddOrgComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
@@ -149,6 +156,7 @@ export const appRoutes: Route[] = [
             {path: 'company-list/:id', component: CompanyListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'company-list', component: CompanyListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'company-dashboard/:id', component: CompanyDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'company-fix/:id', component: FixCompanyComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'census-history/:id/:id2', component: CensusHistoryComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'apa-company-dashboard/:id', component: ApaCompanyDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'apa-company-dashboard/:id/:id2', component: ApaCompanyDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
@@ -197,7 +205,8 @@ export const appRoutes: Route[] = [
             {path: 'nuaxess-home', component: NuaxessHomeComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'invoice-list/:id', component: InvoiceListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'invoice-list/:id/:id2', component: InvoiceListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
-            {path: 'enroll', component: UserEnrollComponent, resolve: { data: EnrollResolver }, }
+            {path: 'duplicate-employees', component: DuplicateEmployeesComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+                        {path: 'enroll', component: UserEnrollComponent, resolve: { data: EnrollResolver }, }
         ]
     },
     {

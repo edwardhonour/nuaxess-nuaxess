@@ -116,6 +116,11 @@ import { CensusDashboardComponent } from './nuaxess/census-dashboard/census-dash
 import { UserProfileComponent } from './nuaxess/user-profile/user-profile.component';
 import { UserSettingsComponent } from './nuaxess/user-settings/user-settings.component';
 import { UserLogoutComponent } from './nuaxess/user-logout/user-logout.component';
+import { FixCompanyComponent } from './nuaxess/fix-company/fix-company.component';
+import { AddClientPlanComponent } from './nuaxess/add-client-plan/add-client-plan.component';
+import { EditClientPlanComponent } from './nuaxess/edit-client-plan/edit-client-plan.component';
+import { MissedEmployeesComponent } from './nuaxess/missed-employees/missed-employees.component';
+import { DuplicateEmployeesComponent } from './nuaxess/duplicate-employees/duplicate-employees.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -193,7 +198,12 @@ const routerConfig: ExtraOptions = {
         CensusDashboardComponent,
         UserProfileComponent,
         UserSettingsComponent,
-        UserLogoutComponent
+        UserLogoutComponent,
+        FixCompanyComponent,
+        AddClientPlanComponent,
+        EditClientPlanComponent,
+        MissedEmployeesComponent,
+        DuplicateEmployeesComponent
     ],
     imports     : [
         BrowserModule,

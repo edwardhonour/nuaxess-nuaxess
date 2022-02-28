@@ -184,7 +184,7 @@
         <div class="col-md-12 col-xl-4">
         <div class="card card-body">            
             <div class="row">
-                <h2 style="font-size: 24px;"><b>Documents {{ data.formData3['company_id'] }}</b></h2>
+                <h2 style="font-size: 24px;"><b>Documents</b></h2>
             <div class="table table-responsive" *ngFor="let m of data.docs">
                 <thead>
                     <tr>
@@ -367,73 +367,6 @@
             </tr>
                     </tbody>
                 </table>
-    </div> <!-- TABLE RESPONSIVE -->
-    </div>  
-    <div class="card card-body"  *ngIf="data.org_id!='17'">
-        <h2 style="font-size: 24px;"><b>Client Plans</b>
-        <button class="btn" (click)="showPlans()">Show ({{ data.company_plans.length }})</button> 
-        <button *ngIf="plans=='Y'" class="btn" (click)="showPlans()">Hide</button>
-    </h2>
-        <div *ngIf="plans=='Y'" class="table-responsive">
-        <table *ngFor="let m of data.company_plans" class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Plan</th>
-                <th>{{ m.plan_code }}</th>
-            </tr>        
-        </thead>
-        <tbody>
-            <tr>
-                <th>
-                    APA    
-                </th>
-                <td>
-                    {{ m.APA_CODE }}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    EE    
-                </th>
-                <td>
-                    {{ m.ee_price }}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    ES    
-                </th>
-                <td>
-                    {{ m.ees_price }}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    EC    
-                </th>
-                <td>
-                    {{ m.eec_price }}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    FAM   
-                </th>
-                <td>
-                    {{ m.fam_price }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                                   
-                </td>
-                <th>
-                    <button [routerLink]="['/edit-client-plan',m.id,m.company_id]" class="btn btn-primary">Edit Plan</button>   
-                </th>
-            </tr>
-        </tbody>
-        </table>
-        <button [routerLink]="['/add-client-plan',data.id]" class="btn btn-primary">ADD </button>  
     </div> <!-- TABLE RESPONSIVE -->
     </div>    
     <div *ngIf="data.status=='prospect'" class="card card-body">
