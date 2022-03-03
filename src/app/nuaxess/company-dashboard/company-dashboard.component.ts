@@ -35,6 +35,8 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     adding: any;
     addcont: any;
     employee_name: any;
+    adjust: any;
+    editAdjust: any;
     dob: any;
     editQQ: any;
     uploading: any;
@@ -85,6 +87,25 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  showAdjustments() {
+    if (this.adjust=='Y') {
+       this.adjust='N';
+    } else {
+      this.adjust='Y'
+    }
+  }
+
+  showEditAdjustments() {
+    if (this.editAdjust=='Y') {
+       this.editAdjust='N';
+       this.data.adjustData['id']="";
+       this.data.adjustData['description']="";
+       this.data.adjustData['amount']="";
+    } else {
+        this.editAdjust='Y';
+    }
+  }
+
     ngOnInit(): void
     {   
       this.dsc='';
@@ -96,6 +117,9 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
       this.history='N';
       this.plans='N';
       this.move='N';
+      this.adjust='N';
+      this.editAdjust='N';
+
       this._activatedRoute.data.subscribe(({ 
         data, menudata, userdata })=> { 
           this.data=data;
@@ -250,6 +274,13 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
         this.adding='Y';
     }
 
+    editAdjustments(m: any) {
+      this.data.adjustData['id']=m.id;
+      this.data.adjustData['description']=m.description;
+      this.data.adjustData['amount']=m.amount;
+      this.editAdjust='Y';
+    }
+
     editBlur(id: any) {
       this.data.colForm['message_'+id]="";
     }
@@ -278,6 +309,28 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
 //            this.error=data.error_message
           }
         });
+      }
+
+      postAdjustment() {
+        this._dataService.postForm("post-adjustment", this.data['adjustData']).subscribe((data:any)=>{
+          if (data.error_code=="0") {
+            location.reload();
+          } else {     
+//            this.error=data.error_message
+          }
+        });
+      }
+
+      deleteAdjustment() {
+        if (confirm('Are you sure you want to delete this adjustment?')) {
+          this._dataService.postForm("delete-adjustment", this.data['adjustData']).subscribe((data:any)=>{
+            if (data.error_code=="0") {
+              location.reload();
+            } else {     
+  //            this.error=data.error_message
+            }
+          });
+        }
       }
 
       activatePlan(id:any, client_plan: any) {

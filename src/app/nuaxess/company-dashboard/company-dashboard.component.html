@@ -344,10 +344,16 @@
 </div>        
 <div class="col-md-12 col-xl-4">
     <div class="card card-body"  *ngIf="data.monthlist.length!='0'&&data.status!='prospect'">
-        <h2 style="font-size: 24px;"><b>Monthly History</b>
-        <button *ngIf="history=='N'" class="btn" (click)="showHistory()">Show ({{ data.monthlist.length }}) </button> 
-        <button *ngIf="history=='Y'" class="btn" (click)="showHistory()">Hide</button>
-    </h2>
+        <div class="row">
+            <div class="col-xl-9">
+                    <h2 style="font-size: 24px;"><b>Monthly History</b>
+                    <button *ngIf="history=='N'" class="btn" (click)="showHistory()">Show ({{ data.monthlist.length }}) </button> 
+                    <button *ngIf="history=='Y'" class="btn" (click)="showHistory()">Hide</button></h2>
+            </div>
+            <div class="col-xl-3">
+                <button [routerLink]="['/company-invoice',data.id, data.month_id]" class="btn btn-primary" style="margin-left: 20px;">Invoice</button>
+            </div>
+        </div>
         <div *ngIf="history=='Y'" class="table-responsive">
         <table class="table table-responsive">
         <thead>
@@ -363,12 +369,85 @@
                 </td>
                 <th>
                     <button [routerLink]="['/census-history',data.id, m.value]" class="btn btn-primary">View Census</button>
+                    <button [routerLink]="['/company-invoice',data.id, m.value]" class="btn btn-primary" style="margin-left: 20px;">Invoice</button>
                 </th>
             </tr>
                     </tbody>
                 </table>
     </div> <!-- TABLE RESPONSIVE -->
     </div>  
+    <div class="card card-body"  *ngIf="data.status!='prospect'">
+        <div class="row">
+            <div class="col-xl-9">
+                    <h2 style="font-size: 24px;"><b>Invoice Adjustments</b>
+                    <button *ngIf="adjust=='N'" class="btn" (click)="showAdjustments()">Show ({{ data.adjustlist.length }}) </button> 
+                    <button *ngIf="adjust=='Y'" class="btn" (click)="showAdjustments()">Hide</button></h2>
+            </div>
+            <div class="col-xl-3">
+                <button *ngIf="editAdjust=='N'" (click)="showEditAdjustments()" class="btn btn-primary" style="margin-left: 20px;">New</button>
+            </div>
+        </div>
+        <div *ngIf="adjust=='Y'" class="table-responsive">
+        <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+                <th></th>
+            </tr>        
+        </thead>
+        <tbody>
+            <tr *ngFor="let m of data.adjustlist">
+                <td>
+                    {{ m.description }}    
+                </td>
+                <td>
+                    {{ m.amount }}    
+                </td>
+                <th>
+                    <button (click)="editAdjustments(m)" class="btn btn-primary" style="margin-left: 20px;">Edit</button>
+                </th>
+            </tr>
+                    </tbody>
+                </table>
+    </div> <!-- TABLE RESPONSIVE -->
+    </div>  
+    <div *ngIf="editAdjust=='Y'" class="card card-body" style="margin-top:20px; margin-bottom: 20px;">
+        <div>
+            <h2 style="font-size: 24px;"><b>Add / Edit Adjustment</b></h2>
+            <form>
+                <div class="row">
+                    <div class="col-xl-12">
+                    <label>Description</label>
+                    <div class="form-control">
+                        <input  type="text" id="description" name="description" [(ngModel)]="data.adjustData['description']">
+                    </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <label>Amount (minus sign to reduce bill)</label>
+                        <div class="form-control">
+                            <input  type="text" id="amount" name="amount" [(ngModel)]="data.adjustData['amount']">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <button mat-button (click)="showEditAdjustments()">
+                        Cancel
+                    </button>
+                    <button
+                        class="px-6 ml-3"
+                        mat-flat-button
+                        [color]="'primary'" (click)="postAdjustment()">
+                        Save
+                    </button>   
+                    <button *ngIf="data.adjustData['id']!=''" style="margin-left: 20px;"
+                        class="btn btn-danger" (click)="deleteAdjustment()">
+                        Delete
+                    </button>               
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="card card-body"  *ngIf="data.org_id!='17'">
         <h2 style="font-size: 24px;"><b>Client Plans</b>
         <button class="btn" (click)="showPlans()">Show ({{ data.company_plans.length }})</button> 

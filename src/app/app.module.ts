@@ -38,6 +38,9 @@ import { ShortcutsModule } from 'app/layout/common/shortcuts/shortcuts.module';
 import { UserModule } from 'app/layout/common/user/user.module';
 import { SharedModule } from 'app/shared/shared.module';
 
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AdminDashboardComponent } from './nuaxess/admin-dashboard/admin-dashboard.component';
 import { VerticalMenuComponent } from './nuaxess/vertical-menu/vertical-menu.component';
@@ -121,6 +124,7 @@ import { AddClientPlanComponent } from './nuaxess/add-client-plan/add-client-pla
 import { EditClientPlanComponent } from './nuaxess/edit-client-plan/edit-client-plan.component';
 import { MissedEmployeesComponent } from './nuaxess/missed-employees/missed-employees.component';
 import { DuplicateEmployeesComponent } from './nuaxess/duplicate-employees/duplicate-employees.component';
+import { CompanyInvoiceComponent } from './nuaxess/company-invoice/company-invoice.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -203,7 +207,8 @@ const routerConfig: ExtraOptions = {
         AddClientPlanComponent,
         EditClientPlanComponent,
         MissedEmployeesComponent,
-        DuplicateEmployeesComponent
+        DuplicateEmployeesComponent,
+        CompanyInvoiceComponent
     ],
     imports     : [
         BrowserModule,

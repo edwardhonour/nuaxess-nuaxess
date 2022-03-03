@@ -79,7 +79,7 @@
         <div class="flex-1 min-w-0">
             <div class="mt-2">
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    Invoice List <button style="margin-left:30px;" [routerLink]="['/add-invoice']" class="btn btn-primary">Add Invoice</button>
+                    Invoice List
                     <div *ngIf="data.id=='org'">Organization User Account List</div>
                     <div *ngIf="data.id=='employer'">Company / Prospect User Account List</div>
                     <div *ngIf="data.id=='pending'">Pending User Account List</div>
@@ -103,32 +103,30 @@
                     <table class="table table-condensed">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Number</th>
-                                <th>Month/Year</th>
+                                <th>Year-Month</th>
                                 <th>Company Name</th>
                                 <th>Address</th>
                                 <th>Email</th>
                                 <th>Grand Total</th>
                                 <th>Payment Date</th>
-                                <th>Employees</th>
+                                <th>EFT</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let m of data.list | filter: term | paginate: { currentPage: p , itemsPerPage: 25}" [ngStyle]="{'background-color':m.count === '0' ? '#FCE5EB' : '' }">
-                                <td>{{ m.id }}</td>
                                 <td>{{ m.invoice_number }}</td>
-                                <td>{{ m.month }}/{{ m.year }}</td>
+                                <td>{{ m.month_id }}</td>
                                 <td>{{ m.company_name }}</td>
-                                <td>{{ m.address }}</td>
-                                <td>{{ m.contact_email }}</td>
-                                <td>{{ m.grand_total }}</td>
+                                <td>{{ m.billing_address }}<br>{{ m.billing_city }}, {{ m.billing_state }} {{ m.billing_zip }}</td>
+                                <td>{{ m.billing_contact_email }}</td>
+                                <td>${{ m.grand_total }}</td>
                                 <td>{{ m.payment_dt }}</td>
-                                <td>{{ m.count }}</td>
+                                <td>{{ m.eft }}</td>
                                 <td>{{ m.status }}</td>
-                                <td><button [routerLink]="['/invoice-dashboard',m.id]" class="btn btn-primary">View</button></td>
+                                <td><button [routerLink]="['/company-invoice',m.company_id,m.month_id]" class="btn btn-primary">View</button></td>
                             </tr>
                         </tbody>
                     </table>

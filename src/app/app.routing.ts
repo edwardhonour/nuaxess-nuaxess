@@ -71,6 +71,7 @@ import { FixCompanyComponent } from './nuaxess/fix-company/fix-company.component
 import { AddClientPlanComponent } from './nuaxess/add-client-plan/add-client-plan.component';
 import { EditClientPlanComponent } from './nuaxess/edit-client-plan/edit-client-plan.component';
 import { DuplicateEmployeesComponent } from './nuaxess/duplicate-employees/duplicate-employees.component';
+import { CompanyInvoiceComponent } from './nuaxess/company-invoice/company-invoice.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -205,6 +206,7 @@ export const appRoutes: Route[] = [
             {path: 'nuaxess-home', component: NuaxessHomeComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'invoice-list/:id', component: InvoiceListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'invoice-list/:id/:id2', component: InvoiceListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'company-invoice/:id/:id2', component: CompanyInvoiceComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'duplicate-employees', component: DuplicateEmployeesComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'enroll', component: UserEnrollComponent, resolve: { data: EnrollResolver }, }
         ]

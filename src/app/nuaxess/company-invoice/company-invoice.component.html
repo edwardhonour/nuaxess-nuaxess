@@ -1,0 +1,238 @@
+<!-- Loading bar -->
+<fuse-loading-bar></fuse-loading-bar>
+<!-- Navigation -->
+<fuse-vertical-navigation
+    class="dark bg-gray-900 print:hidden"
+    [mode]="isScreenSmall ? 'over' : 'side'"
+    [name]="'mainNavigation'"
+    [navigation]="navigation.default"
+    [opened]="!isScreenSmall">
+    <!-- Navigation header hook -->
+    <ng-container fuseVerticalNavigationContentHeader>
+        <div class="flex items-center w-full p-4 pl-6">
+            <!-- Logo -->
+            <div class="flex items-center justify-center">
+                <img
+                    class="w-8"
+                    src="assets/images/logo/logo.png">
+            </div>
+            <!-- Components -->
+            <div class="flex items-center ml-auto">
+                <notifications></notifications>
+                <user [showAvatar]="false"></user>
+            </div>
+        </div>
+        <!-- User -->
+        <div class="flex flex-col items-center w-full p-4">
+            <div class="relative w-24 h-24">
+                <img
+                    class="w-full h-full rounded-full"
+                    *ngIf="user.avatar"
+                    [src]="user.avatar"
+                    alt="User avatar">
+                <mat-icon
+                    class="icon-size-24"
+                    *ngIf="!user.avatar"
+                    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+            </div>
+            <div class="flex flex-col items-center justify-center w-full mt-6">
+                <div class="w-full whitespace-nowrap overflow-ellipsis overflow-hidden text-center leading-normal font-medium">
+                    {{user.name}}
+                </div>
+                <div class="w-full mt-0.5 whitespace-nowrap overflow-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-secondary">
+                    {{user.email}}
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <!-- Navigation footer hook -->
+    <ng-container fuseVerticalNavigationContentFooter>
+        <div class="flex flex-0 items-center justify-center h-16 pr-6 pl-2 mt-2 mb-4 opacity-12">
+            <img
+                class="max-w-36"
+                src="assets/images/logo/logo-text-on-dark.png">
+        </div>
+    </ng-container>
+</fuse-vertical-navigation>
+
+<div class="flex flex-col flex-auto min-w-0">
+ <div class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+  <!--  <button
+        mat-icon-button
+        (click)="toggleNavigation('mainNavigation')">
+        <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+    </button>
+    <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
+        <languages></languages>
+        <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
+        <search [appearance]="'bar'"></search>
+        <shortcuts></shortcuts>
+        <messages></messages>
+    </div> -->
+    <div class="row">
+        <div class="col-xl-3">
+            <button style="margin-left: 20px; width:120px;" [routerLink]="['/company-dashboard',data.company_id]" class="btn">Go Back</button>   
+        </div>
+        <div class="col-xl-3">
+            <button style="margin-left: 20px; width:120px;" (click)="removeBackground()" class="btn btn-primary">Background</button>   
+        </div>
+        <div class="col-xl-3">
+            <button style="margin-left: 20px; width:120px;" (click)="openPDF(data.filename)" class="btn btn-danger">Export PDF</button>
+        </div>
+    </div>
+</div> 
+    <!-- Header -->
+    <div
+    class="absolute inset-0 min-w-0 text-center overflow-auto print:overflow-visible"
+    cdkScrollable>
+
+    <!-- Main -->
+    <div class="inline-block p-6 sm:p-10 text-left print:p-0">
+
+        <!-- Invoice -->
+<!--       <div id="invoiceData" class="w-240 min-w-240 p-16 rounded-2xl shadow bg-card print:w-auto print:p-0 print:rounded-none print:shadow-none print:bg-transparent"> -->
+        <div id="invoiceData" class="w-240 min-w-240 p-16 rounded-2xl" [ngClass]="{'shadow bg-card print:w-auto print:p-0 print:rounded-none print:shadow-none print:bg-transparent':printing === 'N'}">
+            <div class="flex items-start">
+                <div class="grid grid-rows-2 place-items-start gap-y-12">
+                    <div class="grid auto-cols-max grid-flow-col gap-x-8">
+                        <div class="place-self-center w-24">
+                            <img
+                                class="w-24"
+                                src="assets/images/logo/logo-dark.png">
+                        </div>
+                        <div class="pl-10 border-l text-md">
+                            <div class="font-medium">NuAxess 2 Inc.</div>
+                            <div>1111 Belt Line Road</div>
+                            <div>Suite 103E</div>
+                            <div>Garland, TX 75040</div>
+                            <div>billing@nuaxess.com</div>
+                            <div>www.nuaxess.com</div>
+                        </div>
+                    </div>
+                    <div class="grid auto-cols-max grid-flow-col gap-x-8">
+                        <div class="place-self-center w-24 text-center text-2xl text-secondary">
+                            Bill To
+                        </div>
+                        <div class="pl-10 border-l text-md">
+                            <div class="font-medium">{{ data.company.invoice_email }}</div>
+                            <div>{{ data.company.invoice_contact_name }}</div>
+                            <div>{{ data.company.company_name }}</div>
+                            <div>{{ data.company.invoice_mailing_address }}</div>
+                            <div>{{ data.company.invoice_city }}, {{ data.company.invoice_state }} {{ data.company.invoice_zip }}</div>
+                            <div>{{ data.company.invoice_contact_email }}</div>
+                            <div>{{ data.company.invoice_contact_phone }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-1 ml-auto">
+                    <div class="justify-self-end text-4xl tracking-tight text-secondary">INVOICE</div>
+                    <div class="text-4xl">{{ data.invoice_number }}</div>
+                    <div class="justify-self-end font-medium tracking-tight text-secondary">INVOICE DATE</div>
+                    <div class="font-medium">{{ data.billing_date }}</div>
+                    <div class="justify-self-end font-medium tracking-tight text-secondary">DUE DATE</div>
+                    <div class="font-medium">{{ data.due_date }}</div>
+                    <div class="justify-self-end font-medium tracking-tight text-secondary">TOTAL DUE</div>
+                    <div class="font-medium">${{ data.grand_total }}</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-x-1 mt-16">
+                <!-- Columns -->
+                <div class="col-span-4 font-medium text-md text-secondary">PLAN</div>
+                <div class="col-span-3 font-medium text-md text-right text-secondary">LEVEL</div>                
+                <div class="col-span-2 font-medium text-md text-right text-secondary">RATE</div>
+                <div class="font-medium text-md text-right text-secondary">QTY</div>
+                <div class="col-span-2 font-medium text-md text-right text-secondary">TOTAL</div>
+
+                <!-- Divider -->
+                <ng-container *ngFor="let m of data.detail">
+
+                <div class="col-span-12 my-4 border-b"></div>
+
+                <!-- Item #1 -->
+                <div class="col-span-4">
+                    <div class="text-lg font-medium">{{ m.plan_code }}</div>
+                </div>
+                <div class="col-span-3 self-center text-right">Employee Only</div>
+                <div class="col-span-2 self-center text-right">${{ m.ee_price }}</div>
+                <div class="self-center text-right">{{ m.ee_qty }}</div>
+                <div class="col-span-2 self-center text-right">${{ m.ee_total }}</div>
+
+                <div *ngIf="m.ees_qty!='0'" class="col-span-4">
+                    <div class="text-lg font-medium"></div>
+                </div>
+                <div *ngIf="m.ees_qty!='0'" class="col-span-3 self-center text-right" >Employee & Spouse</div>
+                <div *ngIf="m.ees_qty!='0'"  class="col-span-2 self-center text-right">${{ m.ees_price }}</div>
+                <div *ngIf="m.ees_qty!='0'"  class="self-center text-right">{{ m.ees_qty }}</div>
+                <div  *ngIf="m.ees_qty!='0'" class="col-span-2 self-center text-right">${{ m.ees_total }}</div>
+
+                <div *ngIf="m.eec_qty!='0'" class="col-span-4">
+                    <div class="text-lg font-medium"></div>
+                </div>
+                <div *ngIf="m.eec_qty!='0'"class="col-span-3 self-center text-right">Employee & Children</div>
+                <div *ngIf="m.eec_qty!='0'" class="col-span-2 self-center text-right">${{ m.eec_price }}</div>
+                <div *ngIf="m.eec_qty!='0'" class="self-center text-right">{{ m.eec_qty }}</div>
+                <div *ngIf="m.eec_qty!='0'" class="col-span-2 self-center text-right">${{ m.eec_total }}</div>
+
+                <div *ngIf="m.fam_qty!='0'"  class="col-span-4">
+                    <div class="text-lg font-medium"></div>
+                </div>
+                <div *ngIf="m.fam_qty!='0'" class="col-span-3 self-center text-right">Family</div>
+                <div *ngIf="m.fam_qty!='0'" class="col-span-2 self-center text-right">${{ m.fam_price }}</div>
+                <div *ngIf="m.fam_qty!='0'" class="self-center text-right">{{ m.fam_qty }}</div>
+                <div *ngIf="m.fam_qty!='0'" class="col-span-2 self-center text-right">${{ m.fam_total }}</div>
+                </ng-container>
+
+                <!-- Divider -->
+                <div class="col-span-12 my-4 border-b"></div>
+
+                <!-- Spacer -->
+                <div class="col-span-12 mt-16"></div>
+
+                <!-- Subtotal -->
+                <div class="col-span-10 self-center font-medium tracking-tight text-secondary">SUBTOTAL</div>
+                <div class="col-span-2 text-right text-lg">${{ data.sub_total }}</div>
+
+                <!-- Divider -->
+                <div class="col-span-12 my-3 border-b"></div>
+
+                <!-- Tax -->
+                <div class="col-span-10 self-center font-medium tracking-tight text-secondary">LATE FEE</div>
+                <div class="col-span-2 text-right text-lg">$0.00</div>
+
+                <!-- Divider -->
+                <div class="col-span-12 my-3 border-b"></div>
+
+                <!-- Discount -->
+                <div class="col-span-10 self-center font-medium tracking-tight text-secondary">ADJUSTMENTS</div>
+                <div class="col-span-2 text-right text-lg">${{ data.adjustments }}</div>
+
+                <!-- Divider -->
+                <div class="col-span-12 my-3 border-b"></div>
+
+                <!-- Total -->
+                <div class="col-span-10 self-center text-2xl font-medium tracking-tight text-secondary">TOTAL</div>
+                <div class="col-span-2 text-right text-2xl font-medium">${{ data.grand_total }}</div>
+            </div>
+
+            <div class="mt-16">
+                <div class="font-medium">Please pay within 15 days. Thank you for your business.</div>
+                <div class="flex items-start mt-4">
+                    <img
+                        class="flex-0 w-10 mt-2"
+                        src="assets/images/logo/logo-dark.png">
+                    <div class="ml-6 text-sm text-secondary">
+                        A 1% fee will be assessed to the balance of any outstanding invoice amount that is not received by the due date.  Please note, the plan has a 
+                        30 day grace period. If the premium is not received, your cancellation will take effect on the last day of the month your premium was fully 
+                        paid.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>    
+</div>
+
+
+
