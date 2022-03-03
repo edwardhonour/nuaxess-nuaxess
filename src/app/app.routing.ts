@@ -206,7 +206,7 @@ export const appRoutes: Route[] = [
             {path: 'invoice-list/:id', component: InvoiceListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'invoice-list/:id/:id2', component: InvoiceListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'duplicate-employees', component: DuplicateEmployeesComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
-                        {path: 'enroll', component: UserEnrollComponent, resolve: { data: EnrollResolver }, }
+            {path: 'enroll', component: UserEnrollComponent, resolve: { data: EnrollResolver }, }
         ]
     },
     {

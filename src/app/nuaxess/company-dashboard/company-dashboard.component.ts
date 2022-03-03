@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { ApexOptions } from 'ng-apexcharts';
+import { ApexOptions, ApexYAxis } from 'ng-apexcharts';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
 import { Navigation } from 'app/core/navigation/navigation.types';
@@ -20,7 +20,7 @@ import { NgLocalization } from '@angular/common';
 export class CompanyDashboardComponent implements OnInit, OnDestroy {
   navigation: Navigation;
   isScreenSmall: boolean;
-  term: any;
+  //term: any;
   p: any;
   formFieldHelpers: string[] = [''];
 
@@ -44,7 +44,8 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     active: any;
     history: any;
     plans:any;
-
+    move: any;
+    term: any;
     /**
      * Constructor
      */
@@ -68,6 +69,14 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     }
   }
   
+  showMove() {
+    if (this.move=='Y') {
+       this.move='N';
+    } else {
+      this.move='Y'
+    }
+  }
+
   showPlans() {
     if (this.plans=='Y') {
        this.plans='N';
@@ -86,6 +95,7 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
       this.active='N';
       this.history='N';
       this.plans='N';
+      this.move='N';
       this._activatedRoute.data.subscribe(({ 
         data, menudata, userdata })=> { 
           this.data=data;
@@ -258,6 +268,8 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
 
     }
 
+
+
     postForm() {
         this._dataService.postForm("post-add-employee-small", this.data['formData']).subscribe((data:any)=>{
           if (data.error_code=="0") {
@@ -310,14 +322,45 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
         });
       }
 
+    showTerm(m: any) {
+        m.term="Y";
+    }
+
     postEmployee() {
-      this._dataService.postForm("post-add-employee-small", this.data).subscribe((data:any)=>{
+      let ok='Y';
+      if (this.data['employeeData']['first_name']=='' ) {
+        ok='N';
+      }
+      if (this.data['employeeData']['last_name']=='' ) {
+        ok='N';
+      }
+      if (this.data['employeeData']['date_of_birth']=='' ) {
+        ok='N';
+      }
+      if (this.data['employeeData']['gender']=='' ) {
+        ok='N';
+      }
+      if (this.data['employeeData']['plan']=='' ) {
+        ok='N';
+      }
+      if (this.data['employeeData']['coverage_level']=='' ) {
+        ok='N';
+      }
+      if (this.data['employeeData']['eff_dt']=='' ) {
+        ok='N';
+      }
+
+      if (ok=='Y') {
+      this._dataService.postForm("post-add-employee-census", this.data['employeeData']).subscribe((data:any)=>{
         if (data.error_code=="0") {
           location.reload();
         } else {     
 //            this.error=data.error_message
         }
       });
+      } else {
+        alert('Mandatory Fields are missing')
+      }
     }
 
   editE(id: any,first_name: any, middle_name: any, last_name: any, suffix: any, email: any, phone_mobile: any, date_of_birth: any, social_security_number: any, gender: any) {
@@ -364,12 +407,55 @@ if (this.inactive=='Y') {
 }
 }
 
+
 showActive() {
   if (this.active=='Y') {
      this.active='N';
   } else {
     this.active='Y'
   }
+}
+
+postMove(id: any) {
+  if (confirm('Are you sure you want to move this member to this company?')) { 
+  this.data['moveData']['census_id']=id;
+  this._dataService.postForm("post-census-move", this.data['moveData']).subscribe((data:any)=>{
+    if (data.error_code=="0") {
+      location.reload();
+    } else {     
+//            this.error=data.error_message
+    }
+  });
+}
+}
+
+priceFix(id: any) {
+  if (confirm('Are you sure you want to update this client price?')) {
+
+
+  this.data['moveData']['census_id']=id;
+  this._dataService.postForm("fix-employee-price", this.data['moveData']).subscribe((data:any)=>{
+    if (data.error_code=="0") {
+      location.reload();
+    } else {     
+       alert('APA Plan not found')
+    }
+  });
+}
+}
+
+postTerm(id: any) {
+  if (confirm('Are you sure you want to terminate this plan?')) {
+
+  this.data['moveData']['census_id']=id;
+  this._dataService.postForm("post-employee-term", this.data['moveData']).subscribe((data:any)=>{
+    if (data.error_code=="0") {
+      location.reload();
+    } else {     
+       alert('APA Plan not found')
+    }
+  });
+}
 }
 
     postForm2() {

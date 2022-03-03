@@ -87,7 +87,7 @@
 
     <!-- Main -->
     <div class="row">
-        <div class="col-xl-5">
+        <div class="col-xl-3">
             <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden" autocomplete="off">
                 <div class="flex flex-col gt-xs:flex-row">
                     <mat-form-field
@@ -135,7 +135,7 @@
                 </div>
             </form>
 </div>
-<div class="col-xl-5">
+<div class="col-xl-3">
             <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
                 <div class="flex flex-col gt-xs:flex-row">
                     <mat-form-field
@@ -182,12 +182,41 @@
                         Save
                     </button>
                     <button
-                    class="px-6 ml-3"
-                    mat-flat-button
-                    [color]="'danger'" (click)="postDelete(data.formData['company_id'])">
-                    Save
+                    (click)="postDelete(data.formData['company_id'])"
+                    class="btn btn-danger">
+                    Delete
                 </button>
                 </div>
             </form>
 </div>
+    <div class="col-xl-3">
+        <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">        
+        <table class="table table-responsive">
+            <thead><tr><th>VB Code</th><th>Client Plan</th></tr> </thead>
+            <tbody>
+                <tr><td (click)="copyAPA('VB11');">VB11</td><td>Platinum III</td></tr>
+                <tr><td (click)="copyAPA('VB10');">VB10</td><td>Platinum</td></tr>
+                <tr><td (click)="copyAPA('VB12');">VB12</td><td>Platinum</td></tr>
+                <tr><td (click)="copyAPA('VB15');">VBP15</td><td>Platinum</td></tr>
+                <tr><td (click)="copyAPA('VB17');">VB17</td><td>Gold II</td></tr>
+                <tr><td (click)="copyAPA('VBP1');">VBP1</td><td>Gold</td></tr>
+                <tr><td (click)="copyAPA('VB14');">VB14</td><td>Gold HSA</td></tr>
+                <tr><td (click)="copyAPA('VB23');">VB23</td><td>Gold III</td></tr>
+                <tr><td (click)="copyAPA('VB18');">VB18</td><td>Silver II</td></tr>
+                <tr><td (click)="copyAPA('VB19');">VB19</td><td>Silver HSA</td></tr>
+                <tr><td (click)="copyAPA('VB13');">VB13</td><td>Silver III (aka Silver HSA II)</td></tr>
+                <tr><td (click)="copyAPA('VBP3');">VBP3</td><td>Silver</td></tr>
+                <tr><td (click)="copyAPA('VB22');">VB22</td><td>Silver III</td></tr>
+                <tr><td (click)="copyAPA('VB21');">VB21</td><td>Bronze 4K</td></tr>
+                <tr><td (click)="copyAPA('VBP9');">VBP9</td><td>Bronze</td></tr>
+                <tr><td (click)="copyAPA('VB20');">VB20</td><td>Bronze II</td></tr>
+                <tr><td (click)="copyAPA('VBP8');">VBP8</td><td>Copper / Essential</td></tr>
+                <tr><td (click)="copyAPA('VBP7');">VBP7</td><td>Prime</td></tr>
+                <tr><td (click)="copyAPA('VBP6');">VBP6</td><td>Premium</td></tr>
+                <tr><td (click)="copyAPA('VBP5');">VBP5</td><td>Plan 1 (Commodore West Club)</td></tr>
+                <tr><td (click)="copyAPA('VBP2');">VBP2</td><td>Plan 2 (Legacy VBC)</td></tr>
+            </tbody>
+        </table>
+        </form>
+    </div>
 </div>

@@ -253,7 +253,7 @@
                 </div>
         
         </div>
-        <div class="card card-body" style="margin-top:20px;">            
+        <div *ngIf="data.user.org_id!='17'" class="card card-body" style="margin-top:20px;">            
             <div class="row">
                 <h2 style="font-size: 24px;"><b>Active Plans 
                     <button *ngIf="active=='N'" class="btn" (click)="showActive()">Show</button> 
@@ -279,7 +279,7 @@
             </div>
             </div>        
         </div>
-        <div class="card card-body" style="margin-top:20px;">            
+        <div *ngIf="data.user.org_id!='17'" class="card card-body" style="margin-top:20px;">            
             <div class="row">
                 <h2 style="font-size: 24px;"><b>Inactive Plans 
                     <button *ngIf="inactive=='N'" class="btn" (click)="showInactive()">Show</button> <button *ngIf="inactive=='Y'" class="btn" (click)="showInactive()">Hide</button></b>
@@ -535,6 +535,137 @@
 
 
     </div>  <!-- END CONTAINER ROW 114-->
+
+<div *ngIf="adding=='Y'" class="row">
+        <div class="col-xl-2">
+            &nbsp;
+     </div>
+     <div class="col-md-12 col-xl-10">
+        <div class="card card-body" style="margin-top:20px;">
+            <div>
+                <h2 style="font-size: 24px;">Enroll Employee</h2>
+                <form>
+                    <div class="row p-5">
+                        <div class="col-xl-3">
+                        <label>Employee or Dependent</label>
+                        <div class="form-control">
+                            <select id="dependent" name="dependent" [(ngModel)]="data.employeeData['dependent']">
+                                <option value="N">Insured</option>
+                                <option value="Y">Dependent</option>
+                           </select>
+                        </div>
+                        </div>
+                        <div *ngIf="data.employeeData['dependent']=='Y'" class="col-xl-3">
+                            <label>Insured</label>
+                            <div class="form-control">
+                                <select id="employee_id" name="employee_id" [(ngModel)]="data.employeeData['employee_id']">
+                                    <option *ngFor="let m of data.employees" value="{{ m.id }}">{{ m.last_name }}, {{ m.first_name }}</option>
+                               </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-5">
+                        <div class="col-xl-3">
+                        <label>First Name</label>
+                        <div class="form-control">
+                            <input  type="text" id="first_name" name="first_name" [(ngModel)]="data.employeeData['first_name']">
+                        </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <label>Middle Name</label>
+                            <div class="form-control">
+                                <input  type="text" id="middle_name" name="middle_name" [(ngModel)]="data.employeeData['middle_name']">
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                                <label>Last Name</label>
+                                <div class="form-control">
+                                    <input  type="text" id="last_name" name="last_name" [(ngModel)]="data.employeeData['last_name']">
+                                </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <label>Suffix</label>
+                            <div class="form-control">
+                                <input  type="text" id="suffix" name="suffix" [(ngModel)]="data.employeeData['suffix']">
+                            </div>
+                    </div>
+                    </div>
+                    
+                    <div class="row  p-5">
+        
+                        <div class="col-xl-3">
+                            <label>Email</label>
+                            <div class="form-control">
+                                <input  type="text" id="email" name="email" [(ngModel)]="data.employeeData['email']">
+                            </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <label>Date of Birth (MM/DD/YYYY)</label>
+                        <div class="form-control">
+                            <input  type="text" id="date_of_birth" name="date_of_birth" [(ngModel)]="data.employeeData['date_of_birth']">
+                        </div>
+                </div>
+                <div class="col-xl-3">
+                    <label>Social Security Number</label>
+                    <div class="form-control">
+                        <input  type="text" id="social_security_number" name="social_security_number" [(ngModel)]="data.employeeData['social_security_number']">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <label>Gender</label>
+                    <div class="form-control">
+                        <select id="gender" name="gender" [(ngModel)]="data.employeeData['gender']">
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                       </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row  p-5">
+                <div class="col-xl-3">
+                    <label>Effective Date</label>
+                    <div class="form-control">
+                        <select id="eff_dt" name="eff_dt" [(ngModel)]="data.employeeData['eff_dt']">
+                            <option *ngFor="let m of data.eff_dates" value="{{ m.eff_dt }}">{{ m.eff_dt }}</option>
+                       </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <label>Plan</label>
+                    <div class="form-control">
+                        <select id="plan" name="plan" [(ngModel)]="data.employeeData['plan']">
+                            <option *ngFor="let m of data.company_plans" value="{{ m.plan_code }}">{{ m.plan_code }}</option>
+                       </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <label>Coverage Level</label>
+                    <div class="form-control">
+                        <select id="coverage_level" name="coverage_level" [(ngModel)]="data.employeeData['coverage_level']">
+                            <option value="EE">Employee Only</option>
+                            <option value="ES">Employee & Spouse</option>
+                            <option value="EC">Employee & Children</option>
+                            <option value="FAM">Family</option>
+                       </select>
+                    </div>
+                </div>
+                    <div class="col-xl-3  p-5">
+                        <button mat-button (click)="addEmployee()">
+                            Cancel
+                        </button>
+                        <button
+                            class="px-6 ml-3"
+                            mat-flat-button
+                            [color]="'primary'" (click)="postEmployee()">
+                            Save
+                        </button>               
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+</div>
+</div>
 <div class="row">
     <div class="col-xl-2">
         &nbsp;
@@ -542,7 +673,9 @@
  <div class="col-md-12 col-xl-10">
     <div class="card card-body" style="margin-top:20px;">
         <div class="table-responsive">
-            <h2 style="font-size: 24px;"><b>Active Members (includes additions)</b></h2>
+            <h2 style="font-size: 24px;"><b>Active Members (includes additions)</b>
+            <button *ngIf="adding=='N'" (click)="addEmployee()" class="btn btn-primary" style="margin-left: 50px;">Enroll Member</button>
+            </h2>
         <div class="col-lg-6 py-2">
             Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
         </div>
@@ -550,19 +683,10 @@
             <thead>
                 <tr>
                     <th>
-                        Employee ID
+                        Employee ID<br>Dependent
                     </th>
                     <th>
-                        Dependent ID
-                    </th>
-                    <th>
-                        Last Name
-                    </th>
-                    <th>
-                        First Name
-                    </th>
-                    <th>
-                        Middle Initial
+                        Name
                     </th>
                     <th>
                         Gender
@@ -571,13 +695,13 @@
                         DOB
                     </th>
                     <th>
-                        Plan
+                        Client<br>Plan
+                    </th>
+                    <th>
+                        APA<br>Plan
                     </th>
                     <th>
                         Eff Date
-                    </th>
-                    <th>
-                        Term Date
                     </th>
                     <th>
                         Coverage
@@ -587,24 +711,19 @@
                     </th>
                     <th>            
                     </th>
+                    <th>            
+                    </th>
+                    <th>            
+                    </th>
                 </tr>
             </thead>
                     <tbody>
     <tr *ngFor="let m of data.census | filter: term ">
         <td>
-            {{ m.employee_code }}
+            {{ m.employee_code }}<br>{{ m.dependent_code }}
         </td>
         <td>
-            {{ m.dependent_code }}
-        </td>
-        <td>
-            {{ m.last_name }}
-        </td>
-        <td>
-            {{ m.first_name }}
-        </td>
-        <td>
-            {{ m.middle_initial }}
+            {{ m.last_name }},<br>{{ m.first_name }}
         </td>
         <td>
             {{ m.gender }}
@@ -616,19 +735,31 @@
             {{ m.client_plan }}
         </td>
         <td>
-            {{ m.eff_dt }}
+            {{ m.apa_plan }}
         </td>
         <td>
-            {{ m.term_dt }}
+            {{ m.eff_dt }}
         </td>
         <td>
             {{ m.coverage_level }}
         </td>
-        <td>
+        <td colspan="3" *ngIf="m.term=='Y'">
+            Term Dt: <select id="term{{m.id}}" name="term{{m.id}}" [(ngModel)]="data['moveData']['term_dt']" class="form-control">
+                 <option *ngFor="let n of data.term_dates" value="{{ n.term_dt }}">{{ n.term_dt }}</option>
+            </select>
+        </td>
+        <td *ngIf="m.term=='N'">
             {{ m.coverage_price }}
         </td>
+        <td *ngIf="m.term=='N'">
+            <button  *ngIf="m.last_name!=''" [routerLink]="['/employee-dashboard',m.employee_id]" class="btn btn-warning">View</button>
+        </td>
+        <td  *ngIf="m.term=='N'">
+            <button (click)="showTerm(m)" class="btn btn-danger">Term</button>
+        </td>
         <td>
-            <button  *ngIf="m.last_name!=''" [routerLink]="['/employee-dashboard',m.employee_id]" class="btn btn-warning">Dashboard</button>
+            <button *ngIf="m.term=='N'" (click)="priceFix(m.id)" class="btn btn-danger">Price Fix</button>
+            <button *ngIf="m.term=='Y'" (click)="postTerm(m.id)" class="btn btn-primary">Save</button>
         </td>
     </tr>
 </tbody>
@@ -640,7 +771,7 @@
 
 </div>
 
-<div class="row" *ngIf="data.insured_lives!='0'">
+<div class="row" *ngIf="data.additions.length!='0'">
     <div class="col-xl-2">
         &nbsp;
  </div>
@@ -745,7 +876,7 @@
 
 </div>
 
-<div class="row" *ngIf="data.insured_lives!='0'">
+<div class="row" *ngIf="data.terminations.length!='0'">
     <div class="col-xl-2">
         &nbsp;
  </div>
@@ -851,6 +982,132 @@
 </div>
 
 
+<div class="row">   
+    <div class="col-xl-2">
+           &nbsp;
+    </div>
+    <div class="col-md-12 col-xl-10">
+        <div class="card card-body" style="margin-top:20px;">
+            <div class="table-responsive">
+                <h2 style="font-size: 24px;"><b>Moveable Census Employees</b>
+                    <button *ngIf="move=='N'" (click)="showMove()" style="margin-left: 50px;">Show</button>
+                    <button *ngIf="move=='Y'" (click)="showMove()" style="margin-left: 50px;">Hide</button>
+                </h2>
+            <div *ngIf="move=='Y'" class="col-lg-6 py-2">
+                Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
+            </div>
+            <table *ngIf="move=='Y'" class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Current Company
+                        </th>
+                        <th>
+                            Plan
+                        </th>
+                        <th>
+                            Coverage Level
+                        </th>
+                        <th>            
+                        </th>
+                    </tr>
+                </thead>
+                        <tbody>
+        <tr *ngFor="let m of data.movelist | filter: term | paginate: { currentPage: p , itemsPerPage: 25}">
+            <td>
+                {{ m.id }}
+            </td>
+            <td>
+                {{ m.last_name }}, {{ m.first_name }}
+            </td>
+            <td>
+                {{ m.company_name }}<span *ngIf="m.alt_company_name!=''">
+                    <br>Billed to: {{ m.alt_company_name }}
+                </span> 
+            </td>
+            <td>
+                {{ m.plan }}
+            </td>
+            <td>
+                {{ m.coverage_level }}
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <button (click)="postMove(m.id)" class="btn btn-danger">Move</button>
+            </td>
+        </tr>
+    </tbody>
+            </table>
+            <div  *ngIf="move=='Y'" >
+                <paging-controls (pageChange)="p = $event" [isItemsPerPage]="false"  
+                class="my-pagination"></paging-controls>
+            </div>
+            </div> <!-- table responsive -->
+            </div> <!-- Card body -->
+            </div> <!-- Col -->
+            <div class="col-md-12 col-xl-5">
+                <div *ngIf="data.status=='XXXprospect'" class="card card-body" style="margin-top:20px;">
+                    <div class="table-responsive">
+<h2 style="font-size:24px;"><b>Terminations</b></h2>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Employee Name
+                        </th>
+                        <th>
+                            Plan
+                        </th>
+                        <th>
+                            Election
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                        <th>            
+                        </th>
+                    </tr>
+                </thead>
+                        <tbody>
+        <tr *ngFor="let m of data.terms | filter: term ">
+            <td>
+                {{ m.id }}
+            </td>
+            <td>
+                {{ m.last_name }}, {{ m.first_name }}
+            </td>
+            <td>
+                {{ m.plan }}
+            </td>
+            <td>
+                {{ m.plan_election }}
+            </td>
+            <td>
+                {{ m.price }}
+            </td>
+            <td>
+            </td>
+            <td>
+                <button  *ngIf="data.user['role']=='sadmin'" [routerLink]="['/employee-dashboard',m.employee_id]" class="btn btn-warning">Dashboard</button>
+            </td>
+        </tr>
+    </tbody>
+            </table>
+</div>
+</div>
+</div>
+</div>
 
 <div class="row">
         <div class="col-xl-2">
@@ -1037,95 +1294,6 @@
             </tr>
         </tbody>
                 </table>
-
-                <div *ngIf="adding=='Y'" style="background-color: lightcyan;">
-                    <h2 style="font-size: 18px;">Add/Edit Employee</h2>
-                    <form>
-                        <div class="row p-5">
-                            <div class="col-xl-3">
-                            <label>First Name</label>
-                            <div class="form-control">
-                                <input  type="text" id="first_name" name="first_name" [(ngModel)]="data.employeeData['first_name']">
-                            </div>
-                            </div>
-                            <div class="col-xl-3">
-                                <label>Middle Name</label>
-                                <div class="form-control">
-                                    <input  type="text" id="middle_name" name="middle_name" [(ngModel)]="data.employeeData['middle_name']">
-                                </div>
-                            </div>
-                            <div class="col-xl-3">
-                                    <label>Last Name</label>
-                                    <div class="form-control">
-                                        <input  type="text" id="last_name" name="last_name" [(ngModel)]="data.employeeData['last_name']">
-                                    </div>
-                            </div>
-                            <div class="col-xl-3">
-                                <label>Suffix</label>
-                                <div class="form-control">
-                                    <input  type="text" id="suffix" name="suffix" [(ngModel)]="data.employeeData['suffix']">
-                                </div>
-                        </div>
-                        </div>
-                        <div class="row  p-5">
-                            <div class="col-xl-3">
-                                <label>Email</label>
-                                <div class="form-control">
-                                    <input  type="text" id="email" name="email" [(ngModel)]="data.employeeData['email']">
-                                </div>
-                        </div>
-                        <div class="col-xl-3">
-                            <label>Mobile Phone</label>
-                            <div class="form-control">
-                                <input  type="text" id="phone_mobile" name="phone_mobile" [(ngModel)]="data.employeeData['phone_mobile']">
-                            </div>
-                        </div>
-                        <div class="col-xl-3">
-                            <label>Date of Birth (MM/DD/YYYY)</label>
-                            <div class="form-control">
-                                <input  type="text" id="date_of_birth" name="date_of_birth" [(ngModel)]="data.employeeData['date_of_birth']">
-                            </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <label>Social Security Number</label>
-                        <div class="form-control">
-                            <input  type="text" id="social_security_number" name="social_security_number" [(ngModel)]="data.employeeData['social_security_number']">
-                        </div>
-                </div>
-                
-                        </div>
-                <div class="row  p-5">
-                    <div class="col-xl-3">
-                        <label>Gender</label>
-                        <div class="form-control">
-                            <select id="gender" name="gender" [(ngModel)]="data.employeeData['gender']">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Non-binary">Non-binary</option>
-                           </select>
-                        </div>
-                    </div>
-                        <div class="col-xl-3  p-5">
-                    
-                            <button mat-button 
-                            [color]="'danger'"
-                            (click)="deleteForm()">
-                                Delete
-                            </button>
-                            <button mat-button (click)="addEmployee()">
-                                Cancel
-                            </button>
-                            <button
-                                class="px-6 ml-3"
-                                mat-flat-button
-                                [color]="'primary'" (click)="postEmployee()">
-                                Save
-                            </button>
-                   
-                        </div>
-                        </div>
-                    </form>
-                </div>
                 <button  *ngIf="adding=='N'" class="btn btn-primary" (click)="addEmployee()">Add Employee</button>
             </div>
             </div>

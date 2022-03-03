@@ -123,7 +123,9 @@ export class EditClientPlanComponent implements OnInit, OnDestroy {
     {
         return this.formFieldHelpers.join(' ');
     }
-  
+    copyAPA(id: any) {
+      this.data['formData']['APA_CODE']=id;
+    }
     postForm(id2: any) {
       console.log(id2)
         this._dataService.postForm("post-add-client-plan", this.data).subscribe((d:any)=>{
@@ -138,6 +140,7 @@ export class EditClientPlanComponent implements OnInit, OnDestroy {
 
       postDelete(id2: any) {
         console.log(id2)
+        if (confirm("Are you sure you want to delete this plan?")) {
           this._dataService.postForm("post-delete-client-plan", this.data).subscribe((d:any)=>{
             if (d.error_code=="0") {
   //            this._router.navigate(['/company-dashboard',this.data.id2])
@@ -147,6 +150,6 @@ export class EditClientPlanComponent implements OnInit, OnDestroy {
             }
           });
         }
-
+      }
         
 }
