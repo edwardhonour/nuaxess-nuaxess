@@ -79,7 +79,7 @@
         <div class="flex-1 min-w-0">
             <div class="mt-2">
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    Invoice List - {{ data.month_id }}
+                    Vendor List
                 </h2>
             </div>
         </div>
@@ -89,7 +89,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1 style="font-size: 24px; font-weight: bold;">&nbsp; </h1>
-                <button class="btn" style="margin-right:20px" *ngFor="let m of data.monthlist" [routerLink]="['/invoice-list',m.month_id]">{{ m.month_id }}</button>
+                <button class="btn btn-primary" style="margin-right:20px" [routerLink]="['/edit-vendor']">Add Vendor</button>
             </div>
             <div class="col-md-12">
                 <div class="table-responsive">
@@ -99,38 +99,31 @@
                     <table class="table table-condensed">
                         <thead>
                             <tr>
-                                <th>Number</th>
-                                <th>Company Name<br>Organization</th>
-                                <th>Census</th>
-                                <th>Additions</th>
-                                <th>Terminations</th>
-                                <th>Adjustments</th>
-                                <th>Grand Total</th>
-                                <th>Payment Date</th>
-                                <th>EFT</th>
-                                <th>Status</th>
+                                <th>ID</th>
+                                <th>Company Name</th>
+                                <th>Contact Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Vendor Type</th>
+                                <th>ACH Bank</th>
                                 <th></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let m of data.list | filter: term | paginate: { currentPage: p , itemsPerPage: 25}" [ngStyle]="{'background-color':m.invoice_number === 'Not Invoiced' ? '#FCE5EB' : '' }">
-                                <td>{{ m.invoice_number }}</td>
-                                <td>{{ m.company_name }}<br>{{ m.org_name }}</td>
-                                <td>{{ m.count }}</td>
-                                <td>{{ m.additions }}</td>
-                                <td>{{ m.terminations }}</td>
-                                <td>{{ m.adjustments }}</td>
-                                <td>{{ m.grand_total }}</td>
-                                <td>{{ m.payment_dt }}</td>
-                                <td>{{ m.eft }}</td>
-                                <td>{{ m.status }}</td>
+                                <td>{{ m.id }}</td>
+                                <td>{{ m.vendor_name }}</td>
+                                <td>{{ m.contact_full_name }}</td>
+                                <td>{{ m.email }}</td>
+                                <td>{{ m.phone_mobile }}</td>
+                                <td>{{ m.vendor_type }}</td>
+                                <td>{{ m.ach_bank_name }}</td>
                                 <td>
-                                    <button *ngIf="m.invoice_number!='Not Invoiced'" [routerLink]="['/company-invoice',m.id]" class="btn btn-primary">View</button>
-                                    <button *ngIf="m.invoice_number=='Not Invoiced'" [routerLink]="['/company-invoice',m.id]" class="btn btn-danger">Process</button>
+                                    <button [routerLink]="['/edit-vendor',m.id]" class="btn btn-primary">Edit</button>
                                 </td>
                                 <td>
-                                    <button [routerLink]="['/company-dashboard',m.id,data.month_id]" class="btn btn-primary">Dashboard</button>
+                                    <button [routerLink]="['/vendor-dashboard',m.id]" class="btn btn-primary">Dashboard</button>
                                 </td>
                             </tr>
                         </tbody>

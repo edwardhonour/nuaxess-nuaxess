@@ -128,30 +128,38 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Employee ID</th>
-                                <th>Name</th>
-                                <th>Company</th>
+                                <th>Action</th>
+                                <th>Employee Code</th>
+                                <th>Dependent Code</th>
+                                <th>Member ID</th>
+                                <th>Client ID</th>
+                                <th>Company Name</th>
+                                <th>Last Name</th>
+                                <th>First Name</th>
                                 <th>DOB</th>
-                                <th>SSN</th>
+                                <th>Gender</th>
                                 <th>Eff Dt</th>
+                                <th>Term Dt</th>
                                 <th>Plan</th>
-                                <th>Coverage Level</th>
-                                <th>Price</th>
-                                <th></th>
+                                <th>Level</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let m of data.list | filter: term | paginate: { currentPage: p , itemsPerPage: 25}">
-                                <td>{{ m.employee_code }}<br>{{ m.dependent_code }}</td>
-                                <td>{{ m.last_name }}, {{ m.first_name }} {{ m.middle_initial }}</td>
-                                <td>{{ m.company_name }} ({{ m.client_id }})</td>
+                                <td>{{ m.action }}</td>
+                                <td>{{ m.employee_code }}</td>
+                                <td>{{ m.dependent_code }}</td>
+                                <td>{{ m.apa_member_id }}</td>
+                                <td>{{ m.apa_client_id }}</td>
+                                <td>{{ m.company_name }}</td>
+                                <td>{{ m.last_name }}</td>
+                                <td>{{ m.first_name }}</td>
                                 <td>{{ m.dob }}</td>
-                                <td>{{ m.ssn }}</td>
+                                <td>{{ m.gender }}</td>
                                 <td>{{ m.eff_dt }}</td>
-                                <td>{{ m.client_plan }}</td>
+                                <td>{{ m.term_dt }}</td>
+                                <td>{{ m.apa_plan }}</td>
                                 <td>{{ m.coverage_level }}</td>
-                                <td>{{ m.coverage_price }}</td>
-                                <td><button [routerLink]="['/census-dashboard',m.id,'additions']" class="btn btn-primary">View</button></td>
                             </tr>
                         </tbody>
                     </table>

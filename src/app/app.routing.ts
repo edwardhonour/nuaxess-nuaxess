@@ -72,6 +72,11 @@ import { AddClientPlanComponent } from './nuaxess/add-client-plan/add-client-pla
 import { EditClientPlanComponent } from './nuaxess/edit-client-plan/edit-client-plan.component';
 import { DuplicateEmployeesComponent } from './nuaxess/duplicate-employees/duplicate-employees.component';
 import { CompanyInvoiceComponent } from './nuaxess/company-invoice/company-invoice.component';
+import { VendorListComponent } from './nuaxess/vendor-list/vendor-list.component';
+import { EditVendorComponent } from './nuaxess/edit-vendor/edit-vendor.component';
+import { VendorDashboardComponent } from './nuaxess/vendor-dashboard/vendor-dashboard.component';
+import { CommissionDashboardComponent } from './nuaxess/commission-dashboard/commission-dashboard.component';
+import { CommissionListComponent } from './nuaxess/commission-list/commission-list.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -208,6 +213,12 @@ export const appRoutes: Route[] = [
             {path: 'invoice-list/:id/:id2', component: InvoiceListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'company-invoice/:id/:id2', component: CompanyInvoiceComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'duplicate-employees', component: DuplicateEmployeesComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'vendor-list', component: VendorListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'edit-vendor', component: EditVendorComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'edit-vendor/:id', component: EditVendorComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'vendor-dashboard/:id', component: VendorDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },  
+            {path: 'commission-dashboard/:id', component: CommissionDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },  
+            {path: 'commission-list', component: CommissionListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },       
             {path: 'enroll', component: UserEnrollComponent, resolve: { data: EnrollResolver }, }
         ]
     },

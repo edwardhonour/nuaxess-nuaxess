@@ -125,6 +125,11 @@ import { EditClientPlanComponent } from './nuaxess/edit-client-plan/edit-client-
 import { MissedEmployeesComponent } from './nuaxess/missed-employees/missed-employees.component';
 import { DuplicateEmployeesComponent } from './nuaxess/duplicate-employees/duplicate-employees.component';
 import { CompanyInvoiceComponent } from './nuaxess/company-invoice/company-invoice.component';
+import { VendorListComponent } from './nuaxess/vendor-list/vendor-list.component';
+import { EditVendorComponent } from './nuaxess/edit-vendor/edit-vendor.component';
+import { VendorDashboardComponent } from './nuaxess/vendor-dashboard/vendor-dashboard.component';
+import { CommissionListComponent } from './nuaxess/commission-list/commission-list.component';
+import { CommissionDashboardComponent } from './nuaxess/commission-dashboard/commission-dashboard.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -208,7 +213,12 @@ const routerConfig: ExtraOptions = {
         EditClientPlanComponent,
         MissedEmployeesComponent,
         DuplicateEmployeesComponent,
-        CompanyInvoiceComponent
+        CompanyInvoiceComponent,
+        VendorListComponent,
+        EditVendorComponent,
+        VendorDashboardComponent,
+        CommissionListComponent,
+        CommissionDashboardComponent
     ],
     imports     : [
         BrowserModule,
