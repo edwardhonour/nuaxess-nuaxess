@@ -79,6 +79,25 @@ export class DataService {
 
   }
 
+  exportInvoice(id: any) {
+    const data = {
+      "q" : "login",
+      "id": id,
+      "id2": "2022-04"
+    }
+  console.log(data)
+  this.t= this.http.post("https://myna-api/api/invoice_export.php", data)
+  return this.t;
+
+  }
+
+
+  postTemplate(file_data:any) {
+    console.log(file_data);
+    this.t=this.http.post('https://myna-docs.com/api/upload_template.php',file_data);
+    return this.t;
+  }
+
   getVerticalMenu() {
     this.getLocalStorage()
     const data = {

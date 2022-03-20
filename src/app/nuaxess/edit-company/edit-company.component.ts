@@ -125,6 +125,7 @@ export class EditCompanyComponent implements OnInit {
     postForm() {
         this._dataService.postForm("post-edit-company", this.data).subscribe((data:any)=>{
           if (data.error_code=="0") {
+            location.reload();
  //           this._router.navigate(['/company-dashboard',data.id])
               this._router.navigate(['/company-list'])
           } else {     

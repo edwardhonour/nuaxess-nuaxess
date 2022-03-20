@@ -126,6 +126,7 @@ export class AddClientPlanComponent implements OnInit, OnDestroy {
     postForm() {
         this._dataService.postForm("post-add-client-plan", this.data).subscribe((data:any)=>{
           if (data.error_code=="0") {
+            this._router.navigate(['/company-dashboard',this.data.formData['company_id']])
             this.data['formData']['plan_code']="";
             this.data['formData']['APA_CODE']="";
             this.data['formData']['ee_price']="";

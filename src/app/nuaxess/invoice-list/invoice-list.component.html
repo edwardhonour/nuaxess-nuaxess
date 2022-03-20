@@ -101,14 +101,13 @@
                             <tr>
                                 <th>Number</th>
                                 <th>Company Name<br>Organization</th>
-                                <th>Census</th>
-                                <th>Additions</th>
-                                <th>Terminations</th>
-                                <th>Adjustments</th>
+                                <th>Census Count</th>
                                 <th>Grand Total</th>
-                                <th>Payment Date</th>
-                                <th>EFT</th>
-                                <th>Status</th>
+                                <th>Invite Total</th>
+                                <th>MyNa Only</th>
+                                <th>ready</th>
+                                <th>sent</th>
+                                <th>Recipients</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -117,20 +116,19 @@
                             <tr *ngFor="let m of data.list | filter: term | paginate: { currentPage: p , itemsPerPage: 25}" [ngStyle]="{'background-color':m.invoice_number === 'Not Invoiced' ? '#FCE5EB' : '' }">
                                 <td>{{ m.invoice_number }}</td>
                                 <td>{{ m.company_name }}<br>{{ m.org_name }}</td>
-                                <td>{{ m.count }}</td>
-                                <td>{{ m.additions }}</td>
-                                <td>{{ m.terminations }}</td>
-                                <td>{{ m.adjustments }}</td>
+                                <td>{{ m.medical_count }}</td>
                                 <td>{{ m.grand_total }}</td>
-                                <td>{{ m.payment_dt }}</td>
-                                <td>{{ m.eft }}</td>
-                                <td>{{ m.status }}</td>
+                                <td>{{ m.invite_total_float }}</td>
+                                <td><a (click)="flipMyNa(m);">({{ m.myna_only }})</a></td>
+                                <td><a (click)="flipReady(m);">({{ m.ready_to_send }})</a></td>
+                                <td>{{ m.email_sent }}</td>                                
+                                <td>{{ m.email }}<br>{{ m.email2 }}<br>{{ m.email3 }}<br>{{ m.email4 }}<br>{{ m.email5 }}</td>
                                 <td>
-                                    <button *ngIf="m.invoice_number!='Not Invoiced'" [routerLink]="['/company-invoice',m.id]" class="btn btn-primary">View</button>
-                                    <button *ngIf="m.invoice_number=='Not Invoiced'" [routerLink]="['/company-invoice',m.id]" class="btn btn-danger">Process</button>
+                                    <button (click)="showInvoice(m.company_id);" class="btn btn-primary">Show</button>
+                                    <button style="margin-top: 20px;" (click)="sendInvoice(m);" class="btn btn-danger">Send</button>
                                 </td>
                                 <td>
-                                    <button [routerLink]="['/company-dashboard',m.id,data.month_id]" class="btn btn-primary">Dashboard</button>
+                                    <button [routerLink]="['/company-dashboard',m.company_id]" class="btn btn-primary">Dashboard</button>
                                 </td>
                             </tr>
                         </tbody>

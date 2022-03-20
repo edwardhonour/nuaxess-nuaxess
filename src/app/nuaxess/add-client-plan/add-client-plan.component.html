@@ -170,9 +170,25 @@
                             matSuffix
                             [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
                     </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Type</mat-label>
+                        <mat-select  id="plan_type" name="plan_type" [(ngModel)]="data.formData['plan_type']">
+                            <mat-option value="*MEDICAL*">Medical</mat-option>
+                            <mat-option value="*DENTAL*">Dental</mat-option>
+                            <mat-option value="*VISION*">Vision</mat-option>
+                            <mat-option value="*LIFE*">Life</mat-option>
+                        </mat-select>
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                    </mat-form-field>
                 </div>
                 <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
-                    <button mat-button>
+                    <button                     [routerLink]="['/company-dashboard',data.formData['company_id']]"  mat-button>
+
                         Cancel
                     </button>
                     <button

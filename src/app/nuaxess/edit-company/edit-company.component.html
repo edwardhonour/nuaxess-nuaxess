@@ -105,7 +105,7 @@
                         <mat-label>Company Name</mat-label>
                         <input matInput id="company_name" name="company_name" [(ngModel)]="data.formData['company_name']">
                     </mat-form-field>
-                    <div *ngIf="data.user['role']=='sadmin'||data.formData['role']=='user'" class="flex flex-col gt-xs:flex-row">
+                    <div class="flex flex-col gt-xs:flex-row">
                         <mat-form-field
                             [ngClass]="formFieldHelpers"
                             class="flex-auto gt-xs:pr-3">
@@ -143,6 +143,18 @@
                             <mat-option value="51-100">51-100</mat-option>
                             <mat-option value="Over 100">Over 100</mat-option>
                         </mat-select>
+                    </mat-form-field>
+                    <mat-form-field
+                    [ngClass]="formFieldHelpers"
+                    class="flex-auto gt-xs:pr-3">
+                    <mat-label>Broker Name</mat-label>
+                    <input matInput id="broker_name" name="broker_name" [(ngModel)]="data.formData['broker_name']">
+                    </mat-form-field>
+                    <mat-form-field
+                    [ngClass]="formFieldHelpers"
+                    class="flex-auto gt-xs:pr-3">
+                    <mat-label>Broker Email</mat-label>
+                    <input matInput id="broker_email" name="broker_email" [(ngModel)]="data.formData['broker_email']">
                     </mat-form-field>
                    <mat-form-field
                         [ngClass]="formFieldHelpers"
@@ -259,6 +271,24 @@
                     <mat-form-field
                         [ngClass]="formFieldHelpers"
                         class="flex-auto gt-xs:pr-3">
+                        <mat-label>Ready to Send</mat-label>
+                        <mat-select  id="ready_to_send" name="ready_to_send" [(ngModel)]="data.formData['ready_to_send']">
+                            <mat-option value="Y">Yes</mat-option>
+                            <mat-option value="N">No</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
+                        <mat-label>Only MyNuaxess</mat-label>
+                        <mat-select  id="only_my_nuaxess" name="ready_to_send" [(ngModel)]="data.formData['ready_to_send']">
+                            <mat-option value="Y">Yes</mat-option>
+                            <mat-option value="N">No</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pr-3">
                         <mat-label>Invoice Paid By</mat-label>
                         <mat-select  id="invoice_paid_by" name="invoice_paid_by" [(ngModel)]="data.formData['invoice_paid_by']">
                             <mat-option value="Company">Company</mat-option>
@@ -268,11 +298,67 @@
                     <mat-form-field
                     [ngClass]="formFieldHelpers"
                     class="flex-auto">
-                    <mat-label>Invoice Contact Name</mat-label>
+                    <mat-label>Billing Contact Name</mat-label>
                     <input
                         matInput
-                        id="invoice_contact_name" name="invoice_contact_name" [(ngModel)]="data.formData['invoice_contact_name']">
+                        id="billing_contact_name" name="billing_contact_name" [(ngModel)]="data.formData['billing_contact_name']">
                 </mat-form-field>
+                <mat-form-field
+                [ngClass]="formFieldHelpers"
+                class="flex-auto">
+                <mat-label>Billing Contact Phone</mat-label>
+                <input
+                    matInput
+                    id="billing_contact_phone" name="billing_contact_phone" [(ngModel)]="data.formData['billing_contact_phone']">
+                </mat-form-field>
+                <mat-form-field
+                [ngClass]="formFieldHelpers"
+                class="flex-auto">
+                <mat-label>Billing Contact Email</mat-label>
+                <input
+                    matInput
+                    id="billing_contact_email" name="billing_contact_email" [(ngModel)]="data.formData['billing_contact_email']">
+                </mat-form-field>
+                <mat-form-field
+                [ngClass]="formFieldHelpers"
+                class="flex-auto">
+                <mat-label>Billing Contact Email (2)</mat-label>
+                <input
+                    matInput
+                    id="billing_contact_email2" name="billing_contact_email2" [(ngModel)]="data.formData['billing_contact_email2']">
+                </mat-form-field>
+                <mat-form-field
+                [ngClass]="formFieldHelpers"
+                class="flex-auto">
+                <mat-label>Billing Contact Email (3)</mat-label>
+                <input
+                    matInput
+                    id="billing_contact_email3" name="billing_contact_email3" [(ngModel)]="data.formData['billing_contact_email3']">
+                </mat-form-field>
+                <mat-form-field
+                [ngClass]="formFieldHelpers"
+                class="flex-auto">
+                <mat-label>Billing Contact Email (4)</mat-label>
+                <input
+                    matInput
+                    id="billing_contact_email4" name="billing_contact_email4" [(ngModel)]="data.formData['billing_contact_email4']">
+                </mat-form-field>
+                <mat-form-field
+                [ngClass]="formFieldHelpers"
+                class="flex-auto">
+                <mat-label>Billing Contact Email (5)</mat-label>
+                <input
+                    matInput
+                    id="billing_contact_email5" name="billing_contact_email5" [(ngModel)]="data.formData['billing_contact_email5']">
+                </mat-form-field>
+                <mat-form-field
+                [ngClass]="formFieldHelpers"
+                class="flex-auto">
+                <mat-label>Billing Company Name</mat-label>
+                <input
+                    matInput
+                    id="billing_company_name" name="billing_company_name" [(ngModel)]="data.formData['billing_company_name']">
+            </mat-form-field>
                 <mat-form-field
                 [ngClass]="formFieldHelpers"
                 class="flex-auto">
@@ -282,6 +368,15 @@
                     #postalCode
                     id="invoice_mailing_address" name="invoice_mailing_address" [(ngModel)]="data.formData['invoice_mailing_address']">
             </mat-form-field>
+            <mat-form-field
+            [ngClass]="formFieldHelpers"
+            class="flex-auto">
+            <mat-label>Suite</mat-label>
+            <input
+                matInput
+                #postalCode
+                id="invoice_suite" name="invoice_suite" [(ngModel)]="data.formData['invoice_suite']">
+        </mat-form-field>
             <mat-form-field
             [ngClass]="formFieldHelpers"
             class="flex-auto">
@@ -306,22 +401,6 @@
     <input
         matInput
         id="invoice_zip" name="invoice_zip" [(ngModel)]="data.formData['invoice_zip']">
-</mat-form-field>
-<mat-form-field
-[ngClass]="formFieldHelpers"
-class="flex-auto">
-<mat-label>Invoice Email</mat-label>
-<input
-    matInput
-    id="invoice_email" name="invoice_email" [(ngModel)]="data.formData['invoice_email']">
-</mat-form-field>
-<mat-form-field
-[ngClass]="formFieldHelpers"
-class="flex-auto">
-<mat-label>Invoice Contact Phone</mat-label>
-<input
-    matInput
-    id="invoice_contact_phone" name="invoice_contact_phone" [(ngModel)]="data.formData['invoice_contact_phone']">
 </mat-form-field>
 <mat-form-field
 [ngClass]="formFieldHelpers"
@@ -377,8 +456,8 @@ class="flex-auto">
             </div>
             </form>
         </div>
-        <div class="col-xl-3">
-            <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
+        <div  class="col-xl-3">
+            <form *ngIf="data.user['priv_view_commissions']=='Y'" class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
                <div class="flex flex-col gt-md:flex-row">
                     <h2 style="font-size: 20px; margin-bottom: 20px;"><b>Override Commission</b></h2>
                     <mat-form-field
@@ -504,7 +583,9 @@ class="flex-auto">
 matInput
 id="broker_vendor_pct_start" name="broker_vendor_pct_start" [(ngModel)]="data.formData['broker_vendor_pct_start']">
 </mat-form-field>
-
+</div>
+</form>
+<form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
                 <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
                     <button [routerLink]="['/company-dashboard',data['formData'].id]" mat-button>
                         Cancel
@@ -516,7 +597,7 @@ id="broker_vendor_pct_start" name="broker_vendor_pct_start" [(ngModel)]="data.fo
                         Save
                     </button>
                 </div>
-                </div>
+        
             
             </form>
         </div>

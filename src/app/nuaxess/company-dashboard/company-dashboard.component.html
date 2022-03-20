@@ -107,8 +107,7 @@
         </div>
         <div class="col-xl-7">
             <div style="margin-top: 10px !important;">
-                <button style="margin-bottom: 20px" *ngIf="data.quotes.length==0&&data.user.org_id!='17'"  class="btn btn-primary" [routerLink]="['/add-quote-request',data.id]">Start New Quote</button>
-                <button *ngIf="data.user.role=='sadmin'&&data.status!='prospect'&&data.user.org_id!='17'" style="margin-left:20px; margin-bottom: 20px;" [routerLink]="['/add-invoice',data.id]" class="btn btn-primary">Create Invoice</button>
+<!--                <button style="margin-bottom: 20px" *ngIf="data.quotes.length==0&&data.user.org_id!='17'"  class="btn btn-primary" [routerLink]="['/add-quote-request',data.id]">Start New Quote</button> -->
             </div>
         </div>
     </div>
@@ -118,8 +117,12 @@
         <div class="row">
               <div class="col-md-12 col-xl-4">
                    <div class="card card-body">  
-                      <h2 style="font-size: 24px;"><b>{{ data.company_name }}</b></h2>          
-<div class="table-responsive">
+                      <h2 style="font-size: 20px;"><b>{{ data.company_name }}</b>
+                        <button *ngIf="comp=='N'" class="btn" (click)="showComp()">Show</button>
+                        <button *ngIf="comp=='Y'" class="btn" (click)="showComp()">Hide</button>
+                        <button [routerLink]="['/edit-company',data.id]" class="btn btn">Edit</button>
+                    </h2>          
+<div class="table-responsive" *ngIf="comp=='Y'">
     <table class="table table-responsive">
     <thead>
         <tr>
@@ -172,10 +175,10 @@
             <th>Status:</th>
             <td>{{ data.status }}</td>
         </tr>
-<!--        <tr>
-            <th>Description:</th>
-            <td>{{ data.dsc }}</td>
-        </tr> -->
+       <tr>
+            <th></th>
+            <td><button class="btn btn-primary">Edit</button></td>
+        </tr> 
     </tbody>
 </table>
 </div>
@@ -184,8 +187,13 @@
         <div class="col-md-12 col-xl-4">
         <div class="card card-body">            
             <div class="row">
-                <h2 style="font-size: 24px;"><b>Documents {{ data.formData3['company_id'] }}</b></h2>
-            <div class="table table-responsive" *ngFor="let m of data.docs">
+                <h2 style="font-size: 24px;"><b>Documents </b>
+                    <button *ngIf="comp=='N'" class="btn" (click)="showDocs()">Show ({{ data.docs.length }})</button>
+                    <button *ngIf="comp=='Y'" class="btn" (click)="showDocs()">Hide</button>             
+                </h2>
+                <div *ngIf="docs=='Y'">
+
+            <div class="table table-responsive" *ngFor="let m of data.docs" >
                 <thead>
                     <tr>
                         <th>Type</th>
@@ -206,6 +214,7 @@
                         <th><button class="btn btn-warning" (click)="showDoc(m.key)">View</button></th>
                     </tr> 
                 </tbody>
+            </div>
             </div>
             </div>
             <div *ngIf="uploading=='N'" class="row">
@@ -253,7 +262,7 @@
                 </div>
         
         </div>
-        <div *ngIf="data.user.org_id!='17'" class="card card-body" style="margin-top:20px;">            
+        <div *ngIf="data.user.org_id=='1777'" class="card card-body" style="margin-top:20px;">            
             <div class="row">
                 <h2 style="font-size: 24px;"><b>Active Plans 
                     <button *ngIf="active=='N'" class="btn" (click)="showActive()">Show</button> 
@@ -279,7 +288,7 @@
             </div>
             </div>        
         </div>
-        <div *ngIf="data.user.org_id!='17'" class="card card-body" style="margin-top:20px;">            
+        <div *ngIf="data.user.org_id=='17777'" class="card card-body" style="margin-top:20px;">            
             <div class="row">
                 <h2 style="font-size: 24px;"><b>Inactive Plans 
                     <button *ngIf="inactive=='N'" class="btn" (click)="showInactive()">Show</button> <button *ngIf="inactive=='Y'" class="btn" (click)="showInactive()">Hide</button></b>
@@ -352,6 +361,7 @@
             </div>
             <div class="col-xl-3">
                 <button [routerLink]="['/company-invoice',data.id, data.month_id]" class="btn btn-primary" style="margin-left: 20px;">Invoice</button>
+                <button (click)="printPDF();" class="btn" style="margin-left: 20px;">PDF</button>
             </div>
         </div>
         <div *ngIf="history=='Y'" class="table-responsive">
@@ -448,7 +458,7 @@
             </form>
         </div>
     </div>
-    <div class="card card-body"  *ngIf="data.org_id!='17'">
+    <div class="card card-body">
         <h2 style="font-size: 24px;"><b>Client Plans</b>
         <button class="btn" (click)="showPlans()">Show ({{ data.company_plans.length }})</button> 
         <button *ngIf="plans=='Y'" class="btn" (click)="showPlans()">Hide</button>
@@ -513,6 +523,7 @@
         </tbody>
         </table>
         <button [routerLink]="['/add-client-plan',data.id]" class="btn btn-primary">ADD </button>  
+        <button style="margin-left:20px;" (click)="addDental()" class="btn btn-danger">Add Dental/Vision </button>  
     </div> <!-- TABLE RESPONSIVE -->
     </div>    
     <div *ngIf="data.status=='prospect'" class="card card-body">
@@ -622,124 +633,251 @@
      <div class="col-md-12 col-xl-10">
         <div class="card card-body" style="margin-top:20px;">
             <div>
-                <h2 style="font-size: 24px;">Enroll Employee</h2>
-                <form>
+                <h2 style="font-size: 24px;"><b>Enroll Employee</b></h2>
+                <form class="flex flex-col pb-4 rounded-2xl shadow overflow-hidden" autocomplete="off" style="background-color: aliceblue; !important">
                     <div class="row p-5">
                         <div class="col-xl-3">
-                        <label>Employee or Dependent</label>
-                        <div class="form-control">
-                            <select id="dependent" name="dependent" [(ngModel)]="data.employeeData['dependent']">
-                                <option value="N">Insured</option>
-                                <option value="Y">Dependent</option>
-                           </select>
-                        </div>
+                            <mat-form-field
+                            [ngClass]="formFieldHelpers"
+                            class="flex-auto gt-xs:pr-3" style="width:100%">
+                            <mat-label>Employee or Dependent</mat-label>
+                            <mat-select  id="dependent" name="dependent" [(ngModel)]="data.employeeData['dependent']">
+                                <mat-option value="N">Employee</mat-option>
+                                <mat-option value="Y">Dependent</mat-option>
+                            </mat-select>
+                            <mat-icon
+                                class="icon-size-5"
+                                matPrefix
+                                [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                        </mat-form-field>
                         </div>
                         <div *ngIf="data.employeeData['dependent']=='Y'" class="col-xl-3">
-                            <label>Insured</label>
-                            <div class="form-control">
-                                <select id="employee_id" name="employee_id" [(ngModel)]="data.employeeData['employee_id']">
-                                    <option *ngFor="let m of data.employees" value="{{ m.id }}">{{ m.last_name }}, {{ m.first_name }}</option>
-                               </select>
-                            </div>
+                            <mat-form-field
+                            [ngClass]="formFieldHelpers"
+                            class="flex-auto" style="width:100%">
+                            <mat-label>Insured</mat-label>
+                            <mat-select  id="employee_id" name="employee_id" [(ngModel)]="data.employeeData['employee_id']">
+                                <mat-option *ngFor="let m of data.employees" value="{{ m.id }}">{{ m.last_name }}, {{ m.first_name }}</mat-option>
+                            </mat-select>
+                            <mat-icon
+                                class="icon-size-5"
+                                matPrefix
+                                [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                        </mat-form-field>
                         </div>
                     </div>
                     <div class="row p-5">
                         <div class="col-xl-3">
-                        <label>First Name</label>
-                        <div class="form-control">
-                            <input  type="text" id="first_name" name="first_name" [(ngModel)]="data.employeeData['first_name']">
-                        </div>
-                        </div>
-                        <div class="col-xl-3">
-                            <label>Middle Name</label>
-                            <div class="form-control">
-                                <input  type="text" id="middle_name" name="middle_name" [(ngModel)]="data.employeeData['middle_name']">
-                            </div>
+                            <mat-form-field
+                            [ngClass]="formFieldHelpers"
+                            class="flex-auto gt-xs:pl-3" style="width:100%">
+                            <mat-label>First Name</mat-label>
+                            <input matInput id="first_name" name="first_name" [(ngModel)]="data.employeeData['first_name']"  autocomplete="new-password">
+                        </mat-form-field>
                         </div>
                         <div class="col-xl-3">
-                                <label>Last Name</label>
-                                <div class="form-control">
-                                    <input  type="text" id="last_name" name="last_name" [(ngModel)]="data.employeeData['last_name']">
-                                </div>
+                            <mat-form-field
+                            [ngClass]="formFieldHelpers"
+                            class="flex-auto gt-xs:pl-3" style="width:100%">
+                            <mat-label>Middle Name</mat-label>
+                            <input matInput id="mmiddle_name" name="mmiddle_name" [(ngModel)]="data.employeeData['middle_name']"  autocomplete="new-password">
+                        </mat-form-field>
                         </div>
                         <div class="col-xl-3">
-                            <label>Suffix</label>
-                            <div class="form-control">
-                                <input  type="text" id="suffix" name="suffix" [(ngModel)]="data.employeeData['suffix']">
-                            </div>
+                            <mat-form-field
+                            [ngClass]="formFieldHelpers"
+                            class="flex-auto gt-xs:pl-3" style="width:100%">
+                            <mat-label>Last Name</mat-label>
+                            <input matInput id="last_name" name="last_name" [(ngModel)]="data.employeeData['last_name']"  autocomplete="new-password">
+                        </mat-form-field>
+                        </div>
+                        <div class="col-xl-3">
+                            <mat-form-field
+                            [ngClass]="formFieldHelpers"
+                            class="flex-auto gt-xs:pl-3" style="width:100%">
+                            <mat-label>Suffix</mat-label>
+                            <input matInput id="suffix" name="suffix" [(ngModel)]="data.employeeData['suffix']"  autocomplete="new-password">
+                        </mat-form-field>
                     </div>
                     </div>
                     
                     <div class="row  p-5">
         
                         <div class="col-xl-3">
-                            <label>Email</label>
-                            <div class="form-control">
-                                <input  type="text" id="email" name="email" [(ngModel)]="data.employeeData['email']">
-                            </div>
+                            <mat-form-field
+                            [ngClass]="formFieldHelpers"
+                            class="flex-auto gt-xs:pl-3" style="width:100%">
+                            <mat-label>Email</mat-label>
+                            <input matInput id="memail" name="memail" [(ngModel)]="data.employeeData['email']"  autocomplete="new-password">
+                        </mat-form-field>
                     </div>
                     <div class="col-xl-3">
-                        <label>Date of Birth (MM/DD/YYYY)</label>
-                        <div class="form-control">
-                            <input  type="text" id="date_of_birth" name="date_of_birth" [(ngModel)]="data.employeeData['date_of_birth']">
-                        </div>
+                        <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pl-3" style="width:100%">
+                        <mat-label>Date of Birth (MM/DD/YYYY)</mat-label>
+                        <input matInput id="date_of_birth" name="date_of_birth" [(ngModel)]="data.employeeData['date_of_birth']"  autocomplete="new-password">
+                    </mat-form-field>
                 </div>
                 <div class="col-xl-3">
-                    <label>Social Security Number</label>
-                    <div class="form-control">
-                        <input  type="text" id="social_security_number" name="social_security_number" [(ngModel)]="data.employeeData['social_security_number']">
-                    </div>
+                    <mat-form-field
+                    [ngClass]="formFieldHelpers"
+                    class="flex-auto gt-xs:pl-3" style="width:100%">
+                    <mat-label>Social Security Number</mat-label>
+                    <input matInput id="social_security_number" name="social_security_number" [(ngModel)]="data.employeeData['social_security_number']"  autocomplete="new-password">
+                </mat-form-field>
                 </div>
                 <div class="col-xl-3">
-                    <label>Gender</label>
-                    <div class="form-control">
-                        <select id="gender" name="gender" [(ngModel)]="data.employeeData['gender']">
-                            <option value="M">Male</option>
-                            <option value="F">Female</option>
-                       </select>
-                    </div>
+                    <mat-form-field
+                    [ngClass]="formFieldHelpers"
+                    class="flex-auto gt-xs:pr-3">
+                    <mat-label>Gender</mat-label>
+                    <mat-select  id="gender" name="gender" [(ngModel)]="data.employeeData['gender']">
+                        <mat-option value="M">Male</mat-option>
+                        <mat-option value="F">Female</mat-option>
+                    </mat-select>
+                    <mat-icon
+                        class="icon-size-5"
+                        matPrefix
+                        [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                </mat-form-field>
                 </div>
             </div>
             <div class="row  p-5">
                 <div class="col-xl-3">
-                    <label>Effective Date</label>
-                    <div class="form-control">
-                        <select id="eff_dt" name="eff_dt" [(ngModel)]="data.employeeData['eff_dt']">
-                            <option *ngFor="let m of data.eff_dates" value="{{ m.eff_dt }}">{{ m.eff_dt }}</option>
-                       </select>
-                    </div>
+                    <mat-form-field
+                    [ngClass]="formFieldHelpers"
+                    class="flex-auto gt-xs:pr-3"  *ngIf="data.employeeData['dependent']=='N'" style="width:100%">
+                    <mat-label>Effective Date</mat-label>
+                    <mat-select  id="eff_dt" name="eff_dt" [(ngModel)]="data.employeeData['eff_dt']">
+                        <mat-option *ngFor="let m of data.eff_dates" value="{{ m.eff_dt }}">{{ m.eff_dt }}</mat-option>
+                    </mat-select>
+                    <mat-icon
+                        class="icon-size-5"
+                        matPrefix
+                        [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                </mat-form-field>
                 </div>
                 <div class="col-xl-3">
-                    <label>Plan</label>
-                    <div class="form-control">
-                        <select id="plan" name="plan" [(ngModel)]="data.employeeData['plan']">
-                            <option *ngFor="let m of data.company_plans" value="{{ m.plan_code }}">{{ m.plan_code }}</option>
-                       </select>
-                    </div>
+                    <mat-form-field
+                    [ngClass]="formFieldHelpers"
+                    class="flex-auto" style="width:100%"  *ngIf="data.employeeData['dependent']=='N'" >
+                    <mat-label>Medical Plan</mat-label>
+                    <mat-select  id="medical_plan_code" name="medical_plan_code" [(ngModel)]="data.employeeData['medical_plan_code']">
+                        <mat-option *ngFor="let m of data.company_plans" value="{{ m.plan_code }}">{{ m.plan_code }}</mat-option>
+                    </mat-select>
+                    <mat-icon
+                        class="icon-size-5"
+                        matPrefix
+                        [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                </mat-form-field>
                 </div>
                 <div class="col-xl-3">
-                    <label>Coverage Level</label>
-                    <div class="form-control">
-                        <select id="coverage_level" name="coverage_level" [(ngModel)]="data.employeeData['coverage_level']">
-                            <option value="EE">Employee Only</option>
-                            <option value="ES">Employee & Spouse</option>
-                            <option value="EC">Employee & Children</option>
-                            <option value="FAM">Family</option>
-                       </select>
-                    </div>
+                    <mat-form-field
+                    [ngClass]="formFieldHelpers"
+                    class="flex-auto" style="width:100%"  *ngIf="data.employeeData['dependent']=='N'" >
+                    <mat-label>Coverage Level</mat-label>
+                    <mat-select  id="medical_coverage_level" name="medical_coverage_level" [(ngModel)]="data.employeeData['medical_coverage_level']">
+                        <mat-option value="EE">Employee Only</mat-option>
+                        <mat-option value="ES">Employee & Spouse</mat-option>
+                        <mat-option value="EC">Employee & Children</mat-option>
+                        <mat-option value="FAM">Family</mat-option>
+                    </mat-select>
+                    <mat-icon
+                        class="icon-size-5"
+                        matPrefix
+                        [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                </mat-form-field>
                 </div>
                     <div class="col-xl-3  p-5">
-                        <button mat-button (click)="addEmployee()">
-                            Cancel
-                        </button>
-                        <button
-                            class="px-6 ml-3"
-                            mat-flat-button
-                            [color]="'primary'" (click)="postEmployee()">
-                            Save
-                        </button>               
+              
                     </div>
                 </div>
+                <div class="row  p-5">
+                    <div class="col-xl-3">
+                    </div>
+                    <div class="col-xl-3">
+                        <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto" style="width:100%"  *ngIf="data.employeeData['dependent']=='N'" >
+                        <mat-label>Dental Plan</mat-label>
+                        <mat-select  id="dental_plan_code" name="dental_plan_code" [(ngModel)]="data.employeeData['dental_plan_code']">
+                            <mat-option value="">No Dental</mat-option>
+                            <mat-option value="GUARDHIGH">Guardian Dental</mat-option>
+                        </mat-select>
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                    </mat-form-field>
+                    </div>
+                    <div class="col-xl-3">
+                        <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto" style="width:100%"  *ngIf="data.employeeData['dependent']=='N'" >
+                        <mat-label>Coverage Level</mat-label>
+                        <mat-select  id="dental_coverage_level" name="dental_coverage_level" [(ngModel)]="data.employeeData['dental_coverage_level']">
+                            <mat-option value="EE">Employee Only</mat-option>
+                            <mat-option value="ES">Employee & Spouse</mat-option>
+                            <mat-option value="EC">Employee & Children</mat-option>
+                            <mat-option value="FAM">Family</mat-option>
+                        </mat-select>
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                    </mat-form-field>
+                    </div>
+                        <div class="col-xl-3  p-5">           
+                        </div>
+                    </div>
+                    <div class="row  p-5">
+                        <div class="col-xl-3">
+                        </div>
+                        <div class="col-xl-3">
+                            <mat-form-field
+                            [ngClass]="formFieldHelpers"
+                            class="flex-auto" style="width:100%"  *ngIf="data.employeeData['dependent']=='N'" >
+                            <mat-label>Vision Plan</mat-label>
+                            <mat-select  id="vision_plan_code" name="vision_plan_code" [(ngModel)]="data.employeeData['vision_plan_code']">
+                                <mat-option value="">No Vision</mat-option>
+                                <mat-option value="VSP">Guardian Vision</mat-option>
+                            </mat-select>
+                            <mat-icon
+                                class="icon-size-5"
+                                matPrefix
+                                [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                        </mat-form-field>
+                        </div>
+                        <div class="col-xl-3">
+                            <mat-form-field
+                            [ngClass]="formFieldHelpers"
+                            class="flex-auto" style="width:100%"  *ngIf="data.employeeData['dependent']=='N'" >
+                            <mat-label>Coverage Level</mat-label>
+                            <mat-select  id="vision_coverage_level" name="vision_coverage_level" [(ngModel)]="data.employeeData['vision_coverage_level']">
+                                <mat-option value="EE">Employee Only</mat-option>
+                                <mat-option value="ES">Employee & Spouse</mat-option>
+                                <mat-option value="EC">Employee & Children</mat-option>
+                                <mat-option value="FAM">Family</mat-option>
+                            </mat-select>
+                            <mat-icon
+                                class="icon-size-5"
+                                matPrefix
+                                [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                        </mat-form-field>
+                        </div>
+                            <div class="col-xl-3  p-5">  
+                                <button mat-button (click)="addEmployee()">
+                                    Cancel
+                                </button>
+                                <button
+                                    class="px-6 ml-3"
+                                    mat-flat-button
+                                    [color]="'primary'" (click)="postEmployee()">
+                                    Save
+                                </button>          
+                            </div>
+                        </div>
                 </form>
             </div>
         </div>
@@ -752,8 +890,9 @@
  <div class="col-md-12 col-xl-10">
     <div class="card card-body" style="margin-top:20px;">
         <div class="table-responsive">
-            <h2 style="font-size: 24px;"><b>Active Members (includes additions)</b>
+            <h2 style="font-size: 24px;"><b>{{ data.month_id }} - Active Members (includes additions)</b>
             <button *ngIf="adding=='N'" (click)="addEmployee()" class="btn btn-primary" style="margin-left: 50px;">Enroll Member</button>
+            <button *ngIf="adding=='N'" (click)="updateCensus()" class="btn btn-danger" style="margin-left: 50px;">Update Monthly Census</button>
             </h2>
         <div class="col-lg-6 py-2">
             Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
@@ -797,7 +936,7 @@
                 </tr>
             </thead>
                     <tbody>
-    <tr *ngFor="let m of data.census | filter: term ">
+    <tr *ngFor="let m of data.census | filter: term" [ngStyle]="{'background-color':m.subject === '' ? '#FFFFFF' : '#FCE5EB' }">
         <td>
             {{ m.employee_code }}<br>{{ m.dependent_code }}
         </td>
@@ -827,18 +966,27 @@
                  <option *ngFor="let n of data.term_dates" value="{{ n.term_dt }}">{{ n.term_dt }}</option>
             </select>
         </td>
-        <td *ngIf="m.term=='N'">
+        <td colspan="3" *ngIf="m.move=='Y'">
+            Note: <input type=text id="bad{{m.id}}" name="bad{{m.id}}" [(ngModel)]="data['badData']['subject']" class="form-control">
+        </td>
+        <td *ngIf="m.term=='N'&&m.move=='N'">
             {{ m.coverage_price }}
         </td>
-        <td *ngIf="m.term=='N'">
-            <button  *ngIf="m.last_name!=''" [routerLink]="['/employee-dashboard',m.employee_id]" class="btn btn-warning">View</button>
+        <td *ngIf="m.term=='N'&&m.move=='N'">
+            <button  *ngIf="m.last_name!=''" [routerLink]="['/employee-dashboard',m.employee_id]" class="btn btn-primary">View</button>
+            <button style="margin-left: 20px;" *ngIf="m.last_name!=''" (click)="editEmployee(m)" class="btn btn-primary">Edit</button>
         </td>
-        <td  *ngIf="m.term=='N'">
+        <td  *ngIf="m.term=='N'&&m.move=='N'">
             <button (click)="showTerm(m)" class="btn btn-danger">Term</button>
+            <button style="margin-left:10px;" (click)="showBad(m)" class="btn">(D)</button>
+            <button style="margin-left:10px;"  (click)="addEmployeeDental(m.employee_id)" class="btn">(MD)</button>
+            <button style="margin-left:10px;"  (click)="addEmployeeVision(m.employee_id)" class="btn">(MV)</button>
         </td>
         <td>
-            <button *ngIf="m.term=='N'" (click)="priceFix(m.id)" class="btn btn-danger">Price Fix</button>
+            <button *ngIf="m.term=='N'&&m.move=='N'" (click)="priceFix(m.id)" class="btn btn-danger">P/F</button>
             <button *ngIf="m.term=='Y'" (click)="postTerm(m.id)" class="btn btn-primary">Save</button>
+            <button *ngIf="m.move=='Y'" (click)="postBad(m.employee_id)" class="btn btn-primary">Save</button>
+            <br>{{ m.subject }}
         </td>
     </tr>
 </tbody>
@@ -905,7 +1053,7 @@
                 </tr>
             </thead>
                     <tbody>
-    <tr *ngFor="let m of data.additions | filter: term ">
+    <tr *ngFor="let m of data.additions | filter: term " [ngStyle]="{'background-color':m.subject === '' ? '#FFFFFF' : '#FCE5EB' }">
         <td>
             {{ m.employee_code }}
         </td>
@@ -933,17 +1081,29 @@
         <td>
             {{ m.eff_dt }}
         </td>
-        <td>
+        <td *ngIf="m.move=='N'">
             {{ m.term_dt }}
         </td>
-        <td>
+        <td *ngIf="m.move=='N'">
             {{ m.coverage_level }}
         </td>
-        <td>
+        <td *ngIf="m.move=='N'">
             {{ m.coverage_price }}
         </td>
+        <td colspan="3" *ngIf="m.move=='Y'">
+            Note: <input type=text id="bad{{m.id}}" name="bad{{m.id}}" [(ngModel)]="data['badData']['subject']" class="form-control">
+        </td>
+        <td  *ngIf="m.move=='N'">
+            <button style="margin-left:10px;"  (click)="showBad(m)" class="btn">(D)</button>
+            <button style="margin-left:10px;"  (click)="addEmployeeDental(m.employee_id)" class="btn">(MD)</button>
+            <button style="margin-left:10px;"  (click)="addEmployeeVision(m.employee_id)" class="btn">(MV)</button>
+        </td>
         <td>
-            <button  *ngIf="m.last_name!=''" [routerLink]="['/employee-dashboard',m.employee_id]" class="btn btn-warning">Dashboard</button>
+            <button *ngIf="m.move=='Y'" (click)="postBad(m.employee_id)" class="btn btn-primary">Save</button>
+            <br>{{ m.subject }}
+        </td>
+        <td>
+            <button  *ngIf="m.last_name!=''&&m.move=='N'" [routerLink]="['/employee-dashboard',m.employee_id]" class="btn btn-warning">Dashboard</button>
         </td>
     </tr>
 </tbody>
@@ -1009,7 +1169,7 @@
                     </th>
                 </tr>
             </thead>
-                    <tbody>
+        <tbody>
     <tr *ngFor="let m of data.terminations | filter: term ">
         <td>
             {{ m.employee_code }}
@@ -1056,11 +1216,7 @@
 </div> <!-- table responsive -->
 </div> <!-- Card body -->
 </div> <!-- Col -->
-
-
 </div>
-
-
 <div class="row">   
     <div class="col-xl-2">
            &nbsp;
@@ -1159,7 +1315,7 @@
                     </tr>
                 </thead>
                         <tbody>
-        <tr *ngFor="let m of data.terms | filter: term ">
+        <tr *ngFor="let m of data.terms | filter: term " [ngStyle]="{'background-color':m.subject === '' ? '#FFFFFF' : '#FCE5EB' }">
             <td>
                 {{ m.id }}
             </td>
@@ -1222,7 +1378,7 @@
                         </tr>
                     </thead>
                             <tbody>
-            <tr *ngFor="let m of data.census | filter: term ">
+            <tr *ngFor="let m of data.census | filter: term " [ngStyle]="{'background-color':m.subject === '' ? '#FFFFFF' : '#FCE5EB' }">
                 <td>
                     {{ m.id }}
                 </td>
@@ -1242,6 +1398,9 @@
                 </td>
                 <td>
                     <button  *ngIf="data.user['role']=='sadmin'" [routerLink]="['/employee-dashboard',m.id]" class="btn btn-warning">Dashboard</button>
+                </td>
+                <td>
+                    <button (click)="postBad(m.id)" class="btn btn-danger">X</button>
                 </td>
             </tr>
         </tbody>
@@ -1276,7 +1435,7 @@
                         </tr>
                     </thead>
                             <tbody>
-            <tr *ngFor="let m of data.terms | filter: term ">
+            <tr *ngFor="let m of data.terms | filter: term " [ngStyle]="{'background-color':m.subject === '' ? '#FFFFFF' : '#FCE5EB' }">
                 <td>
                     {{ m.id }}
                 </td>

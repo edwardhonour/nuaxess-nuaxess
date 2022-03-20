@@ -33,7 +33,7 @@
                 <mat-icon
                     class="icon-size-24"
                     *ngIf="!user.avatar"
-                    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon> 
             </div>
             <div class="flex flex-col items-center justify-center w-full mt-6">
                 <div class="w-full whitespace-nowrap overflow-ellipsis overflow-hidden text-center leading-normal font-medium">
@@ -88,16 +88,23 @@
     <!-- Main -->
     <div class="flex-auto p-6 sm:p-10">
         <div class="max-w-3xl">
-            <div class="prose prose-sm max-w-3xl">
-                <h2>Please fill out form to Edit User</h2>
-            </div>
             <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
                 <div class="flex flex-col gt-xs:flex-row">
                 <mat-form-field
                     [ngClass]="formFieldHelpers"
                     class="flex-auto gt-xs:pl-3">
-                    <mat-label>Full Name</mat-label>
-                    <input matInput id="full_name" name="full_name" [(ngModel)]="data.formData['full_name']">
+                    <mat-label>First Name</mat-label>
+                    <input matInput id="first_name" name="first_name" [(ngModel)]="data.formData['first_name']">
+                    <mat-icon
+                        class="icon-size-5"
+                        matSuffix
+                        [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                </mat-form-field>
+                <mat-form-field
+                    [ngClass]="formFieldHelpers"
+                    class="flex-auto gt-xs:pl-3">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput id="last_name" name="last_name" [(ngModel)]="data.formData['last_name']">
                     <mat-icon
                         class="icon-size-5"
                         matSuffix
@@ -115,23 +122,14 @@
                     </mat-form-field>
                 </div>
                 <div class="flex flex-col gt-xs:flex-row">
-                    <mat-form-field
-                        [ngClass]="formFieldHelpers"
-                        class="flex-auto gt-xs:pr-3">
-                        <mat-label>Mobile Phone</mat-label>
-                        <input matInput id="phone_mobile" name="phone_mobile" [(ngModel)]="data.formData['phone_mobile']">
-                        <mat-icon
-                            class="icon-size-5"
-                            matSuffix
-                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
-                    </mat-form-field>
-                    <mat-form-field
+                    <mat-form-field 
                         [ngClass]="formFieldHelpers"
                         class="flex-auto gt-xs:pr-3">
                         <mat-label>Role</mat-label>
                         <mat-select  id="role" name="role" [(ngModel)]="data.formData['role']">
                             <mat-option value="sadmin">Super Admin</mat-option>
                             <mat-option value="user">NuAxess User</mat-option>
+                            <mat-option value="padmin">PEO Admin</mat-option>
                             <mat-option value="badmin">Organization Admin</mat-option>
                             <mat-option value="broker">Organization User</mat-option>
                             <mat-option value="eadmin">Employer Admin</mat-option>
@@ -143,7 +141,7 @@
                             [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
                     </mat-form-field>
                 </div>
-                <div *ngIf="data.formData['role']=='badmin'||data.formData['role']=='broker'" class="flex flex-col gt-xs:flex-row">
+                <div *ngIf="data.formData['role']=='badmin'||data.formData['role']=='padmin'||data.formData['role']=='broker'" class="flex flex-col gt-xs:flex-row">
                     <mat-form-field
                         [ngClass]="formFieldHelpers"
                         class="flex-auto gt-xs:pr-3">
@@ -175,7 +173,7 @@
                     <span style="color: red;">{{ error }}</span>
                 </div>
                 <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
-                    <button mat-button [routerLink]="['/user-dashboard',data.formData.id]">
+                    <button [routerLink]="['/sadmin']" mat-button>
                         Cancel
                     </button>
                     <button

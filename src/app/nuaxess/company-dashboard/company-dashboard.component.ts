@@ -48,6 +48,10 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     plans:any;
     move: any;
     term: any;
+    bad: any;
+    docs: any;
+    comp: any;
+
     /**
      * Constructor
      */
@@ -76,6 +80,22 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
        this.move='N';
     } else {
       this.move='Y'
+    }
+  }
+
+  showDocs() {
+    if (this.docs=='Y') {
+       this.docs='N';
+    } else {
+      this.docs='Y'
+    }
+  }
+
+  showComp() {
+    if (this.comp=='Y') {
+       this.comp='N';
+    } else {
+      this.comp='Y'
     }
   }
 
@@ -119,6 +139,8 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
       this.move='N';
       this.adjust='N';
       this.editAdjust='N';
+      this.docs='N';
+      this.comp='N';
 
       this._activatedRoute.data.subscribe(({ 
         data, menudata, userdata })=> { 
@@ -238,6 +260,42 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
       }
     }
 
+    editEmployee(m) {
+      if (this.adding=='N') {
+        this.adding='Y';
+        console.log(m);
+        this.data.employeeData['id']=m.id;
+        this.data.employeeData['first_name']=m.first_name;
+        this.data.employeeData['middle_name']=m.middle_name;
+        this.data.employeeData['last_name']=m.last_name;
+        this.data.employeeData['suffix']=m.suffix;
+        this.data.employeeData['email']=m.email;
+        this.data.employeeData['phone_mobile']=m.phone_mobile;
+        this.data.employeeData['social_security_number']=m.ssn;
+        this.data.employeeData['date_of_birth']=m.dob;
+        this.data.employeeData['gender']=m.gender;
+        this.data.employeeData['medical_plan_code']=m.medical_plan_code;
+        this.data.employeeData['medical_coverage_level']=m.medical_coverage_level;
+        this.data.employeeData['eff_dt']=m.eff_dt;
+        this.data.employeeData['dental_plan_code']=m.dental_plan_code;
+        this.data.employeeData['dental_coverage_level']=m.dental_coverage_level;
+        this.data.employeeData['vision_plan_code']=m.vision_plan_code;
+        this.data.employeeData['vision_coverage_level']=m.vision_coverage_level;
+      } else {
+        this.adding='N';
+        this.data.employeeData['id']="";
+        this.data.employeeData['first_name']="";
+        this.data.employeeData['middle_name']="";
+        this.data.employeeData['last_name']="";
+        this.data.employeeData['suffix']="";
+        this.data.employeeData['email']="";
+        this.data.employeeData['phone_mobile']="";
+        this.data.employeeData['social_security_number']="";
+        this.data.employeeData['date_of_birth']="";
+        this.data.employeeData['gender']="";
+      }
+    }
+
     addLevel() {
       if (this.addcont=='N') {
         this.data.formData2['id']="";
@@ -333,6 +391,27 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
         }
       }
 
+      addDental() {
+        window.open(
+          "https://myna-api.com/api/makedental.php?id="+this.data.id, "_blank");
+      }
+  
+      addEmployeeDental(m: any) {
+        window.open(
+          "https://myna-api.com/api/add_employee_vision.php?id="+m, "_blank");
+      }
+
+      addEmployeeVision(m: any) {
+        window.open(
+          "https://myna-api.com/api/add_employee_dental.php?id="+m, "_blank");
+      }
+
+      printPDF() {
+        window.open(
+          "https://myna-api.com/api/pdf1.php?id="+this.data.id, "_blank");
+      }
+
+
       activatePlan(id:any, client_plan: any) {
 
         this.data.formData['id']=id;
@@ -379,6 +458,11 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
         m.term="Y";
     }
 
+    showBad(m: any) {
+      m.move="Y";
+     }
+
+
     postEmployee() {
       let ok='Y';
       if (this.data['employeeData']['first_name']=='' ) {
@@ -391,12 +475,6 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
         ok='N';
       }
       if (this.data['employeeData']['gender']=='' ) {
-        ok='N';
-      }
-      if (this.data['employeeData']['plan']=='' ) {
-        ok='N';
-      }
-      if (this.data['employeeData']['coverage_level']=='' ) {
         ok='N';
       }
       if (this.data['employeeData']['eff_dt']=='' ) {
@@ -480,6 +558,30 @@ postMove(id: any) {
     }
   });
 }
+}
+
+updateCensus() {
+  if (confirm('Are you sure you want to update member census with additions and terminations from last month?')) {
+    this.data['moveData']['term_dt']=this.data.month_id;
+  this._dataService.postForm("post-forward-census", this.data['moveData']).subscribe((data:any)=>{
+    if (data.error_code=="0") {
+      location.reload();
+    } else {     
+//            this.error=data.error_message
+    }
+  });
+}
+}
+
+postBad(id: any) {
+  this.data['badData']['employee_id']=id;
+  this._dataService.postForm("post-census-bad", this.data['badData']).subscribe((data:any)=>{
+    if (data.error_code=="0") {
+      location.reload();
+    } else {     
+//            this.error=data.error_message
+    }
+  });
 }
 
 priceFix(id: any) {

@@ -92,8 +92,69 @@
                 </h2>
             </div>
         </div>
+        <div class="flex-1 min-w-0">
+            <div class="col-xl-12">
+             </div>
+        </div>
+        <div class="flex-1 min-w-0">
+            <div class="col-xl-12">
+             </div>
+        </div>
+        <div class="flex-1 min-w-0">
+            <div class="col-xl-12">
+                <a href="./assets/NuAxess_Company_Template.xlsx"><img style="max-width:40px;" src="./assets/icons/excel.png"><br><b>Download Company Template</b></a>
+            </div>
+        </div>
+        <div class="flex-1 min-w-0">
+            <div class="col-xl-12">
+                <a href="./assets/NuAxess_Enrollment_Template.xlsx"><img style="max-width:40px;" src="./assets/icons/excel.png"><br><b>Download Enrollment Template</b></a>
+            </div>
+        </div>
+        <div class="flex-1 min-w-0">
+            <div class="col-xl-12">
+                <a (click)="showUpload()"><img style="max-width:40px;" src="./assets/icons/upload.png"><br><b>Upload Template</b></a>
+            </div>
+        </div>
     </div>
+    <div *ngIf="uploading=='Y'" class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3">
 
+            </div>
+            <div class="col-xl-4">
+                <div class="card card-body">
+                    <h2 style="font-size: 24px;"><b>Select File to Upload</b></h2>
+                    <div class="row">
+                        <div class="col-xl-4"> &nbsp; </div>            
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4">Template Type</div>
+                        <div class="col-xl-8">
+                        <select class="form-control" [(ngModel)]="doc_title" name="doc_title" id="doc_title">
+                            <option class="form-control" value="COMPANY">Company Template</option>
+                            <option class="form-control" value="QUOTE">Company Template - Quote Data</option>
+                            <option class="form-control" value="ENROLLMENT">Enrollment Template - Enrollment</option>
+                            <option class="form-control" value="ADDS">Enrollment Template - Adds / Terms</option>                
+                        </select> 
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4"> &nbsp; </div>            
+                    </div>
+                    <div class="mc">
+                        <input [formControl]="file" (change)="fileChange(index,$event)" type="file" placeholder="File">
+                        <br>
+                        <button style="margin-top:20px" (click)="showUpload()" mat-raised-button color="default">
+                            Cancel
+                        </button>
+                        <button style="margin-top:20px; margin-left:20px;" (click)="uploadFile()" mat-raised-button color="primary">
+                            Upload
+                        </button>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -119,12 +180,13 @@
                                 <th>Insured Lives</th>
                                 <th>Plan Count</th>
                                 <th>Status</th>
+                                <th>Bad</th>
                                 <th></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let m of data.list | filter: term | paginate: { currentPage: p , itemsPerPage: 25}">
+                            <tr *ngFor="let m of data.list | filter: term | paginate: { currentPage: p , itemsPerPage: 25}" [ngStyle]="{'background-color':m.bad_count === '0' ? '#FFFFFF' : '#FCE5EB' }">
                                 <td>{{ m.id }}</td>
                                 <td>{{ m.company_name }}</td>
                                 <td>{{ m.org_name }}</td>
@@ -133,6 +195,7 @@
                                 <td>{{ m.insured_lives }}</td>
                                 <td>{{ m.plan_count }}</td>
                                 <td>{{ m.status }}</td>
+                                <td>{{ m.bad_count }}</td>
                                 <td><button [routerLink]="['/company-dashboard',m.id]" class="btn btn-primary">View</button></td>
                                 <td><button [routerLink]="['/edit-company',m.id]" class="btn btn-primary">Edit</button></td>
                             </tr>

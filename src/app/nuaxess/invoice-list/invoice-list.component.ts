@@ -8,6 +8,7 @@ import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { DataService } from 'app/data.service';
 import { FormBuilder } from '@angular/forms';
+import { MatYearView } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-invoice-list',
@@ -133,7 +134,11 @@ export class InvoiceListComponent implements OnInit, OnDestroy {
         return this.formFieldHelpers.join(' ');
     }
 
-  
+    exportInvoice(id: any) {
+      window.open(
+        "https://myna-api.com/api/invoice_export.php?id="+id, "_blank");
+    }
+
     postForm() {
         this._dataService.postForm("post-add-org", this.data).subscribe((data:any)=>{
           if (data.error_code=="0") {
@@ -143,5 +148,62 @@ export class InvoiceListComponent implements OnInit, OnDestroy {
           }
         });
       }
+
+      flipMyNa(m: any) {
+        this.data.movedata['id']=m.id;
+        if (m.myna_only=='N') {
+          this.data.movedata['value']='Y';
+        } else {
+          this.data.movedata['value']='N';
+        }
+        this._dataService.postForm("flip-myna", this.data.movedata).subscribe((data:any)=>{
+          if (data.error_code=="0") {
+            if (m.myna_only=='N') {
+              m.myna_only='Y'
+            } else {
+              m.myna_only='N'
+            }   
+          } else {     
+
+          }
+        });
+      }
+
+      flipReady(m: any) {
+        this.data.movedata['id']=m.id;
+        if (m.ready_to_send=='N') {
+          this.data.movedata['value']='Y';
+        } else {
+          this.data.movedata['value']='N';
+        }
+        this._dataService.postForm("flip-ready", this.data.movedata).subscribe((data:any)=>{
+          if (data.error_code=="0") {
+            if (m.ready_to_send=='N') {
+              m.ready_to_send='Y'
+            } else {
+              m.ready_to_send='N'
+            }   
+          } else {     
+
+          }
+        });
+      }
+
+      sendInvoice(m: any) {
+        if (m.ready_to_send=='N') {
+          alert('INVOICE IS NOT READY TO SEND!')
+        } else {
+           if (confirm("Are you SURE you want to email this invoice?")) {
+            window.open(
+              "https://myna-api.com/api/pdf1.php?id="+m.company_id+"&display=E", "_blank");
+           }
+        }
+      }
+
+      showInvoice(id: any) {
+        window.open(
+          "https://myna-api.com/api/pdf1.php?id="+id+"&display=B", "_blank");
+      }
+
 
 }

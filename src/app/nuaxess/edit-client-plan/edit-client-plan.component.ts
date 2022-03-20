@@ -130,8 +130,9 @@ export class EditClientPlanComponent implements OnInit, OnDestroy {
       console.log(id2)
         this._dataService.postForm("post-add-client-plan", this.data).subscribe((d:any)=>{
           if (d.error_code=="0") {
-//            this._router.navigate(['/company-dashboard',this.data.id2])
-            location.href="/#/company-dashboard/"+id2;
+            alert(this.data.formData['company_id'])
+            this._router.navigate(['/company-dashboard',this.data.formData['company_id']])
+//            location.href="/#/company-dashboard/"+id2;
           } else {     
 //            this.error=data.error_message
           }
@@ -139,15 +140,15 @@ export class EditClientPlanComponent implements OnInit, OnDestroy {
       }
 
       postDelete(id2: any) {
-        console.log(id2)
+        //alert(id2)
         if (confirm("Are you sure you want to delete this plan?")) {
           this._dataService.postForm("post-delete-client-plan", this.data).subscribe((d:any)=>{
             if (d.error_code=="0") {
-  //            this._router.navigate(['/company-dashboard',this.data.id2])
-              location.href="/#/company-dashboard/"+id2;
-            } else {     
-  //            this.error=data.error_message
-            }
+              this._router.navigate(['/company-dashboard',this.data.formData['company_id']])
+        //     location.href="/nuaxess/#/company-dashboard/"+id2;
+           } else {     
+    //        this.error=data.error_message
+          }
           });
         }
       }
