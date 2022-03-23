@@ -360,7 +360,6 @@
                     <button *ngIf="history=='Y'" class="btn" (click)="showHistory()">Hide</button></h2>
             </div>
             <div class="col-xl-3">
-                <button [routerLink]="['/company-invoice',data.id, data.month_id]" class="btn btn-primary" style="margin-left: 20px;">Invoice</button>
                 <button (click)="printPDF();" class="btn" style="margin-left: 20px;">PDF</button>
             </div>
         </div>

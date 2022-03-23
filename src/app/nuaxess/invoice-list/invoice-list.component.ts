@@ -195,14 +195,14 @@ export class InvoiceListComponent implements OnInit, OnDestroy {
         } else {
            if (confirm("Are you SURE you want to email this invoice?")) {
             window.open(
-              "https://myna-api.com/api/pdf1.php?id="+m.company_id+"&display=E", "_blank");
+              "https://myna-api.com/api/pdf1.php?id="+m.company_id+"&display=E"+"&month_id="+this.data.month_id, "_blank");
            }
         }
       }
 
       showInvoice(id: any) {
         window.open(
-          "https://myna-api.com/api/pdf1.php?id="+id+"&display=B", "_blank");
+          "https://myna-api.com/api/pdf1.php?id="+id+"&display=B"+"&month_id="+this.data.month_id, "_blank");
       }
 
 

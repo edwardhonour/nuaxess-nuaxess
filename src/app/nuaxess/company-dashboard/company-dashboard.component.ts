@@ -408,7 +408,7 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
 
       printPDF() {
         window.open(
-          "https://myna-api.com/api/pdf1.php?id="+this.data.id, "_blank");
+          "https://myna-api.com/api/pdf1.php?id="+this.data.id+'&month_id='+this.data.month_id, "_blank");
       }
 
 
