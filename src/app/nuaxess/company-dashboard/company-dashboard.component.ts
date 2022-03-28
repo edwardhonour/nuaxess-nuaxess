@@ -411,7 +411,16 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
           "https://myna-api.com/api/pdf1.php?id="+this.data.id+'&month_id='+this.data.month_id, "_blank");
       }
 
-
+      getProfile(id: any, status: any) {
+        if (status=="Enrolled"||status=="enrolled"||status=="enrolling") {
+          window.open(
+            "https://myna-docs.com/api/get_quote_template.php?id="+id);
+        }  else {
+          window.open(
+            "https://myna-docs.com/api/get_quote_template.php?id="+id);
+        }
+      }
+      
       activatePlan(id:any, client_plan: any) {
 
         this.data.formData['id']=id;

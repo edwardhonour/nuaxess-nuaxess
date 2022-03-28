@@ -360,7 +360,8 @@
                     <button *ngIf="history=='Y'" class="btn" (click)="showHistory()">Hide</button></h2>
             </div>
             <div class="col-xl-3">
-                <button (click)="printPDF();" class="btn" style="margin-left: 20px;">PDF</button>
+                <button (click)="printPDF();" class="btn" style="margin-left: 20px;">PDF Invoice</button><br>
+                <button (click)="getProfile();" class="btn" style="margin-left: 20px;">XLS Profile</button>
             </div>
         </div>
         <div *ngIf="history=='Y'" class="table-responsive">

@@ -77,6 +77,10 @@ import { EditVendorComponent } from './nuaxess/edit-vendor/edit-vendor.component
 import { VendorDashboardComponent } from './nuaxess/vendor-dashboard/vendor-dashboard.component';
 import { CommissionDashboardComponent } from './nuaxess/commission-dashboard/commission-dashboard.component';
 import { CommissionListComponent } from './nuaxess/commission-list/commission-list.component';
+import { AddBrokerComponent } from './nuaxess/add-broker/add-broker.component';
+import { EditBrokerComponent } from './nuaxess/edit-broker/edit-broker.component';
+import { BrokerDashboardComponent } from './nuaxess/broker-dashboard/broker-dashboard.component';
+import { BrokerListComponent } from './nuaxess/broker-list/broker-list.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -209,6 +213,9 @@ export const appRoutes: Route[] = [
             {path: 'user-profile', component: UserProfileComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'broker-home', component: BrokerHomeComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'nuaxess-home', component: NuaxessHomeComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'add-broker', component: AddBrokerComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, }, 
+            {path: 'edit-broker/:id', component: EditBrokerComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, }, 
+            {path: 'broker-dashboard/:id', component: BrokerDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, }, 
             {path: 'invoice-list/:id', component: InvoiceListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'invoice-list/:id/:id2', component: InvoiceListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'company-invoice/:id/:id2', component: CompanyInvoiceComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
@@ -218,7 +225,8 @@ export const appRoutes: Route[] = [
             {path: 'edit-vendor/:id', component: EditVendorComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'vendor-dashboard/:id', component: VendorDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },  
             {path: 'commission-dashboard/:id', component: CommissionDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },  
-            {path: 'commission-list', component: CommissionListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },       
+            {path: 'commission-list', component: CommissionListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },     
+            {path: 'broker-list', component: BrokerListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },     
             {path: 'enroll', component: UserEnrollComponent, resolve: { data: EnrollResolver }, }
         ]
     },

@@ -79,7 +79,7 @@
         <div class="flex-1 min-w-0">
             <div class="mt-2">
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    Company / Employer List 
+                    Broker List 
                 </h2>
             </div>
         </div>
@@ -88,7 +88,7 @@
         <div class="flex-1 min-w-0">
             <div class="mt-2">
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    <button class="btn btn-primary" [routerLink]="['/add-company/data.user.org_id']">Add Company</button>
+                    <button class="btn btn-primary" [routerLink]="['/add-broker']">Add Broker</button>
                 </h2>
             </div>
         </div>
@@ -100,19 +100,21 @@
             <div class="col-xl-12">
              </div>
         </div>
-        <div class="flex-1 min-w-0">
+<!--        <div class="flex-1 min-w-0">
             <div class="col-xl-12">
-                <a (click)="getProfile(0,'prospect')"><img style="max-width:40px;" src="./assets/icons/excel.png"><br><b>Download Company Template</b></a>
+                <a href="./assets/NuAxess_Company_Template.xlsx"><img style="max-width:40px;" src="./assets/icons/excel.png"><br><b>Download Company Template</b></a>
             </div>
         </div>
         <div class="flex-1 min-w-0">
-
+            <div class="col-xl-12">
+                <a href="./assets/NuAxess_Enrollment_Template.xlsx"><img style="max-width:40px;" src="./assets/icons/excel.png"><br><b>Download Enrollment Template</b></a>
+            </div>
         </div>
         <div class="flex-1 min-w-0">
             <div class="col-xl-12">
                 <a (click)="showUpload()"><img style="max-width:40px;" src="./assets/icons/upload.png"><br><b>Upload Template</b></a>
             </div>
-        </div>
+        </div> -->
     </div>
     <div *ngIf="uploading=='Y'" class="container-fluid">
         <div class="row">
@@ -129,15 +131,11 @@
                         <div class="col-xl-4">Template Type</div>
                         <div class="col-xl-8">
                         <select class="form-control" [(ngModel)]="doc_title" name="doc_title" id="doc_title">
-                            <option class="form-control" value="QUOTING">Company/Quoting Template</option>
-                            <option class="form-control" value="ENROLLMENT">Enrollment/Census</option>             
+                            <option class="form-control" value="COMPANY">Company Template</option>
+                            <option class="form-control" value="QUOTE">Company Template - Quote Data</option>
+                            <option class="form-control" value="ENROLLMENT">Enrollment Template - Enrollment</option>
+                            <option class="form-control" value="ADDS">Enrollment Template - Adds / Terms</option>                
                         </select> 
-                    </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-4">Note/Description</div>
-                        <div class="col-xl-8">
-                        <input type="text" class="form-control" [(ngModel)]="dsc" name="dsc" id="dsc">
                     </div>
                     </div>
                     <div class="row">
@@ -175,32 +173,21 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Prospect</th>
+                                <th>Broker Name</th>
                                 <th>Organization</th>
-                                <th>Invoicing</th>
-                                <th>Insured Employees</th>
-                                <th>Insured Lives</th>
-                                <th>Plan Count</th>
-                                <th>Status</th>
-                                <th>Bad</th>
-                                <th></th>
+                                <th>Email</th>
+                                <th>Phone</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let m of data.list | filter: term | paginate: { currentPage: p , itemsPerPage: 25}" [ngStyle]="{'background-color':m.bad_count === '0' ? '#FFFFFF' : '#FCE5EB' }">
+                            <tr *ngFor="let m of data.list | filter: term | paginate: { currentPage: p , itemsPerPage: 25}">
                                 <td>{{ m.id }}</td>
-                                <td>{{ m.company_name }}</td>
+                                <td>{{ m.last_name }}, {{ m.first_name }}</td>
                                 <td>{{ m.org_name }}</td>
-                                <td>{{ m.invoicing }}</td>
-                                <td>{{ m.insured_employees }}</td>
-                                <td>{{ m.insured_lives }}</td>
-                                <td>{{ m.plan_count }}</td>
-                                <td>{{ m.status }}</td>
-                                <td>{{ m.bad_count }}</td>
-                                <td><button [routerLink]="['/company-dashboard',m.id]" class="btn btn-primary">View</button></td>
-                        <!--        <td><button [routerLink]="['/edit-company',m.id]" class="btn btn-primary">Edit</button></td> -->
-                                <td><button (click)="getProfile(m.id,m.status)" class="btn">(Get XLSX)</button></td>
+                                <td>{{ m.email }}</td>
+                                <td>{{ m.phone }}</td>
+                                <td><button [routerLink]="['/broker-dashboard',m.id]" class="btn btn-primary">View</button></td>
                             </tr>
                         </tbody>
                     </table>

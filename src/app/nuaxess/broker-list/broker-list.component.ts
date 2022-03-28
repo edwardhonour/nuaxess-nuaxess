@@ -7,21 +7,22 @@ import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/co
 import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { DataService } from 'app/data.service';
-import { FormBuilder } from '@angular/forms';
-
+import { FormBuilder, FormControl } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';;
 
 @Component({
-  selector: 'app-edit-broker',
-  templateUrl: './edit-broker.component.html',
-  styleUrls: ['./edit-broker.component.scss']
+  selector: 'app-broker-list',
+  templateUrl: './broker-list.component.html',
+  styleUrls: ['./broker-list.component.scss']
 })
-export class EditBrokerComponent implements OnInit, OnDestroy {
+export class BrokerListComponent implements OnInit , OnDestroy {
   navigation: Navigation;
   isScreenSmall: boolean;
   term: any;
   p: any;
-  error: any;
   formFieldHelpers: string[] = [''];
+  dsc: any;
+  doc_title: any;
 
     data: any;
     selectedProject: string = 'ACME Corp. Backend App';
@@ -29,6 +30,9 @@ export class EditBrokerComponent implements OnInit, OnDestroy {
     currentYear: any;
     email: any;
     user: any;
+    uploading: any;
+      //Upload 
+      index: any;
 
     /**
      * Constructor
@@ -41,12 +45,20 @@ export class EditBrokerComponent implements OnInit, OnDestroy {
       private _fuseMediaWatcherService: FuseMediaWatcherService,
       private _fuseNavigationService: FuseNavigationService,
       private _dataService: DataService,
-      private _formBuilder: FormBuilder
+      private _formBuilder: FormBuilder,
+      public http: HttpClient  // used by upload
   ) { }
 
+  showUpload() {
+     if (this.uploading=='Y') {
+       this.uploading='N'
+     } else {
+       this.uploading='Y'
+     }
+  }
     ngOnInit(): void
     {      
-      this.error="";
+      this.uploading='N';
       this._activatedRoute.data.subscribe(({ 
         data, menudata, userdata })=> { 
           this.data=data;
@@ -65,7 +77,7 @@ export class EditBrokerComponent implements OnInit, OnDestroy {
                 // Check if the screen is small
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
-
+              
     }
 
     ngOnDestroy(): void
@@ -125,13 +137,90 @@ export class EditBrokerComponent implements OnInit, OnDestroy {
 
   
     postForm() {
-        this._dataService.postForm("post-edit-broker", this.data.formData).subscribe((data:any)=>{
+
+        this._dataService.postForm("post-add-org", this.data).subscribe((data:any)=>{
           if (data.error_code=="0") {
-            this._router.navigate(['/broker-dashboard',data.id])
+            this._router.navigate(['/org-dashboard',data.id])
           } else {     
-            this.error=data.error_message
+//            this.error=data.error_message
           }
         });
       }
+
+
+      //------------------------------
+      // Upload Form
+      //------------------------------
+
+      file=new FormControl('')
+      file_data:any=''
+
+      fileChange(index,event) {
+        
+        const fileList: FileList = event.target.files;
+        //check whether file is selected or not
+        if (fileList.length > 0) {
+    
+            const file = fileList[0];
+            //get file information such as name, size and type
+            console.log('finfo',file.name,file.size,file.type);
+            //max file size is 8 mb
+            if((file.size/1048576)<=8)
+            {
+              let formData = new FormData();
+              formData.append('file', file, file.name);
+              //formData.append('company_id',this.data.id);
+              formData.append('company_id','0');
+              formData.append('user_id',this.data.user.id);
+              formData.append('dsc',this.doc_title);
+              formData.append('doc_title',this.doc_title);
+              this.file_data=formData
+              
+            }else{
+              alert('File size exceeds 8 MB. Please choose less than 8 MB');
+            }
+            
+        }
+    
+      }
+    
+      ip="https://myna-docs.com/api/"
+    
+      getProfile(id: any, status: any) {
+        if (status=="Enrolled"||status=="enrolled"||status=="enrolling") {
+          window.open(
+            "https://myna-api.com/xlsx/get_company_template.php?id="+id);
+        }  else {
+          window.open(
+            "https://myna-api.com/xlsx/get_quote_template.php?id="+id);
+        }
+      }
+
+
+      uploadFile() {
+        this._dataService.postTemplate(this.file_data).subscribe((data:any)=>{
+          if (data.error_code==0) {
+              console.log(data)
+              this._router.navigate(['/company-dashboard',data.company_id])
+          }
+        });   
+      }
+
+      uploadFile2()
+        {
+          console.log(this.file_data);
+          this.http.post(this.ip+'upload_template.php',this.file_data)
+          .subscribe(res => {
+//            location.reload()
+            console.log(res.toString)
+          }, (err) => {
+          //send error response
+          alert('error occured')
+        });
+        }
+
+        showDoc(id: any) {
+          window.open('https://myna-docs.com/?id='+id,'_new')
+        }
 
 }

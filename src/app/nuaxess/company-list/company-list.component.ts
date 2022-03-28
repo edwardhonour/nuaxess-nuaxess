@@ -184,28 +184,59 @@ export class CompanyListComponent implements OnInit, OnDestroy {
       }
     
       ip="https://myna-docs.com/api/"
-      
+    
+      getProfile(id: any, status: any) {
+        if (status=="Enrolled"||status=="enrolled"||status=="enrolling") {
+          window.open(
+            "https://myna-docs.com/api/get_quote_template.php?id="+id);
+        }  else {
+          window.open(
+            "https://myna-docs.com/api/get_quote_template.php?id="+id);
+        }
+      }
+
+
       uploadFile() {
         this._dataService.postTemplate(this.file_data).subscribe((data:any)=>{
           if (data.error_code==0) {
               console.log(data)
-              this._router.navigate(['/company-dashboard',data.company_id])
+              window.open(
+                "https://myna-docs.com/api/"+data.filename);
           }
         });   
       }
 
-      uploadFile2()
-        {
+      uploadFile2() {
           console.log(this.file_data);
-          this.http.post(this.ip+'upload_template.php',this.file_data)
+
+          /*
+          if (this.doc_title=="QUOTING") {
+            this.http.post(this.ip+'upload_quoting_template.php',this.file_data)
           .subscribe(res => {
-//            location.reload()
+            //location.reload()
+            this.uploading='N'
             console.log(res.toString)
           }, (err) => {
           //send error response
           alert('error occured')
         });
         }
+
+        if (this.doc_title=="ENROLLMENT") {
+            this.http.post(this.ip+'upload_enrollment_template.php',this.file_data)
+          .subscribe(res => {
+            //location.reload()
+            window.open(
+              "https://myna-docs.com/api/"+res.filename);
+            this.uploading='N'
+            console.log(res.toString)
+          }, (err) => {
+          //send error response
+          alert('error occured')
+        });
+        }
+        */
+      }
 
         showDoc(id: any) {
           window.open('https://myna-docs.com/?id='+id,'_new')

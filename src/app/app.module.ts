@@ -130,6 +130,8 @@ import { EditVendorComponent } from './nuaxess/edit-vendor/edit-vendor.component
 import { VendorDashboardComponent } from './nuaxess/vendor-dashboard/vendor-dashboard.component';
 import { CommissionListComponent } from './nuaxess/commission-list/commission-list.component';
 import { CommissionDashboardComponent } from './nuaxess/commission-dashboard/commission-dashboard.component';
+import { BrokerDashboardComponent } from './nuaxess/broker-dashboard/broker-dashboard.component';
+import { BrokerListComponent } from './nuaxess/broker-list/broker-list.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -218,7 +220,9 @@ const routerConfig: ExtraOptions = {
         EditVendorComponent,
         VendorDashboardComponent,
         CommissionListComponent,
-        CommissionDashboardComponent
+        CommissionDashboardComponent,
+        BrokerDashboardComponent,
+        BrokerListComponent
     ],
     imports     : [
         BrowserModule,
