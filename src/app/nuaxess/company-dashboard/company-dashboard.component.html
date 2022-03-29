@@ -177,7 +177,7 @@
         </tr>
        <tr>
             <th></th>
-            <td><button class="btn btn-primary">Edit</button></td>
+            <td><button [routerLink]="['/edit-company',data.id]" class="btn btn-primary">Edit</button></td>
         </tr> 
     </tbody>
 </table>
@@ -231,6 +231,7 @@
                     <div class="col-xl-4">Document Type</div>
                     <div class="col-xl-8">
                     <select class="form-control" [(ngModel)]="doc_title" name="doc_title" id="doc_title">
+                        <option class="form-control" value="QUOTING">Excel Template</option>
                         <option class="form-control" value="Employee Census">Employee Census</option>
                         <option class="form-control" value="Current Plan">Current Plan</option>
                         <option class="form-control" value="Current Invoice">Current Invoice</option>
@@ -260,7 +261,6 @@
                     </button>
                 </div>
                 </div>
-        
         </div>
         <div *ngIf="data.user.org_id=='1777'" class="card card-body" style="margin-top:20px;">            
             <div class="row">
@@ -311,7 +311,7 @@
             </div>
             </div>        
         </div>
-        <div class="card card-body">
+ <!--     <div class="card card-body">
         <ng-container *ngIf="data.quotes.length>0">
             <div *ngFor="let n of data.quotes" class="card card-body">
                 <h2 style="font-size: 24px;"><b>Quotes</b></h2>
@@ -349,22 +349,24 @@
                         </div>
             </div>
             </ng-container>
-        </div>
+        </div> -->
 </div>        
 <div class="col-md-12 col-xl-4">
-    <div class="card card-body"  *ngIf="data.monthlist.length!='0'&&data.status!='prospect'">
+    <div class="card card-body">
         <div class="row">
             <div class="col-xl-9">
-                    <h2 style="font-size: 24px;"><b>Monthly History</b>
-                    <button *ngIf="history=='N'" class="btn" (click)="showHistory()">Show ({{ data.monthlist.length }}) </button> 
-                    <button *ngIf="history=='Y'" class="btn" (click)="showHistory()">Hide</button></h2>
+                    <h2 *ngIf="data['INVOICE-PRINT']=='0'&&data.monthlist.length!='0'&&data.status!='prospect'" style="font-size: 24px;"><b>Monthly History</b>
+                    <button *ngIf="data['INVOICE-PRINT']=='0'&&data.monthlist.length!='0'&&data.status!='prospect'&&history=='N'" class="btn" (click)="showHistory()">Show ({{ data.monthlist.length }}) </button> 
+                    <button *ngIf="data['INVOICE-PRINT']=='0'&&data.monthlist.length!='0'&&data.status!='prospect'&&history=='Y'" class="btn" (click)="showHistory()">Hide</button></h2>
+<!--                    <h2 *ngIf="data['INVOICE-PRINT']!='0'" style="font-size: 24px;"><b>Export Profile</b></h2> -->
             </div>
             <div class="col-xl-3">
-                <button (click)="printPDF();" class="btn" style="margin-left: 20px;">PDF Invoice</button><br>
-                <button (click)="getProfile();" class="btn" style="margin-left: 20px;">XLS Profile</button>
+                <button *ngIf="data['INVOICE-PRINT']=='0'" (click)="printPDF();" class="btn" style="margin-left: 20px;">PDF Invoice</button><br>
+                <button *ngIf="data['INVOICE-PRINT']=='0'" (click)="getProfile(data.id,'enrolled');" class="btn" style="margin-left: 20px;">XLS Profile</button>
+                <button *ngIf="data['INVOICE-PRINT']=='1'" (click)="getProfile(data.id,'enrolled');" class="btn btn-primary" style="margin-left: 20px;">XLS Profile</button>
             </div>
         </div>
-        <div *ngIf="history=='Y'" class="table-responsive">
+        <div *ngIf="data['INVOICE-PRINT']=='0'&&history=='Y'" class="table-responsive">
         <table class="table table-responsive">
         <thead>
             <tr>
@@ -386,7 +388,7 @@
                 </table>
     </div> <!-- TABLE RESPONSIVE -->
     </div>  
-    <div class="card card-body"  *ngIf="data.status!='prospect'">
+    <div *ngIf="data['INVOICE-PRINT']=='0'&&data.status!='prospect'" class="card card-body" >
         <div class="row">
             <div class="col-xl-9">
                     <h2 style="font-size: 24px;"><b>Invoice Adjustments</b>
@@ -526,57 +528,6 @@
         <button style="margin-left:20px;" (click)="addDental()" class="btn btn-danger">Add Dental/Vision </button>  
     </div> <!-- TABLE RESPONSIVE -->
     </div>    
-    <div *ngIf="data.status=='prospect'" class="card card-body">
-        <div class="table-responsive">
-            <h2 style="font-size: 24px;"><b>Pre-Enrollment Census</b></h2>
-        <div class="col-lg-6 py-2">
-            Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
-        </div>
-        <table class="table table-responsive">
-            <thead>
-                <tr>
-                    <th>
-                        ID
-                    </th>
-                    <th>
-                        Employee Name
-                    </th>
-                    <th>
-                        Marital Status
-                    </th>
-                    <th>
-                        Gender
-                    </th>
-<!--                 <th>            
-                    </th> -->
-                </tr>
-            </thead>
-                    <tbody>
-    <tr *ngFor="let m of data.employees | filter: term | paginate: { currentPage: p , itemsPerPage: 25}">
-        <td>
-            {{ m.employee_code }}
-        </td>
-        <td>
-            {{ m.last_name }}, {{ m.first_name }}
-        </td>
-        <td>
-            {{ m.marital_status }}
-        </td>
-        <td>
-            {{ m.gender }}
-        </td>
-        <td>
-        </td>
-<!--     <td>
-            <button  *ngIf="data.user['role']=='sadmin'" [routerLink]="['/employee-dashboard',m.id]" class="btn btn-warning">Dashboard</button>
-        </td> -->
-    </tr>
-</tbody>
-        </table>
-        <paging-controls (pageChange)="p = $event" [isItemsPerPage]="false"  
-        class="my-pagination"></paging-controls>
-        </div> <!-- table responsive -->
-        </div> <!-- Card body -->
     </div>
     </div> <!-- ROW -->
     </div>
@@ -888,11 +839,84 @@
         &nbsp;
  </div>
  <div class="col-md-12 col-xl-10">
-    <div class="card card-body" style="margin-top:20px;">
+    <div *ngIf="data.preenroll.length>0&&data.formData['status']!='enrolled'" class="card card-body" style="margin-top:20px;">
+        <div class="table-responsive">
+            <h2 style="font-size: 24px;"><b>Preenrollment Census</b>
+            </h2>
+        <div class="col-lg-6 py-2">
+            Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
+        </div>
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        Employee ID (SSN)
+                    </th>
+                    <th>
+                        Dependent ID (SSN)
+                    </th>
+                    <th>
+                        Last Name
+                    </th>
+                    <th>
+                        First Name
+                    </th>
+                    <th>
+                        Middle
+                    </th>
+                    <th>
+                        Marital Status
+                    </th>
+                    <th>
+                       Gender 
+                    </th>
+                    <th>
+                        Date of Birth
+                    </th>
+                    <th>
+                        Relationship
+                    </th>
+                </tr>
+            </thead>
+                    <tbody>
+    <tr *ngFor="let m of data.preenroll | filter: term"> 
+        <td>
+            {{ m.social_security_number }}
+        </td>
+        <td>
+            {{ m.dependent_social_security_number }}
+        </td>
+        <td>
+            {{ m.last_name }}
+        </td>
+        <td>
+            {{ m.first_name }}
+        </td>
+        <td>
+            {{ m.middle_name }}
+        </td>
+        <td>
+            {{ m.marital_status }}
+        </td>
+        <td>
+            {{ m.gender }}
+        </td>
+        <td>
+            {{ m.date_of_birth }}
+        </td>
+        <td>
+            {{ m.relationship }}
+        </td>
+    </tr>
+</tbody>
+</table>
+</div> <!-- table responsive -->
+</div> <!-- Card body -->
+    <div *ngIf="data.census.length>0" class="card card-body" style="margin-top:20px;">
         <div class="table-responsive">
             <h2 style="font-size: 24px;"><b>{{ data.month_id }} - Active Members (includes additions)</b>
-            <button *ngIf="adding=='N'" (click)="addEmployee()" class="btn btn-primary" style="margin-left: 50px;">Enroll Member</button>
-            <button *ngIf="adding=='N'" (click)="updateCensus()" class="btn btn-danger" style="margin-left: 50px;">Update Monthly Census</button>
+            <button *ngIf="data['ENROLL-EMPLOYEE']=='0'&&adding=='N'" (click)="addEmployee()" class="btn btn-primary" style="margin-left: 50px;">Enroll Member</button>
+            <button *ngIf="data['UPDATE-CENSUS']=='0'&&adding=='N'" (click)="updateCensus()" class="btn btn-danger" style="margin-left: 50px;">Update Monthly Census</button>
             </h2>
         <div class="col-lg-6 py-2">
             Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
@@ -1222,7 +1246,7 @@
            &nbsp;
     </div>
     <div class="col-md-12 col-xl-10">
-        <div class="card card-body" style="margin-top:20px;">
+        <div *ngIf="data['MOVE-EMPLOYEES']=='0'" class="card card-body" style="margin-top:20px;">
             <div class="table-responsive">
                 <h2 style="font-size: 24px;"><b>Moveable Census Employees</b>
                     <button *ngIf="move=='N'" (click)="showMove()" style="margin-left: 50px;">Show</button>

@@ -347,6 +347,9 @@
                         Company Name
                     </th>
                     <th>
+                        Status
+                    </th>
+                    <th>
     
                     </th>
                 </tr>
@@ -359,8 +362,11 @@
         <td>
             {{ m.company_name }}
         </td>
+        <td>
+            {{ m.status }}
+        </td>
         <th>
-            <button class="btn btn-primary">View</button>
+            <button [routerLink]="['/company-dashboard',m.id]" class="btn btn-primary">View</button>
         </th> 
     </tr>
             </tbody>

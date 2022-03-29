@@ -680,8 +680,16 @@ postTerm(id: any) {
     
       ip="https://myna-docs.com/api/"
       
-      uploadFile()
-        {
+      uploadFile() {
+        if (this.doc_title=="QUOTING") {
+          this._dataService.postTemplate(this.file_data).subscribe((data:any)=>{
+            if (data.error_code==0) {
+                this.uploading='N'
+                window.open(
+                  "https://myna-docs.com/api/"+data.filename);
+            }
+          }); 
+        } else {
           console.log(this.file_data);
           this.http.post(this.ip+'upload.php',this.file_data)
           .subscribe(res => {
@@ -691,7 +699,9 @@ postTerm(id: any) {
           //send error response
           alert('error occured')
         });
-        }
+        }  
+      }
+
 
         showDoc(id: any) {
           window.open('https://myna-docs.com/?id='+id,'_new')
