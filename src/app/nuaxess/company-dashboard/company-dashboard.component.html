@@ -219,7 +219,7 @@
             </div>
             <div *ngIf="uploading=='N'" class="row">
                 <div class="col-12">
-                    <button class="btn btn-primary" (click)="showUpload()">Upload Documents</button>
+                    <button class="btn btn-primary" (click)="showUpload()">Upload Documents / Template</button>
                 </div>
             </div>
             <div *ngIf="uploading=='Y'"  class="card card-body">
@@ -262,7 +262,7 @@
                 </div>
                 </div>
         </div>
-        <div *ngIf="data.user.org_id=='1777'" class="card card-body" style="margin-top:20px;">            
+ <!--       <div *ngIf="data.user.org_id=='1777'" class="card card-body" style="margin-top:20px;">            
             <div class="row">
                 <h2 style="font-size: 24px;"><b>Active Plans 
                     <button *ngIf="active=='N'" class="btn" (click)="showActive()">Show</button> 
@@ -311,7 +311,7 @@
             </div>
             </div>        
         </div>
- <!--     <div class="card card-body">
+      <div class="card card-body">
         <ng-container *ngIf="data.quotes.length>0">
             <div *ngFor="let n of data.quotes" class="card card-body">
                 <h2 style="font-size: 24px;"><b>Quotes</b></h2>
@@ -403,6 +403,7 @@
         <table class="table table-responsive">
         <thead>
             <tr>
+                <th>Month</th>
                 <th>Description</th>
                 <th>Amount</th>
                 <th></th>
@@ -410,6 +411,9 @@
         </thead>
         <tbody>
             <tr *ngFor="let m of data.adjustlist">
+                <td>
+                    {{ m.month_id }}    
+                </td>
                 <td>
                     {{ m.description }}    
                 </td>
@@ -429,6 +433,23 @@
             <h2 style="font-size: 24px;"><b>Add / Edit Adjustment</b></h2>
             <form>
                 <div class="row">
+                    <div class="col-xl-12">
+                        <label>Invoice Month</label>
+                        <div class="form-control">
+                            <select id="month_id" name="month_id" [(ngModel)]="data.adjustData['month_id']">
+<option value="2022-01">2022-01</option>
+<option value="2022-02">2022-02</option>
+<option value="2022-03">2022-03</option>
+<option value="2022-04">2022-04</option>
+<option value="2022-05">2022-05</option>
+<option value="2022-06">2022-06</option>
+<option value="2022-07">2022-07</option>
+<option value="2022-08">2022-08</option>
+<option value="2022-09">2022-09</option>
+<option value="2022-10">2022-10</option>
+                            </select>
+                        </div>
+                        </div>
                     <div class="col-xl-12">
                     <label>Description</label>
                     <div class="form-control">
@@ -460,6 +481,81 @@
             </form>
         </div>
     </div>
+    <div class="card card-body">
+        <h2 style="font-size: 24px;"><b>Quoted Plans</b>
+        <button class="btn" (click)="showQuotedPlans()">Show ({{ data.quoted_plans.length }})</button> 
+        <button *ngIf="quotedPlans=='Y'" class="btn" (click)="showQuotedPlans()">Hide</button>
+    </h2>
+        <div *ngIf="quotedPlans=='Y'" class="table-responsive">
+        <table *ngFor="let m of data.quoted_plans" class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Plan</th>
+                <th>{{ m.plan_code }}</th>
+            </tr>        
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                    APA    
+                </th>
+                <td>
+                    {{ m.APA_CODE }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    EE    
+                </th>
+                <td>
+                    {{ m.ee_price }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    ES    
+                </th>
+                <td>
+                    {{ m.ees_price }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    EC    
+                </th>
+                <td>
+                    {{ m.eec_price }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    FAM   
+                </th>
+                <td>
+                    {{ m.fam_price }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Accepted   
+                </th>
+                <td>
+                    {{ m.accepted }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                                   
+                </td>
+                <th>
+                    <button [routerLink]="['/edit-quoted-plan',m.id,m.company_id]" class="btn btn-primary">Edit Plan</button>   
+                </th>
+            </tr>
+        </tbody>
+        </table>
+        <button [routerLink]="['/add-quoted-plan',data.id]" class="btn btn-primary">ADD </button>  
+    </div> <!-- TABLE RESPONSIVE -->
+    </div>    
     <div class="card card-body">
         <h2 style="font-size: 24px;"><b>Client Plans</b>
         <button class="btn" (click)="showPlans()">Show ({{ data.company_plans.length }})</button> 
@@ -839,7 +935,7 @@
         &nbsp;
  </div>
  <div class="col-md-12 col-xl-10">
-    <div *ngIf="data.preenroll.length>0&&data.formData['status']!='enrolled'" class="card card-body" style="margin-top:20px;">
+    <div *ngIf="data.preenroll.length>0&&data.status!='enrolled'" class="card card-body" style="margin-top:20px;">
         <div class="table-responsive">
             <h2 style="font-size: 24px;"><b>Preenrollment Census</b>
             </h2>
@@ -912,11 +1008,10 @@
 </table>
 </div> <!-- table responsive -->
 </div> <!-- Card body -->
-    <div *ngIf="data.census.length>0" class="card card-body" style="margin-top:20px;">
+    <div class="card card-body" style="margin-top:20px;">
         <div class="table-responsive">
             <h2 style="font-size: 24px;"><b>{{ data.month_id }} - Active Members (includes additions)</b>
-            <button *ngIf="data['ENROLL-EMPLOYEE']=='0'&&adding=='N'" (click)="addEmployee()" class="btn btn-primary" style="margin-left: 50px;">Enroll Member</button>
-            <button *ngIf="data['UPDATE-CENSUS']=='0'&&adding=='N'" (click)="updateCensus()" class="btn btn-danger" style="margin-left: 50px;">Update Monthly Census</button>
+            <button [routerLink]="['/add-employee', 0, data.id]" class="btn btn-primary" style="margin-left: 50px;">Enroll Member</button>
             </h2>
         <div class="col-lg-6 py-2">
             Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
@@ -998,16 +1093,16 @@
         </td>
         <td *ngIf="m.term=='N'&&m.move=='N'">
             <button  *ngIf="m.last_name!=''" [routerLink]="['/employee-dashboard',m.employee_id]" class="btn btn-primary">View</button>
-            <button style="margin-left: 20px;" *ngIf="m.last_name!=''" (click)="editEmployee(m)" class="btn btn-primary">Edit</button>
+            <button style="margin-left: 20px;" *ngIf="m.last_name!=''" [routerLink]="['/add-employee',m.employee_id,m.company_id]" class="btn btn-primary">Edit</button>
         </td>
         <td  *ngIf="m.term=='N'&&m.move=='N'">
             <button (click)="showTerm(m)" class="btn btn-danger">Term</button>
             <button style="margin-left:10px;" (click)="showBad(m)" class="btn">(D)</button>
-            <button style="margin-left:10px;"  (click)="addEmployeeDental(m.employee_id)" class="btn">(MD)</button>
-            <button style="margin-left:10px;"  (click)="addEmployeeVision(m.employee_id)" class="btn">(MV)</button>
+<!--            <button style="margin-left:10px;"  (click)="addEmployeeDental(m.employee_id)" class="btn">(MD)</button>
+            <button style="margin-left:10px;"  (click)="addEmployeeVision(m.employee_id)" class="btn">(MV)</button> -->
         </td>
         <td>
-            <button *ngIf="m.term=='N'&&m.move=='N'" (click)="priceFix(m.id)" class="btn btn-danger">P/F</button>
+  <!--          <button *ngIf="m.term=='N'&&m.move=='N'" (click)="priceFix(m.id)" class="btn btn-danger">P/F</button> -->
             <button *ngIf="m.term=='Y'" (click)="postTerm(m.id)" class="btn btn-primary">Save</button>
             <button *ngIf="m.move=='Y'" (click)="postBad(m.employee_id)" class="btn btn-primary">Save</button>
             <br>{{ m.subject }}
@@ -1231,9 +1326,6 @@
         <td>
             {{ m.coverage_price }}
         </td>
-        <td>
-            <button  *ngIf="m.last_name!=''" [routerLink]="['/employee-dashboard',m.id]" class="btn btn-warning">Dashboard</button>
-        </td>
     </tr>
 </tbody>
 </table>
@@ -1246,7 +1338,7 @@
            &nbsp;
     </div>
     <div class="col-md-12 col-xl-10">
-        <div *ngIf="data['MOVE-EMPLOYEES']=='0'" class="card card-body" style="margin-top:20px;">
+    <!--    <div *ngIf="data['MOVE-EMPLOYEES']=='0'" class="card card-body" style="margin-top:20px;">
             <div class="table-responsive">
                 <h2 style="font-size: 24px;"><b>Moveable Census Employees</b>
                     <button *ngIf="move=='N'" (click)="showMove()" style="margin-left: 50px;">Show</button>
@@ -1309,8 +1401,8 @@
                 <paging-controls (pageChange)="p = $event" [isItemsPerPage]="false"  
                 class="my-pagination"></paging-controls>
             </div>
-            </div> <!-- table responsive -->
-            </div> <!-- Card body -->
+            </div> 
+            </div> -->
             </div> <!-- Col -->
             <div class="col-md-12 col-xl-5">
                 <div *ngIf="data.status=='XXXprospect'" class="card card-body" style="margin-top:20px;">

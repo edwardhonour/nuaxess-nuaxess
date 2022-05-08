@@ -46,6 +46,7 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     active: any;
     history: any;
     plans:any;
+    quotedPlans:any;
     move: any;
     term: any;
     bad: any;
@@ -107,6 +108,14 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  showQuotedPlans() {
+    if (this.quotedPlans=='Y') {
+       this.quotedPlans='N';
+    } else {
+      this.quotedPlans='Y'
+    }
+  }
+
   showAdjustments() {
     if (this.adjust=='Y') {
        this.adjust='N';
@@ -121,6 +130,7 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
        this.data.adjustData['id']="";
        this.data.adjustData['description']="";
        this.data.adjustData['amount']="";
+       this.data.adjustData['month_id']="";
     } else {
         this.editAdjust='Y';
     }
@@ -136,6 +146,7 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
       this.active='N';
       this.history='N';
       this.plans='N';
+      this.quotedPlans='N';
       this.move='N';
       this.adjust='N';
       this.editAdjust='N';
@@ -336,6 +347,7 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
       this.data.adjustData['id']=m.id;
       this.data.adjustData['description']=m.description;
       this.data.adjustData['amount']=m.amount;
+      this.data.adjustData['month_id']=m.month_id;      
       this.editAdjust='Y';
     }
 

@@ -22,7 +22,7 @@ import { DataService } from 'app/data.service';
     term: any;
     p: any;
     q: any;
-
+    uploading: any;
       chartGithubIssues: ApexOptions = {};
       chartTaskDistribution: ApexOptions = {};
       chartBudgetDistribution: ApexOptions = {};
@@ -65,6 +65,7 @@ import { DataService } from 'app/data.service';
                 this.data=data;
                 this.navigation=menudata
                 this.user=userdata
+                this.uploading='N'
                 if (this.data.user.force_logout>0) {
                     localStorage.removeItem('uid');
                     this._router.navigate(['/forced-off',this.data.user.force_logout]);
@@ -96,6 +97,18 @@ import { DataService } from 'app/data.service';
       /**
        * On destroy
        */
+
+
+       getProfile(id: any, status: any) {
+         if (status=="Enrolled"||status=="enrolled"||status=="enrolling") {
+           window.open(
+             "https://myna-docs.com/api/get_quote_template.php?id="+id);
+         }  else {
+           window.open(
+             "https://myna-docs.com/api/get_quote_template.php?id="+id);
+         }
+       }
+
       ngOnDestroy(): void
       {
           // Unsubscribe from all subscriptions
@@ -210,6 +223,14 @@ import { DataService } from 'app/data.service';
     
       ip="https://www.mynuaxess.com/"
       
+      showUpload() {
+        if (this.uploading=='Y') {
+          this.uploading='N'
+        } else {
+          this.uploading='Y'
+        }
+     }
+
       uploadFile()
         {
           this.http.post(this.ip+'upload.php',this.file_data)

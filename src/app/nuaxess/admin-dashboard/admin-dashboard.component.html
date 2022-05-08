@@ -238,13 +238,137 @@
                             </mat-tab>            
                         </mat-tab-group>
                     </div>
+                    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent m-3">
+                        <div class="flex-1 min-w-0">
+                            <div class="mt-2">
+                                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                                    <button class="btn btn-primary" [routerLink]="['/add-company/data.user.org_id']">Add Company</button>
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="col-xl-12">
+                             </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="col-xl-12">
+                             </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="col-xl-12">
+<!--
+                                <a (click)="getProfile(0,'prospect')"><img style="max-width:40px;" src="./assets/icons/excel.png"><br><b>Download Company Template</b></a>
+-->
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="col-xl-12">
+                                <a (click)="showUpload()"><img style="max-width:40px;" src="./assets/icons/upload.png"><br><b>Upload Template</b></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="uploading=='Y'" class="container-fluid">
+                        <div class="row">
+                            <div class="col-xl-3">
+                
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="card card-body">
+                                    <h2 style="font-size: 24px;"><b>Select File to Upload</b></h2>
+                                    <div class="row">
+                                        <div class="col-xl-4"> &nbsp; </div>            
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-4">Template Type</div>
+                                        <div class="col-xl-8">
+                                        <select class="form-control" [(ngModel)]="doc_title" name="doc_title" id="doc_title">
+                                            <option class="form-control" value="QUOTING">Company/Quoting Template</option>
+                                            <option class="form-control" value="ENROLLMENT">Enrollment/Census</option>             
+                                        </select> 
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-4">Note/Description</div>
+                                        <div class="col-xl-8">
+                                        <input type="text" class="form-control" [(ngModel)]="dsc" name="dsc" id="dsc">
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-4"> &nbsp; </div>            
+                                    </div>
+                                    <div class="mc">
+                                        <input [formControl]="file" (change)="fileChange(index,$event)" type="file" placeholder="File">
+                                        <br>
+                                        <button style="margin-top:20px" (click)="showUpload()" mat-raised-button color="default">
+                                            Cancel
+                                        </button>
+                                        <button style="margin-top:20px; margin-left:20px;" (click)="uploadFile()" mat-raised-button color="primary">
+                                            Upload
+                                        </button>
+                                    </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <h1 style="font-size: 24px; font-weight: bold;">Active Organizations</h1>
+                                <div style="margin-top: 20px !important;">
+                                    <a class="inline-flex items-center leading-6 text-primary hover:underline" [routerLink]="['/sadmin']"><span class="inline-flex items-center"><mat-icon role="img" class="mat-icon notranslate icon-size-5 text-current mat-icon-no-color" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="arrow-sm-left" data-mat-icon-namespace="heroicons_solid"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                                        <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
+                                    </svg></mat-icon><span class="ml-1.5 font-medium leading-5">Back to Admin Dashboard</span></span></a>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="table-responsive">
+
+                                    <div class="card card-body">
+                                        <div class="row">
+                                            <h2 style="font-size: 18px;"><b>Company Status Codes</b></h2>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-xl-2 m-2">
+                                            <b style="color:blue">prospect: </b> New Company
+                                        </div>
+                                        <div class="col-xl-2 m-2">
+                                            <b style="color:blue">quoting: </b> In process or preparing quote.
+                                        </div>
+                                        <div class="col-xl-2  m-2">
+                                            <b style="color:darkgoldenrod">quoted: </b> Quoted generated and entered.
+                                        </div>
+                                        <div class="col-xl-2  m-2">
+                                            <b style="color: forestgreen">accepted: </b> One or more plans accepted.
+                                        </div>
+                                        <div class="col-xl-2  m-2">
+                                            <b style="color:red">rejected: </b> Quote rejected (no further action).
+                                        </div>
+                                        <div class="col-xl-2  m-2">
+                                            <b style="color: goldenrod">enrolling: </b> Adding members prior to first invoice.
+                                        </div>
+                                        <div class="col-xl-2  m-2">
+                                            <b style="color:forestgreen">invoiced: </b> Initial invoice submitted.  Waiting for payment.
+                                        </div>
+                                        <div class="col-xl-2  m-2">
+                                            <b style="color:black">approved: </b> All prerequisites met and verified.
+                                        </div>
+                                        <div class="col-xl-2  m-2">
+                                            <b style="color:green">pending: </b> Changes waiting to be submitted to APA or Guardian.
+                                        </div>
+                                        <div class="col-xl-2  m-2">
+                                            <b style="color:green">submitted: </b>Changes submitted to APA or Guardian.
+                                        </div>
+                                        <div class="col-xl-2 m-2">
+                                            <b style="color:green">enrolled: </b> Enrolled no changes pending.
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="card card-body mt-4">
+                                    <div class="row mt-3 mb-3">
+                                        <h2 style="font-size: 24px;"><b>Companies / Prospects</b></h2>
+                                    </div>
                                     <div class="col-lg-6 py-2">
                                         Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
                                     </div>
@@ -252,64 +376,38 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Prospect</th>
                                                 <th>Organization</th>
-                                                <th style="text-align: right;">Description</th>
-                                                <th style="text-align: right;">Type</th>
-                                                <th style="text-align: right;"></th>
-                                                <th style="text-align: right;"></th>
+                                                <th>Invoicing</th>
+                                                <th>Insured Employees</th>
+                                                <th>Insured Lives</th>
+                                                <th>Plan Count</th>
+                                                <th>Status</th>
+                                                <th>Bad</th>
+                                                <th></th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let m of data.orgs | filter: term | paginate: { currentPage: p , itemsPerPage: 25}">
+                                            <tr *ngFor="let m of data.list | filter: term | paginate: { currentPage: p , itemsPerPage: 25}" [ngStyle]="{'background-color':m.bad_count === '0' ? '#FFFFFF' : '#FCE5EB' }">
                                                 <td>{{ m.id }}</td>
+                                                <td>{{ m.company_name }}</td>
                                                 <td>{{ m.org_name }}</td>
-                                                <td style="text-align: right;">{{ m.description }}</td>
-                                                <td style="text-align: right;">{{ m.type }}</td>
-                                                <td><button [routerLink]="['/org-dashboard' ,m.id]" class="btn btn-primary">View</button></td>
+                                                <td>{{ m.invoicing }}</td>
+                                                <td>{{ m.insured_employees }}</td>
+                                                <td>{{ m.insured_lives }}</td>
+                                                <td>{{ m.plan_count }}</td>
+                                                <td>{{ m.status }}</td>
+                                                <td>{{ m.bad_count }}</td>
+                                                <td><button [routerLink]="['/company-dashboard',m.id]" class="btn btn-primary">View</button></td>
+                                        <!--        <td><button [routerLink]="['/edit-company',m.id]" class="btn btn-primary">Edit</button></td> -->
+                                                <td><button (click)="getProfile(m.id,m.status)" class="btn">(Get XLSX)</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <paging-controls (pageChange)="p = $event" [isItemsPerPage]="false"  
-                                    class="my-pagination"></paging-controls> 
+                                    class="my-pagination"></paging-controls>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h1 style="font-size: 24px; font-weight: bold;">Problem Companies</h1>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <div class="col-lg-6 py-2">
-                                        Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
-                                    </div>
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Company</th>
-                                                <th style="text-align: right;">Address</th>
-                                                <th style="text-align: right;">City</th>
-                                                <th style="text-align: right;">State</th>
-                                                <th style="text-align: right;">Zip</th>
-                                                <th style="text-align: right;">Status</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let m of data.companies | filter: term">
-                                                <td>{{ m.id }}</td>
-                                                <td>{{ m.company_name }}</td>
-                                                <td style="text-align: right;">{{ m.address }}</td>
-                                                <td style="text-align: right;">{{ m.city }}</td>
-                                                <td style="text-align: right;">{{ m.state }}</td>
-                                                <td style="text-align: right;">{{ m.zip }}</td>
-                                                <td style="text-align: right;">{{ m.status }}</td>
-                                                <td><button [routerLink]="['/company-dashboard',m.id]" class="btn btn-primary">View</button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>

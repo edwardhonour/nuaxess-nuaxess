@@ -81,6 +81,9 @@ import { AddBrokerComponent } from './nuaxess/add-broker/add-broker.component';
 import { EditBrokerComponent } from './nuaxess/edit-broker/edit-broker.component';
 import { BrokerDashboardComponent } from './nuaxess/broker-dashboard/broker-dashboard.component';
 import { BrokerListComponent } from './nuaxess/broker-list/broker-list.component';
+import { AddEmployeeComponent } from './nuaxess/add-employee/add-employee.component';
+import { AddQuotedPlanComponent } from './nuaxess/add-quoted-plan/add-quoted-plan.component';
+import { EditQuotedPlanComponent } from './nuaxess/edit-quoted-plan/edit-quoted-plan.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -147,6 +150,9 @@ export const appRoutes: Route[] = [
             {path: 'add-client-plan', component: AddClientPlanComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'add-client-plan/:id', component: AddClientPlanComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'edit-client-plan/:id/:id2', component: EditClientPlanComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'add-quoted-plan', component: AddQuotedPlanComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'add-quoted-plan/:id', component: AddQuotedPlanComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'edit-quoted-plan/:id/:id2', component: EditQuotedPlanComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'add-org', component: AddOrgComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'add-org/:id', component: AddOrgComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'add-org/:id/:id2', component: AddOrgComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
@@ -227,6 +233,7 @@ export const appRoutes: Route[] = [
             {path: 'commission-dashboard/:id', component: CommissionDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },  
             {path: 'commission-list', component: CommissionListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },     
             {path: 'broker-list', component: BrokerListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },     
+            {path: 'add-employee/:id/:id2', component: AddEmployeeComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },     
             {path: 'enroll', component: UserEnrollComponent, resolve: { data: EnrollResolver }, }
         ]
     },

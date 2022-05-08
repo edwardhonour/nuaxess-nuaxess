@@ -10,11 +10,11 @@ import { DataService } from 'app/data.service';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-edit-client-plan',
-  templateUrl: './edit-client-plan.component.html',
-  styleUrls: ['./edit-client-plan.component.scss']
+  selector: 'app-edit-quoted-plan',
+  templateUrl: './edit-quoted-plan.component.html',
+  styleUrls: ['./edit-quoted-plan.component.scss']
 })
-export class EditClientPlanComponent implements OnInit, OnDestroy {
+export class EditQuotedPlanComponent implements OnInit, OnDestroy {
   navigation: Navigation;
   isScreenSmall: boolean;
   term: any;
@@ -128,7 +128,7 @@ export class EditClientPlanComponent implements OnInit, OnDestroy {
     }
     postForm(id2: any) {
       console.log(id2)
-        this._dataService.postForm("post-add-client-plan", this.data).subscribe((d:any)=>{
+        this._dataService.postForm("post-add-quoted-plan", this.data).subscribe((d:any)=>{
           if (d.error_code=="0") {
             this._router.navigate(['/company-dashboard',this.data.formData['company_id']])
 //            location.href="/#/company-dashboard/"+id2;
@@ -141,7 +141,7 @@ export class EditClientPlanComponent implements OnInit, OnDestroy {
       postDelete(id2: any) {
         //alert(id2)
         if (confirm("Are you sure you want to delete this plan?")) {
-          this._dataService.postForm("post-delete-client-plan", this.data).subscribe((d:any)=>{
+          this._dataService.postForm("post-delete-quoted-plan", this.data).subscribe((d:any)=>{
             if (d.error_code=="0") {
               this._router.navigate(['/company-dashboard',this.data.formData['company_id']])
         //     location.href="/nuaxess/#/company-dashboard/"+id2;

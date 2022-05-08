@@ -132,6 +132,9 @@ import { CommissionListComponent } from './nuaxess/commission-list/commission-li
 import { CommissionDashboardComponent } from './nuaxess/commission-dashboard/commission-dashboard.component';
 import { BrokerDashboardComponent } from './nuaxess/broker-dashboard/broker-dashboard.component';
 import { BrokerListComponent } from './nuaxess/broker-list/broker-list.component';
+import { AddEmployeeComponent } from './nuaxess/add-employee/add-employee.component';
+import { AddQuotedPlanComponent } from './nuaxess/add-quoted-plan/add-quoted-plan.component';
+import { EditQuotedPlanComponent } from './nuaxess/edit-quoted-plan/edit-quoted-plan.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -222,7 +225,10 @@ const routerConfig: ExtraOptions = {
         CommissionListComponent,
         CommissionDashboardComponent,
         BrokerDashboardComponent,
-        BrokerListComponent
+        BrokerListComponent,
+        AddEmployeeComponent,
+        AddQuotedPlanComponent,
+        EditQuotedPlanComponent
     ],
     imports     : [
         BrowserModule,
