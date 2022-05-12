@@ -149,5 +149,15 @@ export class CurrentAdditionsComponent implements OnInit, OnDestroy {
         });
       }
 
+      APAExcel() {
+        window.open(
+          "https://myna-docs.com/api/get_nuaxess_apa_additions.php?id="+this.data.month_id);
+      }
+
+      GuardianExcel() {
+        window.open(
+          "https://myna-docs.com/api/get_nuaxess_guardian_additions.php?id="+this.data.month_id);
+      }
+
 }
 

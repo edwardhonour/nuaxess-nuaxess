@@ -1008,6 +1008,147 @@
 </table>
 </div> <!-- table responsive -->
 </div> <!-- Card body -->
+<div class="card card-body" style="margin-top:20px;">
+    <div class="table-responsive">
+        <div class="row">
+            <div class="col-xl-3">
+                <h2 style="font-size: 24px;"><b>Invoices & Payments</b></h2> <a (click)="showPayments()">(Show)</a>
+            </div>
+            <div class="col-xl-3">
+                <h2 style="font-size: 24px;"><b>${{ data.balance_due }}</b></h2>
+            </div>
+            <div class="col-xl-3">
+                <button  *ngIf="editPayments=='N'" style="margin-left: 50px;" class="btn btn-primary" (click)="showEditPayments()">Receive Payment</button>
+            </div>
+        </div>
+       
+    <table *ngIf="payments=='Y'" class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Reference</th><th>Date</th><th>Type</th><th>Amounts</th>
+                <th>Applied To</th><th>Bank</th><th>Balance</th><th></th>
+            </tr>
+        </thead>
+                <tbody>
+<tr *ngFor="let m of data.payments">
+    <td>
+        {{ m.reference_number }}
+    </td>
+    <td>
+        {{ m.payment_date }}
+    </td>
+    <td>
+        {{ m.deposit_type }}
+    </td>
+    <td>
+        {{ m.reference_number }}
+    </td>
+    <td>
+        {{ m.amount_received }}
+    </td>
+    <td>
+        {{ m.applied_to }}
+    </td>
+    <td>
+        {{ m.bank }}
+    </td>
+    <td>
+        {{ m.running }}
+    </td>
+    <td>
+
+    </td>
+</tr>
+</tbody>
+</table>
+</div> <!-- table responsive -->
+</div> <!-- Card body -->
+<div class="row">
+    <div class="col-xl-3"></div>
+    <div class="col-xl-5">
+
+<div *ngIf="editPayments=='Y'" class="card-body"  style="background-color: bisque!important;">
+    <h2 style="font-size:24px"><b>Record Payment</b></h2>
+    <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        class="flex-auto" style="width:180px;">
+        <mat-label>Payment Date (MM/DD/YYYY):</mat-label>
+        <input
+            matInput
+            id="payment_date" name="payment_date" [(ngModel)]="data.payData['payment_date']">
+        </mat-form-field>
+        <mat-form-field 
+        [ngClass]="formFieldHelpers"
+        class="flex-auto gt-xs:pr-3" style="width:250px;">
+        <mat-label>Bank Account</mat-label>
+        <mat-select  id="bank" name="bank" [(ngModel)]="data.payData['bank']">
+            <mat-option value="Wells">Wells Fargo</mat-option>
+            <mat-option value="BOA">Bank of America</mat-option>
+            <mat-option value="5/3">5/3 Bank</mat-option>
+            <mat-option value="Credit">Credit Memo</mat-option>
+        </mat-select>
+        </mat-form-field>
+        <mat-form-field 
+        [ngClass]="formFieldHelpers"
+        class="flex-auto gt-xs:pr-3" style="width:250px;">
+        <mat-label>Type</mat-label>
+        <mat-select  id="deposit_type" name="deposit_type" [(ngModel)]="data.payData['deposit_type']">
+            <mat-option value="Check Deposit">Check Deposit</mat-option>
+            <mat-option value="Wire">Wire Transfer</mat-option>
+            <mat-option value="ACH">ACH (Customer Initiated)</mat-option>
+            <mat-option value="EFT">EFT/ACH (NuAxess Initiated)</mat-option>
+            <mat-option value="Credit">Credit Memo</mat-option>
+        </mat-select>
+        </mat-form-field>
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        class="flex-auto" style="width:380px;">
+        <mat-label>Reference Number:</mat-label>
+        <input
+            matInput
+            id="reference_number" name="reference_number" [(ngModel)]="data.payData['reference_number']">
+        </mat-form-field>
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        class="flex-auto" style="width:380px;">
+        <mat-label>Applied To:</mat-label>
+        <input
+            matInput
+            id="applied_to" name="applied_to" [(ngModel)]="data.payData['applied_to']">
+        </mat-form-field>
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        class="flex-auto" style="width:180px;">
+        <mat-label>Amount:</mat-label>
+        <input
+            matInput
+            id="amount_received" name="amount_received" [(ngModel)]="data.payData['amount_received']">
+        </mat-form-field>
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        class="flex-auto">
+        <mat-label>Note:</mat-label>
+        <input
+            matInput
+            id="note" name="note" [(ngModel)]="data.payData['note']">
+        </mat-form-field>
+        <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+            <button (click)="showEditPayments()" mat-button>
+                Cancel
+            </button>
+            <button
+                class="px-6 ml-3"
+                mat-flat-button
+                [color]="'primary'" (click)="postPayment()">
+                Save
+            </button>
+        </div>
+    </form>
+</div>
+</div>
+                        
+</div>
     <div class="card card-body" style="margin-top:20px;">
         <div class="table-responsive">
             <h2 style="font-size: 24px;"><b>{{ data.month_id }} - Active Members (includes additions)</b>
@@ -1113,10 +1254,7 @@
 </div> <!-- table responsive -->
 </div> <!-- Card body -->
 </div> <!-- Col -->
-
-
 </div>
-
 <div class="row" *ngIf="data.additions.length!='0'">
     <div class="col-xl-2">
         &nbsp;

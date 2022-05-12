@@ -27,6 +27,7 @@ export class AddEmployeeComponent implements OnInit , OnDestroy {
     currentYear: any;
     email: any;
     user: any;
+    id: any;
 
     /**
      * Constructor
@@ -48,6 +49,8 @@ export class AddEmployeeComponent implements OnInit , OnDestroy {
       this._activatedRoute.data.subscribe(({ 
         data, menudata, userdata })=> { 
           this.data=data;
+          console.log(data)
+          this.id=this.data.company_id;
           if (this.data.user.force_logout>0) {
             localStorage.removeItem('uid');
             this._router.navigate(['/forced-off',this.data.user.force_logout]);
@@ -125,7 +128,8 @@ export class AddEmployeeComponent implements OnInit , OnDestroy {
     postForm() {
         this._dataService.postForm("post-add-employee-new", this.data.formData).subscribe((data:any)=>{
           if (data.error_code=="0") {
-            this._router.navigate(['/company-dashboard',data.id])
+              this._router.navigate(['/company-dashboard',data.id])
+//            this._router.navigate(['/company-dashboard',this.data.id])
           } else {     
 //            this.error=data.error_message
           }

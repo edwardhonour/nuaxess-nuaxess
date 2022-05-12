@@ -13,11 +13,11 @@ import { HttpClient } from '@angular/common/http';
 import { NgLocalization } from '@angular/common';
 
 @Component({
-  selector: 'app-company-dashboard',
-  templateUrl: './company-dashboard.component.html',
-  styleUrls: ['./company-dashboard.component.scss']
+  selector: 'app-company-payments',
+  templateUrl: './company-payments.component.html',
+  styleUrls: ['./company-payments.component.scss']
 })
-export class CompanyDashboardComponent implements OnInit, OnDestroy {
+export class CompanyPaymentsComponent implements OnInit, OnDestroy {
   navigation: Navigation;
   isScreenSmall: boolean;
   //term: any;
@@ -53,7 +53,6 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     docs: any;
     comp: any;
     payments: any;
-    editPayments: any;
 
     /**
      * Constructor
@@ -86,13 +85,6 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     }
   }
   
-  showEditPayments() {
-    if (this.editPayments=='Y') {
-       this.editPayments='N';
-    } else {
-      this.editPayments='Y'
-    }
-  }
 
   showMove() {
     if (this.move=='Y') {
@@ -169,7 +161,6 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
       this.adjust='N';
       this.editAdjust='N';
       this.payments='N';
-      this.editPayments='N';
       this.docs='N';
       this.comp='N';
 
@@ -401,15 +392,6 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
         });
       }
 
-      postPayment() {
-        this._dataService.postForm("post-payment", this.data['payData']).subscribe((data:any)=>{
-          if (data.error_code=="0") {
-            location.reload();
-          } else {     
-//            this.error=data.error_message
-          }
-        });
-      }
       postAdjustment() {
         this._dataService.postForm("post-adjustment", this.data['adjustData']).subscribe((data:any)=>{
           if (data.error_code=="0") {

@@ -151,4 +151,14 @@ export class CurrentTerminationsComponent implements OnInit, OnDestroy {
         });
       }
 
+      APAExcel() {
+        window.open(
+          "https://myna-docs.com/api/get_nuaxess_apa_terminations.php?id="+this.data.month_id);
+      }
+
+      GuardianExcel() {
+        window.open(
+          "https://myna-docs.com/api/get_nuaxess_guardian_terminations.php?id="+this.data.month_id);
+      }
+
 }

@@ -96,14 +96,6 @@
             </div>
             <div class="col-md-12">
                 <div style="margin-top: 20px !important;">
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2021-01']">January 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2021-02']">February 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2021-03']">March 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2021-04']">April 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2021-05']">May 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2021-06']">June 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2021-07']">July 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2021-08']">August 2021</button>
 <button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2021-09']">September 2021</button>
 <button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2021-10']">October 2021</button>
 <button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2021-11']">November 2021</button>
@@ -111,6 +103,8 @@
 <button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2022-01']">January 2022</button>
 <button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2022-02']">February 2022</button>
 <button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2022-03']">March 2022</button>
+<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2022-04']">April 2022</button>
+<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-additions','2022-05']">May 2022</button>
                 </div>
             </div>
             <div class="col-md-12">
@@ -120,46 +114,41 @@
                             <div class="col-xl-6">
                                 Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
                             </div>
-                            <div class="col-xl-6">
-                                <img (click)="exportexcel()" style="max-width: 60px;" src="assets/icons/excel.png">
+                            <div class="col-xl-3">
+                                <img (click)="APAExcel()" style="max-width: 60px;" src="assets/icons/excel.png"><br>APA Additions / Changes
                             </div>
+                            <div class="col-xl-3">
+                                <img (click)="GuardianExcel()" style="max-width: 60px;" src="assets/icons/excel.png"><br>Guardian Additions / Changes
+                            </div>                            
                         </div>
                     </div>
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Action</th>
-                                <th>Employee Code</th>
-                                <th>Dependent Code</th>
-                                <th>Member ID</th>
-                                <th>Client ID</th>
-                                <th>Company Name</th>
-                                <th>Last Name</th>
-                                <th>First Name</th>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Company</th>
                                 <th>DOB</th>
-                                <th>Gender</th>
+                                <th>SSN</th>
                                 <th>Eff Dt</th>
-                                <th>Term Dt</th>
                                 <th>Plan</th>
-                                <th>Level</th>
+                                <th>Coverage Level</th>
+                                <th>Price</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let m of data.list | filter: term | paginate: { currentPage: p , itemsPerPage: 25}">
-                                <td>{{ m.action }}</td>
-                                <td>{{ m.employee_code }}</td>
-                                <td>{{ m.dependent_code }}</td>
-                                <td>{{ m.apa_member_id }}</td>
-                                <td>{{ m.apa_client_id }}</td>
-                                <td>{{ m.company_name }}</td>
-                                <td>{{ m.last_name }}</td>
-                                <td>{{ m.first_name }}</td>
+                                <td>{{ m.employee_code }}<br>{{ m.dependent_code }}</td>
+                                <td>{{ m.last_name }}, {{ m.first_name }} {{ m.middle_initial }}</td>
+                                <td>{{ m.company_name }} ({{ m.client_id }})</td>
                                 <td>{{ m.dob }}</td>
-                                <td>{{ m.gender }}</td>
+                                <td>{{ m.ssn }}</td>
                                 <td>{{ m.eff_dt }}</td>
-                                <td>{{ m.term_dt }}</td>
-                                <td>{{ m.apa_plan }}</td>
+                                <td>{{ m.client_plan }}</td>
                                 <td>{{ m.coverage_level }}</td>
+                                <td>{{ m.coverage_price }}</td>
+                                <td><button [routerLink]="['/census-dashboard',m.id,'additions']" class="btn btn-primary">View</button></td>
                             </tr>
                         </tbody>
                     </table>

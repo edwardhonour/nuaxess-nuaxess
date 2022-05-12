@@ -58,7 +58,7 @@ export class NewSigninComponent implements OnInit {
           email     : ['', [Validators.required]],
           password  : ['', Validators.required],
           rememberMe: ['']
-      });
+      });ß
 
      if (localStorage.getItem('uid')!==undefined) {
        //-- Super Admin

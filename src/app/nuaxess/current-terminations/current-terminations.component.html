@@ -79,7 +79,7 @@
         <div class="flex-1 min-w-0">
             <div class="mt-2">
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    Terminations effective {{ data.month_id }}
+                    Terminations beginning {{ data.month_id }}
                 </h2>
                 <p>Note: Enrollement counts updated nightly.</p>
             </div>
@@ -96,14 +96,6 @@
             </div>
             <div class="col-md-12">
                 <div style="margin-top: 20px !important;">
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2021-01']">January 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2021-02']">February 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2021-03']">March 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2021-04']">April 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2021-05']">May 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2021-06']">June 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2021-07']">July 2021</button>
-<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2021-08']">August 2021</button>
 <button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2021-09']">September 2021</button>
 <button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2021-10']">October 2021</button>
 <button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2021-11']">November 2021</button>
@@ -111,6 +103,8 @@
 <button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2022-01']">January 2022</button>
 <button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2022-02']">February 2022</button>
 <button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2022-03']">March 2022</button>
+<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2022-04']">April 2022</button>
+<button style="margin-left: 20px; margin-bottom: 20px;" class="btn btn-warning" [routerLink]="['/current-terminations','2022-05']">May 2022</button>
                 </div>
             </div>
             <div class="col-md-12">
@@ -120,9 +114,12 @@
                             <div class="col-xl-6">
                                 Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
                             </div>
-                            <div class="col-xl-6">
-                                <img (click)="exportexcel()" style="max-width: 60px;" src="assets/icons/excel.png">
+                            <div class="col-xl-2">
+                                <img (click)="exportexcel()" style="max-width: 60px;" src="assets/icons/excel.png"><br>APA Terminations
                             </div>
+                            <div class="col-xl-2">
+                                <img (click)="exportexcel()" style="max-width: 60px;" src="assets/icons/excel.png"><br>Guardian Terminations
+                            </div>                            
                         </div>
                     </div>
                     <table class="table table-striped">
@@ -131,11 +128,12 @@
                                 <th>Employee ID</th>
                                 <th>Name</th>
                                 <th>Company</th>
-                                <th>Dates</th>
+                                <th>Eff Date</th>
+                                <th>Term Date</th>
                                 <th>Plan</th>
                                 <th>Coverage Level</th>
                                 <th>Price</th>
-                                <th></th>
+             <!--                   <th></th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -143,11 +141,12 @@
                                 <td>{{ m.employee_code }}<br>{{ m.dependent_code }}</td>
                                 <td>{{ m.last_name }}, {{ m.first_name }} {{ m.middle_initial }}</td>
                                 <td>{{ m.company_name }} ({{ m.client_id }})</td>
+                                <td>{{ m.eff_dt }}</td>
                                 <td>{{ m.term_dt }}</td>
                                 <td>{{ m.client_plan }}</td>
                                 <td>{{ m.coverage_level }}</td>
                                 <td>{{ m.coverage_price }}</td>
-                                <td><button [routerLink]="['/employee_dashboard',m.id]" class="btn btn-primary">View</button></td>
+      <!--                          <td><button [routerLink]="['/employee-dashboard',m.employee-id]" class="btn btn-primary">View</button></td> -->
                             </tr>
                         </tbody>
                     </table>

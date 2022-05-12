@@ -135,6 +135,7 @@ import { BrokerListComponent } from './nuaxess/broker-list/broker-list.component
 import { AddEmployeeComponent } from './nuaxess/add-employee/add-employee.component';
 import { AddQuotedPlanComponent } from './nuaxess/add-quoted-plan/add-quoted-plan.component';
 import { EditQuotedPlanComponent } from './nuaxess/edit-quoted-plan/edit-quoted-plan.component';
+import { CompanyPaymentsComponent } from './nuaxess/company-payments/company-payments.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -228,7 +229,8 @@ const routerConfig: ExtraOptions = {
         BrokerListComponent,
         AddEmployeeComponent,
         AddQuotedPlanComponent,
-        EditQuotedPlanComponent
+        EditQuotedPlanComponent,
+        CompanyPaymentsComponent
     ],
     imports     : [
         BrowserModule,
