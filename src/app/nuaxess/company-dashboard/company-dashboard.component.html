@@ -361,7 +361,10 @@
 <!--                    <h2 *ngIf="data['INVOICE-PRINT']!='0'" style="font-size: 24px;"><b>Export Profile</b></h2> -->
             </div>
             <div class="col-xl-3">
-                <button *ngIf="data['INVOICE-PRINT']=='0'" (click)="printPDF();" class="btn" style="margin-left: 20px;">PDF Invoice</button><br>
+                <button *ngIf="data['INVOICE-PRINT']=='0'" (click)="printPDF();" class="btn" style="margin-left: 20px;">Display Invoice</button><br>
+                <button *ngIf="data['INVOICE-PRINT']=='0'" (click)="makePDF();" class="btn" style="margin-left: 20px;">Make Invoice</button><br>
+                <button *ngIf="data['INVOICE-PRINT']=='0'" (click)="sendPDF();" class="btn" style="margin-left: 20px;">Send Invoice</button><br>
+                <button *ngIf="data['INVOICE-PRINT']=='0'" (click)="sendLate();" class="btn" style="margin-left: 20px;">Send Late</button><br>
                 <button *ngIf="data['INVOICE-PRINT']=='0'" (click)="getProfile(data.id,'enrolled');" class="btn" style="margin-left: 20px;">XLS Profile</button>
                 <button *ngIf="data['INVOICE-PRINT']=='1'" (click)="getProfile(data.id,'enrolled');" class="btn btn-primary" style="margin-left: 20px;">XLS Profile</button>
             </div>
@@ -1025,8 +1028,8 @@
     <table *ngIf="payments=='Y'" class="table table-responsive">
         <thead>
             <tr>
-                <th>Reference</th><th>Date</th><th>Type</th><th>Amounts</th>
-                <th>Applied To</th><th>Bank</th><th>Balance</th><th></th>
+                <th>Reference</th><th>Date</th><th>Type</th><th>Invoice</th><th>Amount</th>
+                <th>Status</th><th>Bank</th><th>Balance</th><th></th>
             </tr>
         </thead>
                 <tbody>
@@ -1047,7 +1050,7 @@
         {{ m.amount_received }}
     </td>
     <td>
-        {{ m.applied_to }}
+        {{ m.status }}
     </td>
     <td>
         {{ m.bank }}
