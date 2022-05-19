@@ -402,15 +402,15 @@
         matInput
         id="invoice_zip" name="invoice_zip" [(ngModel)]="data.formData['invoice_zip']">
 </mat-form-field>
-<mat-form-field
+<!-- <mat-form-field
 [ngClass]="formFieldHelpers"
 class="flex-auto">
 <mat-label>EFT Account Name</mat-label>
 <input
     matInput
     id="edf_account_name" name="edf_account_name" [(ngModel)]="data.formData['edf_account_name']">
-</mat-form-field>
-<mat-form-field
+</mat-form-field> -->
+<!-- <mat-form-field
 [ngClass]="formFieldHelpers"
 class="flex-auto">
 <mat-label>EFT Bank Name</mat-label>
@@ -418,8 +418,8 @@ class="flex-auto">
     matInput
     #postalCode
     id="edf_bank_name" name="edf_bank_name" [(ngModel)]="data.formData['edf_bank_name']">
-</mat-form-field>
- <mat-form-field
+</mat-form-field> -->
+ <!-- <mat-form-field
 [ngClass]="formFieldHelpers"
 class="flex-auto gt-xs:pr-3">
 <mat-label>EFT Account Type</mat-label>
@@ -427,26 +427,36 @@ class="flex-auto gt-xs:pr-3">
     <mat-option value="Company">Checking</mat-option>
     <mat-option value="Organization">Savings</mat-option>
 </mat-select>
-</mat-form-field>
+</mat-form-field> -->
 
 
-<mat-form-field
+<!-- <mat-form-field
 [ngClass]="formFieldHelpers"
 class="flex-auto">
 <mat-label>Routing Number</mat-label>
 <input
     matInput
     id="edf_routing" name="edf_routing" [(ngModel)]="data.formData['edf_routing']">
-</mat-form-field>
+</mat-form-field> -->
 
-<mat-form-field
+<!-- <mat-form-field
 [ngClass]="formFieldHelpers"
 class="flex-auto">
 <mat-label>Account Number</mat-label>
 <input
     matInput
     id="edf_account" name="edf_account" [(ngModel)]="data.formData['edf_account']">
+</mat-form-field> -->
+<mat-form-field
+[ngClass]="formFieldHelpers"
+class="flex-auto gt-xs:pr-3">
+<mat-label>EFT Flag</mat-label>
+<mat-select  id="flag_eft" name="flag_eft" [(ngModel)]="data.formData['flag_eft']">
+    <mat-option value="Yes">Yes</mat-option>
+    <mat-option value="No">No</mat-option>
+</mat-select>
 </mat-form-field>
+
                 <mat-form-field
                 [ngClass]="formFieldHelpers"
                 class="flex-auto gt-md:pr-3">
