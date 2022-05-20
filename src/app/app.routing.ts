@@ -84,6 +84,7 @@ import { BrokerListComponent } from './nuaxess/broker-list/broker-list.component
 import { AddEmployeeComponent } from './nuaxess/add-employee/add-employee.component';
 import { AddQuotedPlanComponent } from './nuaxess/add-quoted-plan/add-quoted-plan.component';
 import { EditQuotedPlanComponent } from './nuaxess/edit-quoted-plan/edit-quoted-plan.component';
+import { ReportsComponent } from './nuaxess/reports/reports.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -130,6 +131,7 @@ export const appRoutes: Route[] = [
             {path: 'unlock-session', loadChildren: () => import('app/modules/auth/unlock-session/unlock-session.module').then(m => m.AuthUnlockSessionModule)},
             {path: 'sadmin', component: AdminDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'user-logout', component: UserLogoutComponent },
+            {path: 'reports', component: ReportsComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'info', component: MemberInfoComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'family', component: MemberFamilyComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'plans', component: MemberPlansComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
