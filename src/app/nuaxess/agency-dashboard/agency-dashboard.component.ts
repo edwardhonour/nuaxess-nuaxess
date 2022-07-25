@@ -18,11 +18,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 //===================================================
 
 @Component({
-  selector: 'app-employee-dashboard',
-  templateUrl: './employee-dashboard.component.html',
-  styleUrls: ['./employee-dashboard.component.scss']
+  selector: 'app-agency-dashboard',
+  templateUrl: './agency-dashboard.component.html',
+  styleUrls: ['./agency-dashboard.component.scss']
 })
-export class EmployeeDashboardComponent implements OnInit, OnDestroy {
+export class AgencyDashboardComponent implements OnInit, OnDestroy {
   navigation: Navigation;
   isScreenSmall: boolean;
   term: any;
@@ -31,11 +31,6 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
   formFieldHelpers: string[] = [''];
   adding: any;
   qedit: any;
-  med_edit: any;
-  dental_edit: any;
-  vision_edit: any;
-  add_edit: any;
-  life_edit: any;
 
     data: any;
     selectedProject: string = 'ACME Corp. Backend App';
@@ -52,6 +47,7 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
     index: any;
     dsc: any;
     doc_title: any;
+    error: any;
 //===================================================
 // END UPLOAD GRAB #2
 //===================================================
@@ -87,60 +83,6 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
         }
     }
    
-    editMed() {
-      if (this.med_edit=='Y') {
-        this.med_edit='N'
-      } else {
-        this.med_edit='Y'
-      }
-    }
-
-    editDental() {
-      if (this.dental_edit=='Y') {
-        this.dental_edit='N'
-      } else {
-        this.dental_edit='Y'
-      }
-    }
-    getEffDate(e: any) {
-      if (this.data.medData['action']=='ADD'||this.data.medData['action']=='CHANGE')  {
-           if (this.data.medData['month_id']=='2022-05') this.data.medData['eff_dt']='05/01/2022';
-           if (this.data.medData['month_id']=='2022-06') this.data.medData['eff_dt']='06/01/2022';
-           if (this.data.medData['month_id']=='2022-07') this.data.medData['eff_dt']='07/01/2022';
-           if (this.data.medData['month_id']=='2022-08') this.data.medData['eff_dt']='08/01/2022';
-           if (this.data.medData['month_id']=='2022-09') this.data.medData['eff_dt']='09/01/2022';
-           if (this.data.medData['month_id']=='2022-10') this.data.medData['eff_dt']='10/01/2022';
-           if (this.data.medData['month_id']=='2022-11') this.data.medData['eff_dt']='11/01/2022';
-           if (this.data.medData['month_id']=='2022-12') this.data.medData['eff_dt']='12/01/2022';
-      } else {
-           if (this.data.medData['month_id']=='2022-05') this.data.medData['eff_dt']='05/31/2022';
-           if (this.data.medData['month_id']=='2022-06') this.data.medData['eff_dt']='06/30/2022';
-           if (this.data.medData['month_id']=='2022-07') this.data.medData['eff_dt']='07/31/2022';
-           if (this.data.medData['month_id']=='2022-08') this.data.medData['eff_dt']='08/31/2022';
-           if (this.data.medData['month_id']=='2022-09') this.data.medData['eff_dt']='09/30/2022';
-           if (this.data.medData['month_id']=='2022-10') this.data.medData['eff_dt']='10/31/2022';
-           if (this.data.medData['month_id']=='2022-11') this.data.medData['eff_dt']='11/30/2022';
-           if (this.data.medData['month_id']=='2022-12') this.data.medData['eff_dt']='12/31/2022';
-      }
-
-    }
-    editAdd() {
-      if (this.add_edit=='Y') {
-        this.add_edit='N'
-      } else {
-        this.add_edit='Y'
-      }
-    }
-
-    editLife() {
-      if (this.life_edit=='Y') {
-        this.life_edit='N'
-      } else {
-        this.life_edit='Y'
-      }
-    }
-
-  
     fixCont() {
       if (this.qedit=='Y') {
         this.qedit='N'
@@ -166,17 +108,11 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
      //===================================================
     // UPLOAD GRAB #4
     //===================================================
-      
       this.dsc='';    
       this.doc_title='';        
       this.uploading='N';
       this.showterm='N';
-      this.med_edit='N';
-      this.dental_edit='N';
-      this.vision_edit='N';
-      this.add_edit='N';
-      this.life_edit='N';
-
+      this.error="";
      //===================================================
     // END UPLOAD GRAB #4
     //===================================================
@@ -320,26 +256,19 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
     }
 
     postForm() {
-        this._dataService.postForm("post-edit-employee", this.data).subscribe((data:any)=>{
+      if (confirm('Are you sure you want to create this account?')) {
+
+
+        this._dataService.postForm("post-broker-user", this.data.formData).subscribe((data:any)=>{
           if (data.error_code=="0") {
             location.reload();
 //            this._router.navigate(['/org-dashboard',data.id])
           } else {     
-//            this.error=data.error_message
+            this.error=data.error_message
           }
         });
       }
-
-      postMed() {
-        this._dataService.postForm("post-edit-med", this.data['medData']).subscribe((data:any)=>{
-          if (data.error_code=="0") {
-            location.reload();
-          } else {     
-//            this.error=data.error_message
-          }
-        });
       }
-
 
       //------------------------------
       // Upload Form
@@ -366,11 +295,13 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
             {
               let formData = new FormData();
               formData.append('file', file, file.name);
-              formData.append('employee_id',this.data.id);
+              formData.append('broker_id',this.data.id);
               formData.append('user_id',this.data.user.id);
               formData.append('dsc',this.dsc);
               formData.append('doc_title',this.doc_title);
               this.file_data=formData              
+              console.log("FILE DATA")
+              console.log(this.file_data)
             }else{
               alert('File size exceeds 8 MB. Please choose less than 8 MB');
             }
@@ -383,8 +314,14 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
       
       uploadFile()
         {
+
+          this.file_data.append('broker_id',this.data.formData.id);
+          this.file_data.append('user_id',this.data.user.id);
+          this.file_data.append('dsc',this.dsc);
+          this.file_data.append('doc_title',this.doc_title); 
+
           console.log(this.file_data);
-          this.http.post(this.ip+'upload.php',this.file_data)
+          this.http.post(this.ip+'upload_broker.php',this.file_data)
           .subscribe(res => {
             location.reload()
             console.log(res.toString)
@@ -398,6 +335,34 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
           window.open('https://myna-docs.com/?id='+id,'_new')
         }
         
+        notifyEmail() {
+
+          if (confirm("Are you sure you want to send this invitation using Email?")) {
+    
+            this._dataService.postForm("admin-invite", this.data['user2']).subscribe((data:any)=>{
+              if (data.error_code=="0") {
+                    alert('Email Message Sent')
+              } else {     
+                alert('ERROR: Email Message WAS NOT Sent!')
+              }
+            });
+          
+          }
+    
+        }
+
+        notifyBrokerEmail() {
+          if (confirm("Are you sure you want to send this invitation using Email?")) {
+            this._dataService.postForm("broker-admin-invite", this.data).subscribe((data:any)=>{
+              if (data.error_code=="0") {
+                    location.reload()
+              } else {     
+                alert('ERROR: Email Message WAS NOT Sent!')
+              }
+            });
+          }
+        }
+
         showUpload() {
           if (this.uploading=='Y') {
             this.uploading="N";

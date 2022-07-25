@@ -186,6 +186,100 @@
                     matPrefix
                     [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
             </mat-form-field>
+            <mat-form-field
+            [ngClass]="formFieldHelpers"
+            class="flex-auto gt-xs:pr-3">
+            <mat-label>Effective Month</mat-label>
+            <mat-select  id="start_month_id" name="start_month_id" [(ngModel)]="data.formData['start_month_id']">
+                <mat-option value="2021-01">2021-01</mat-option>
+                <mat-option value="2021-02">2021-02</mat-option>
+                <mat-option value="2021-03">2021-03</mat-option>
+                <mat-option value="2021-04">2021-04</mat-option>
+                <mat-option value="2021-05">2021-05</mat-option>
+                <mat-option value="2021-06">2021-06</mat-option>
+                <mat-option value="2021-07">2021-07</mat-option>
+                <mat-option value="2021-08">2021-08</mat-option>
+                <mat-option value="2021-09">2021-09</mat-option>
+                <mat-option value="2021-10">2021-10</mat-option>
+                <mat-option value="2021-11">2021-11</mat-option>
+                <mat-option value="2021-12">2021-12</mat-option>
+                <mat-option value="2022-01">2022-01</mat-option>
+                <mat-option value="2022-02">2022-02</mat-option>
+                <mat-option value="2022-03">2022-03</mat-option>
+                <mat-option value="2022-04">2022-04</mat-option>
+                <mat-option value="2022-05">2022-05</mat-option>
+                <mat-option value="2022-06">2022-06</mat-option>
+                <mat-option value="2022-07">2022-07</mat-option>
+                <mat-option value="2022-08">2022-08</mat-option>
+                <mat-option value="2022-09">2022-09</mat-option>
+                <mat-option value="2022-10">2022-10</mat-option>
+                <mat-option value="2022-11">2022-11</mat-option>
+                <mat-option value="2022-12">2022-12</mat-option>
+                <mat-option value="2023-01">2023-01</mat-option>
+                <mat-option value="2023-02">2023-02</mat-option>
+                <mat-option value="2023-03">2023-03</mat-option>
+                <mat-option value="2023-04">2023-04</mat-option>
+                <mat-option value="2023-05">2023-05</mat-option>
+                <mat-option value="2023-06">2023-06</mat-option>
+                <mat-option value="2023-07">2023-07</mat-option>
+                <mat-option value="2023-08">2023-08</mat-option>
+                <mat-option value="2023-09">2023-09</mat-option>
+                <mat-option value="2023-10">2023-10</mat-option>
+                <mat-option value="2023-11">2023-11</mat-option>
+                <mat-option value="2023-12">2023-12</mat-option>
+            </mat-select>
+            <mat-icon
+                class="icon-size-5"
+                matPrefix
+                [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+        </mat-form-field>
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        class="flex-auto gt-xs:pr-3">
+        <mat-label>End Month</mat-label>
+        <mat-select  id="end_month_id" name="end_month_id" [(ngModel)]="data.formData['end_month_id']">
+            <mat-option value="2021-01">2021-01</mat-option>
+            <mat-option value="2021-02">2021-02</mat-option>
+            <mat-option value="2021-03">2021-03</mat-option>
+            <mat-option value="2021-04">2021-04</mat-option>
+            <mat-option value="2021-05">2021-05</mat-option>
+            <mat-option value="2021-06">2021-06</mat-option>
+            <mat-option value="2021-07">2021-07</mat-option>
+            <mat-option value="2021-08">2021-08</mat-option>
+            <mat-option value="2021-09">2021-09</mat-option>
+            <mat-option value="2021-10">2021-10</mat-option>
+            <mat-option value="2021-11">2021-11</mat-option>
+            <mat-option value="2021-12">2021-12</mat-option>
+            <mat-option value="2022-01">2022-01</mat-option>
+            <mat-option value="2022-02">2022-02</mat-option>
+            <mat-option value="2022-03">2022-03</mat-option>
+            <mat-option value="2022-04">2022-04</mat-option>
+            <mat-option value="2022-05">2022-05</mat-option>
+            <mat-option value="2022-06">2022-06</mat-option>
+            <mat-option value="2022-07">2022-07</mat-option>
+            <mat-option value="2022-08">2022-08</mat-option>
+            <mat-option value="2022-09">2022-09</mat-option>
+            <mat-option value="2022-10">2022-10</mat-option>
+            <mat-option value="2022-11">2022-11</mat-option>
+            <mat-option value="2022-12">2022-12</mat-option>
+            <mat-option value="2023-01">2023-01</mat-option>
+            <mat-option value="2023-02">2023-02</mat-option>
+            <mat-option value="2023-03">2023-03</mat-option>
+            <mat-option value="2023-04">2023-04</mat-option>
+            <mat-option value="2023-05">2023-05</mat-option>
+            <mat-option value="2023-06">2023-06</mat-option>
+            <mat-option value="2023-07">2023-07</mat-option>
+            <mat-option value="2023-08">2023-08</mat-option>
+            <mat-option value="2023-09">2023-09</mat-option>
+            <mat-option value="2023-10">2023-10</mat-option>
+            <mat-option value="2023-11">2023-11</mat-option>
+            <mat-option value="2023-12">2023-12</mat-option>
+        </mat-select>
+        <mat-icon
+            class="icon-size-5"
+            matPrefix
+            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+    </mat-form-field>         
                 <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
                     <button 
                     [routerLink]="['/company-dashboard',data.formData['company_id']]" 

@@ -85,6 +85,9 @@ import { AddEmployeeComponent } from './nuaxess/add-employee/add-employee.compon
 import { AddQuotedPlanComponent } from './nuaxess/add-quoted-plan/add-quoted-plan.component';
 import { EditQuotedPlanComponent } from './nuaxess/edit-quoted-plan/edit-quoted-plan.component';
 import { ReportsComponent } from './nuaxess/reports/reports.component';
+import { AddAgencyComponent } from './nuaxess/add-agency/add-agency.component';
+import { AgencyListComponent } from './nuaxess/agency-list/agency-list.component';
+import { AgencyDashboardComponent } from './nuaxess/agency-dashboard/agency-dashboard.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -168,6 +171,10 @@ export const appRoutes: Route[] = [
             {path: 'edit-user/:id', component: EditUserComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'edit-org/:id', component: EditQuoteComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'employee-lookup', component: EmployeeLookupComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'add-company', component: AddCompanyComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'add-agency', component: AddAgencyComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'agency-list', component: AgencyListComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
+            {path: 'agency-dashboard/:id', component: AgencyDashboardComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'add-company', component: AddCompanyComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'add-company/:id', component: AddCompanyComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },
             {path: 'add-company/:id/:id2', component: AddCompanyComponent, resolve: { menudata: MenuResolver, data: DataResolver, userdata: UserResolver }, },

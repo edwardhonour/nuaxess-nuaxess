@@ -137,6 +137,9 @@ import { AddQuotedPlanComponent } from './nuaxess/add-quoted-plan/add-quoted-pla
 import { EditQuotedPlanComponent } from './nuaxess/edit-quoted-plan/edit-quoted-plan.component';
 import { CompanyPaymentsComponent } from './nuaxess/company-payments/company-payments.component';
 import { ReportsComponent } from './nuaxess/reports/reports.component';
+import { AddAgencyComponent } from './nuaxess/add-agency/add-agency.component';
+import { AgencyListComponent } from './nuaxess/agency-list/agency-list.component';
+import { AgencyDashboardComponent } from './nuaxess/agency-dashboard/agency-dashboard.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -232,7 +235,10 @@ const routerConfig: ExtraOptions = {
         AddQuotedPlanComponent,
         EditQuotedPlanComponent,
         CompanyPaymentsComponent,
-        ReportsComponent
+        ReportsComponent,
+        AddAgencyComponent,
+        AgencyListComponent,
+        AgencyDashboardComponent
     ],
     imports     : [
         BrowserModule,

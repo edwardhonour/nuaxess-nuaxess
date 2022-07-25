@@ -101,6 +101,13 @@
     <!-- Main -->
 
 <div class="container-fluid p-1" style="margin-top: 10px;">
+    <div class="row" *ngIf="data.org.org_name!=''">
+        <div class="col-xl-2">
+        </div>        
+        <div class="col-xl-10">
+            <h2 style="font-size:24px;"><b>PEO: {{ data.org.org_name }}</b></h2>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xl-2">
 
@@ -611,6 +618,22 @@
                 </th>
                 <td>
                     {{ m.fam_price }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Effective Month
+                </th>
+                <td>
+                    {{ m.start_month_id }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Ending Month
+                </th>
+                <td>
+                    {{ m.end_month_id }}
                 </td>
             </tr>
             <tr>
@@ -1156,7 +1179,8 @@
         <div class="table-responsive">
             <h2 style="font-size: 24px;"><b>{{ data.month_id }} - Active Members (includes additions)</b>
             <button [routerLink]="['/add-employee', 0, data.id]" class="btn btn-primary" style="margin-left: 50px;">Enroll Member</button>
-            </h2>
+            <button [routerLink]="['/add-employee', 0, data.id]" class="btn btn-primary" style="margin-left: 50px;">Add Employee Only</button>
+        </h2>
         <div class="col-lg-6 py-2">
             Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
         </div>
@@ -1479,6 +1503,67 @@
            &nbsp;
     </div>
     <div class="col-md-12 col-xl-10">
+        <div class="card card-body" style="margin-top:20px;">
+            <div class="table-responsive">
+                <h2 style="font-size: 24px;"><b>Inactive Employees</b>
+                 <button [routerLink]="['/add-employee', 0, data.id]" class="btn btn-primary" style="margin-left: 50px;">Add Employee Only</button>
+            </h2>
+            <div class="col-lg-6 py-2">
+                Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
+            </div>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            Employee ID
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Gender
+                        </th>
+                        <th>
+                            DOB
+                        </th>
+                        <th>
+                            Hire Date
+                        </th>
+                        <th>
+                            Termination Date
+                        </th>
+                        <th>            
+                        </th>
+                    </tr>
+                </thead>
+                        <tbody>
+        <tr *ngFor="let m of data.inactive | filter: term" [ngStyle]="{'background-color':m.subject === '' ? '#FFFFFF' : '#FCE5EB' }">
+            <td>
+                {{ m.employee_code }}<br>{{ m.dependent_code }}
+            </td>
+            <td>
+                {{ m.last_name }},<br>{{ m.first_name }}
+            </td>
+            <td>
+                {{ m.gender }}
+            </td>
+            <td>
+                {{ m.dob }}
+            </td>
+            <td>
+                {{ m.date_hired }}
+            </td>
+            <td>
+                {{ m.term_date }}
+            </td>
+            <th>
+                <button [routerLink]="['/employee-dashboard',m.id]" class="btn btn-primary">Dashboard</button>   
+            </th>
+        </tr>
+    </tbody>
+    </table>
+    </div> <!-- table responsive -->
+    </div> <!-- Card body -->
     <!--    <div *ngIf="data['MOVE-EMPLOYEES']=='0'" class="card card-body" style="margin-top:20px;">
             <div class="table-responsive">
                 <h2 style="font-size: 24px;"><b>Moveable Census Employees</b>

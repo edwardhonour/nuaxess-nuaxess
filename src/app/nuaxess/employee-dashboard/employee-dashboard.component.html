@@ -464,57 +464,304 @@
         </div>
         <!-- End Upload Grab #1 -->
 </div>
-<div class="card card-body"  style="margin-top:20px;">
-    <div class="table-responsive">
-        <h2 class="h2" style="font-size: 24px;">Benefits</h2>
-        <table class="table table-responsive table-striped">
-            <thead>
-                <tr>
-                    <th>
-                        Plan
-                    </th>
-                    <th>
-                        Eff Dt
-                    </th>
-                    <th>
-                        Term Dt
-                    </th>
-                    <th>
-                        Coverage Level
-                    </th>
-                    <th>
-                        Price
-                    </th>
-                    <th  *ngIf="data.user.org_id!='17'">
-    
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-    <tr *ngFor="let m of data.census">
-        <td>
-            {{ m.client_plan }}
-        </td>
-        <td>
-            {{ m.eff_dt }}
-        </td>
-        <td>
-            {{ m.term_dt }}
-        </td>
-        <td>
-            {{ m.coverage_level }}
-        </td>
-        <td>
-            {{ m.coverage_price }}
-        </td>
-        <th *ngIf="data.user.org_id!='17'">
-            <button *ngIf="m.term_dt==''" (click)="termEmployee(m.id, m.client_plan)" class="btn btn-danger">Terminate Plan</button>
-        </th> 
-    </tr>
-            </tbody>
-        </table>
-     </div>
+<div *ngIf="data.medical.length>0" class="card" style="margin-top:20px;">
+    <h2 class="h2" style="font-size: 24px;"></h2>
+    <div class="card-body">
+        <div class="table-responsive">
+            <h2 class="h2" style="font-size: 24px;">Medical</h2>
+            <table class="table table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Plan
+                        </th>
+                        <th>
+                            Eff Dt
+                        </th>
+                        <th>
+                            Term Dt
+                        </th>
+                        <th>
+                            Coverage
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+        <tr *ngFor="let m of data.medical">
+            <td>
+                {{ m.plan_id }}
+            </td>
+            <td>
+                {{ m.coverage_start }}
+            </td>
+            <td>
+                {{ m.term_dt }}
+            </td>
+            <td>
+                {{ m.plan_type }}
+            </td>
+            <td>
+                {{ m.peo_premium }}
+            </td>
+        </tr>
+                </tbody>
+            </table>
+         </div>    
+         <button *ngIf="med_edit=='N'"  class="btn btn-primary" (click)="editMed()">Edit Medical</button>    
+        <div *ngIf="med_edit=='Y'" class="card card-body">
+            <h2 style="font-size:20px;">Add/Change Medical Coverage</h2>
+            <form class="flex flex-col mt-1 p-4 pb-4 bg-card rounded-2xl shadow overflow-hidden" autocomplete="off">
+                <div class="flex flex-col gt-xs:flex-row">
+                <div class="form-group p-3">
+                    <label>Action</label>
+                    <select  class="form-control" id="action" name="action" [(ngModel)]="data.medData['action']">
+                        <option *ngIf="data.medical_plan==''" value="ADD">Add Coverage</option>
+                        <option *ngIf="data.medical_plan!=''" value="TERM">End Coverage</option>
+                        <option *ngIf="data.medical_plan!=''" value="CHANGE">Change Coverage</option>
+                    </select>
+                </div>
+
+                <div *ngIf="data.medData['action']!=''" class="form-group p-3">
+                    <label>Month Effective</label>
+                    <select  class="form-control"  id="month_id" (change)="getEffDate()" name="month_id" [(ngModel)]="data.medData['month_id']">
+                        <option value="2022-05">2022-05</option>
+                        <option value="2022-06">2022-06</option>
+                        <option value="2022-07">2022-07</option>
+                        <option value="2022-08">2022-08</option>
+                        <option value="2022-09">2022-09</option>
+                        <option value="2022-10">2022-10</option>
+                    </select>
+                </div>
+
+                <div *ngIf="data.medData['action']!=''" class="form-group p-3">
+                    <label>Effective Date</label>
+                    <input type="text" class="form-control"  id="eff_dt" name="eff_dt" [(ngModel)]="data.medData['eff_dt']">
+                </div>
+                
+                <div *ngIf="data.medData['action']!=''&&data.medData['action']!='TERM'" class="form-group p-3">
+                    <label>Plan</label>
+                    <select  class="form-control"  id="client_plan" name="client_plan" [(ngModel)]="data.medData['client_plan']">
+                        <option *ngFor="let m of data.medical_plans" value="{{ m.plan_code }}">{{ m.plan_code }}</option>
+                    </select>
+                </div>
+
+                <div *ngIf="data.medData['action']!=''&&data.medData['action']!='TERM'" class="form-group p-3">
+                    <label>Coverage Level</label>
+                    <select  class="form-control"  id="coverage_level" name="coverage_level" [(ngModel)]="data.medData['coverage_level']">
+                        <option value="EE">Employee Only</option>
+                        <option value="ES">Employee & Spouse</option>
+                        <option value="EC">Employee & Children</option>
+                        <option value="FAM">Family</option>
+                    </select>
+                </div>
+
+            <button style="margin-top:20px; margin-left:20px;" (click)="editMed()" mat-raised-button>
+                Cancel
+            </button>              
+            <button  *ngIf="data.medData['action']!=''" style="margin-top:20px; margin-left:20px;" (click)="postMed()" mat-raised-button color="primary">
+                Save
+            </button>  
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+<div *ngIf="data.dental.length>0" class="card" style="margin-top:20px;">
+    <h2 class="h2" style="font-size: 24px;"></h2>
+    <div class="card-body">
+        <div class="table-responsive">
+            <h2 class="h2" style="font-size: 24px;">Dental</h2>
+            <table class="table table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Plan
+                        </th>
+                        <th>
+                            Eff Dt
+                        </th>
+                        <th>
+                            Term Dt
+                        </th>
+                        <th>
+                            Coverage
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+        <tr *ngFor="let m of data.dental">
+            <td>
+                {{ m.plan_id }}
+            </td>
+            <td>
+                {{ m.coverage_start }}
+            </td>
+            <td>
+                {{ m.term_dt }}
+            </td>
+            <td>
+                {{ m.plan_type }}
+            </td>
+            <td>
+                {{ m.peo_premium }}
+            </td>
+        </tr>
+                </tbody>
+            </table>
+         </div>        
+    </div>
+</div>
+<div *ngIf="data.vision.length>0" class="card" style="margin-top:20px;">
+    <h2 class="h2" style="font-size: 24px;"></h2>
+    <div class="card-body">
+        <div class="table-responsive">
+            <h2 class="h2" style="font-size: 24px;">Vision</h2>
+            <table class="table table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Plan
+                        </th>
+                        <th>
+                            Eff Dt
+                        </th>
+                        <th>
+                            Term Dt
+                        </th>
+                        <th>
+                            Coverage
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+        <tr *ngFor="let m of data.vision">
+            <td>
+                {{ m.plan_id }}
+            </td>
+            <td>
+                {{ m.coverage_start }}
+            </td>
+            <td>
+                {{ m.term_dt }}
+            </td>
+            <td>
+                {{ m.plan_type }}
+            </td>
+            <td>
+                {{ m.peo_premium }}
+            </td>
+        </tr>
+                </tbody>
+            </table>
+         </div>        
+    </div>
+</div>
+<div *ngIf="data.add.length>0" class="card" style="margin-top:20px;">
+    <h2 class="h2" style="font-size: 24px;"></h2>
+    <div class="card-body">
+        <div class="table-responsive">
+            <h2 class="h2" style="font-size: 24px;">AD&D</h2>
+            <table class="table table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Plan
+                        </th>
+                        <th>
+                            Eff Dt
+                        </th>
+                        <th>
+                            Term Dt
+                        </th>
+                        <th>
+                            Coverage
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+        <tr *ngFor="let m of data.add">
+            <td>
+                {{ m.plan_id }}
+            </td>
+            <td>
+                {{ m.coverage_start }}
+            </td>
+            <td>
+                {{ m.term_dt }}
+            </td>
+            <td>
+                {{ m.plan_type }}
+            </td>
+            <td>
+                {{ m.peo_premium }}
+            </td>
+        </tr>
+                </tbody>
+            </table>
+         </div>        
+    </div>
+</div>
+<div *ngIf="data.life.length>0" class="card" style="margin-top:20px;">
+    <h2 class="h2" style="font-size: 24px;"></h2>
+    <div class="card-body">
+        <div class="table-responsive">
+            <h2 class="h2" style="font-size: 24px;">Life</h2>
+            <table class="table table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Plan
+                        </th>
+                        <th>
+                            Eff Dt
+                        </th>
+                        <th>
+                            Term Dt
+                        </th>
+                        <th>
+                            Coverage
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+        <tr *ngFor="let m of data.life">
+            <td>
+                {{ m.plan_id }}
+            </td>
+            <td>
+                {{ m.coverage_start }}
+            </td>
+            <td>
+                {{ m.term_dt }}
+            </td>
+            <td>
+                {{ m.plan_type }}
+            </td>
+            <td>
+                {{ m.peo_premium }}
+            </td>
+        </tr>
+                </tbody>
+            </table>
+         </div>        
+    </div>
+</div>
+
 <div *ngIf="showterm=='Y'" class="card card-body"  style="margin-top:20px;">
     <div class="table-responsive">
         <h2 class="h2" style="font-size: 24px;">Schedule Plan Termination</h2>
