@@ -99,7 +99,22 @@
     </div>
 
     <!-- Main -->
-
+    <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(mymodal)">Open My Modal</button> -->
+   
+    <!-- <ng-template #mymodal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This is example from ItSolutionStuff.com
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+      </div>
+    </ng-template> -->
 <div class="container-fluid p-1" style="margin-top: 10px;">
     <div class="row" *ngIf="data.org.org_name!=''">
         <div class="col-xl-2">
@@ -707,7 +722,7 @@
         <div class="card card-body" style="margin-top:20px;">
             <div>
                 <h2 style="font-size: 24px;"><b>Enroll Employee</b></h2>
-                <form class="flex flex-col pb-4 rounded-2xl shadow overflow-hidden" autocomplete="off" style="background-color: aliceblue; !important">
+                <form class="flex flex-col pb-4 rounded-2xl shadow overflow-hidden" autocomplete="off" style="background-color: aliceblue !important">
                     <div class="row p-5">
                         <div class="col-xl-3">
                             <mat-form-field
@@ -1051,13 +1066,16 @@
     <table *ngIf="payments=='Y'" class="table table-responsive">
         <thead>
             <tr>
-                <th>Reference</th><th>Date</th><th>Type</th><th>Invoice</th>
+                <th>Id</th><th>Reference</th><th>Date</th><th>Type</th><th>Invoice</th>
                 <th>Amount</th><th>Applied</th><th>Remaining</th>
                 <th>Paid</th><th>Bank</th><th>Balance</th><th></th>
             </tr>
         </thead>
                 <tbody>
 <tr *ngFor="let m of data.payments">
+    <td>
+        {{ m.id }}
+    </td>
     <td>
         {{ m.reference_number }}
     </td>
@@ -1089,7 +1107,7 @@
         {{ m.running }}
     </td>
     <td>
-<button *ngIf="m.deposit_type!='INVOICE'&&m.amount_remaining!='0.00'" class="btn btn-primary">Apply</button>
+<button *ngIf="m.deposit_type!='INVOICE'&&m.amount_remaining!='0.00'" (click)="showApplyPayments(m.bank,m.deposit_type,m.reference_number,m.amount_remaining,m.id)" class="btn btn-primary">Apply</button>
     </td>
 </tr>
 </tbody>
@@ -1103,9 +1121,13 @@
 <div *ngIf="editPayments=='Y'" class="card-body"  style="background-color: bisque!important;">
     <h2 style="font-size:24px"><b>Record Payment</b></h2>
     <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
+        <mat-form-field class="invisible"
+        [ngClass]="formFieldHelpers">
+        <input matInput id="paymentId" name="paymentId" [(ngModel)]="data.payData['id']">
+        </mat-form-field>
         <mat-form-field
         [ngClass]="formFieldHelpers"
-        class="flex-auto" style="width:180px;">
+        class="flex-auto" style="width:250px;">
         <mat-label>Payment Date (MM/DD/YYYY):</mat-label>
         <input
             matInput

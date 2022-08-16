@@ -12,11 +12,13 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NgLocalization } from '@angular/common';
 import { forEach } from 'lodash';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-company-dashboard',
   templateUrl: './company-dashboard.component.html',
-  styleUrls: ['./company-dashboard.component.scss']
+  styleUrls: ['./company-dashboard.component.scss'],
+  providers: [DatePipe]
 })
 export class CompanyDashboardComponent implements OnInit, OnDestroy {
   navigation: Navigation;
@@ -26,7 +28,7 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
   total: any;
   amount_left: any;
   formFieldHelpers: string[] = [''];
-
+  myDate = new Date();
     data: any;
     selectedProject: string = 'ACME Corp. Backend App';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -58,12 +60,14 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     payments: any;
     editPayments: any;
     running: any;
+    closeResult: string = '';
 
     /**
      * Constructor
      */
 
      constructor(
+      private datePipe: DatePipe,
       private _activatedRoute: ActivatedRoute,
       private _router: Router,
       private _navigationService: NavigationService,
@@ -73,6 +77,10 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
       private _formBuilder: FormBuilder,
       public http: HttpClient  // used by upload
   ) { }
+
+
+
+    
 
   showHistory() {
     if (this.history=='Y') {
@@ -88,6 +96,7 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     } else {
       this.payments='Y'
     }
+
   }
   
   showEditPayments() {
@@ -96,6 +105,23 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     } else {
       this.editPayments='Y'
     }
+  }
+
+  showApplyPayments(vbank: String, vtype: String, vref: String, vamountremain: String, vpaymentid: String) {
+    if (this.editPayments=='Y') {
+      this.editPayments='N';
+   } else {
+     this.editPayments='Y'
+   }
+   console.log("bank=" + vbank + " type=" + vtype + " Ref# " + vref + " Amount $" + vamountremain + " PaymentId" + vpaymentid);
+   vamountremain = vamountremain.replace(/,/g, '');
+   this.data.payData['payment_date'] = this.datePipe.transform(this.myDate, 'MM-dd-yyyy');
+   this.data.payData['bank'] = vbank;
+   this.data.payData['deposit_type'] = vtype;
+   this.data.payData['reference_number'] = vref;
+   this.data.payData['amount_received'] = vamountremain;
+   this.data.payData['id'] = vpaymentid;
+
   }
 
   showMove() {
