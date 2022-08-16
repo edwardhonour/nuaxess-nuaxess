@@ -1051,8 +1051,9 @@
     <table *ngIf="payments=='Y'" class="table table-responsive">
         <thead>
             <tr>
-                <th>Reference</th><th>Date</th><th>Type</th><th>Invoice</th><th>Amount</th>
-                <th>Status</th><th>Bank</th><th>Balance</th><th></th>
+                <th>Reference</th><th>Date</th><th>Type</th><th>Invoice</th>
+                <th>Amount</th><th>Applied</th><th>Remaining</th>
+                <th>Paid</th><th>Bank</th><th>Balance</th><th></th>
             </tr>
         </thead>
                 <tbody>
@@ -1073,6 +1074,12 @@
         {{ m.amount_received }}
     </td>
     <td>
+        {{ m.amount_applied }}
+    </td>
+    <td>
+        {{ m.amount_remaining }}
+    </td>
+    <td>
         {{ m.status }}
     </td>
     <td>
@@ -1082,7 +1089,7 @@
         {{ m.running }}
     </td>
     <td>
-
+<button *ngIf="m.deposit_type!='INVOICE'&&m.amount_remaining!='0.00'" class="btn btn-primary">Apply</button>
     </td>
 </tr>
 </tbody>
@@ -1137,20 +1144,154 @@
         </mat-form-field>
         <mat-form-field
         [ngClass]="formFieldHelpers"
-        class="flex-auto" style="width:380px;">
-        <mat-label>Applied To:</mat-label>
-        <input
-            matInput
-            id="applied_to" name="applied_to" [(ngModel)]="data.payData['applied_to']">
-        </mat-form-field>
-        <mat-form-field
-        [ngClass]="formFieldHelpers"
         class="flex-auto" style="width:180px;">
         <mat-label>Amount:</mat-label>
         <input
             matInput
             id="amount_received" name="amount_received" [(ngModel)]="data.payData['amount_received']">
         </mat-form-field>
+        <mat-form-field 
+        [ngClass]="formFieldHelpers"
+        class="flex-auto gt-xs:pr-3" style="width:250px;">
+        <mat-label>Applied To #1</mat-label>
+        <mat-select (blur)="applyInvoice1()" id="applied_to_1" name="applied_to_1" [(ngModel)]="data.payData['applied_to_1']">
+            <mat-option *ngFor="let m of data.select" value="{{ m.value }}">{{ m.name }}</mat-option>
+        </mat-select>
+        </mat-form-field>        
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        class="flex-auto" style="width:380px;">
+        <mat-label>Amount Applied #1:</mat-label>
+        <input
+        (change)="showRunningTotal()"
+            matInput
+            id="amount_applied_1" name="amount_applied_1" [(ngModel)]="data.payData['amount_applied_1']">
+        </mat-form-field>   
+        <mat-form-field 
+        [ngClass]="formFieldHelpers"
+        class="flex-auto gt-xs:pr-3" style="width:250px;">
+        <mat-label>Invoice Paid in Full?</mat-label>
+        <mat-select (blur)="applyInvoice1()" id="paid_in_full_1" name="paid_in_full_1" [(ngModel)]="data.payData['paid_in_full_1']">
+            <mat-option value="Yes">Yes</mat-option>
+            <mat-option value="No">No</mat-option>            
+        </mat-select>
+        </mat-form-field>            
+        <mat-form-field 
+        [ngClass]="formFieldHelpers"
+        *ngIf="data.payData['applied_to_1']!=''"        
+        class="flex-auto gt-xs:pr-3" style="width:250px;">
+        <mat-label>Applied To #2</mat-label>
+        <mat-select (blur)="applyInvoice2()" id="applied_to_2" name="applied_to_2" [(ngModel)]="data.payData['applied_to_2']">
+            <mat-option *ngFor="let m of data.select" value="{{ m.value }}">{{ m.name }}</mat-option>
+        </mat-select>
+        </mat-form-field>       
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        *ngIf="data.payData['applied_to_2']!=''"        
+        class="flex-auto" style="width:380px;">
+        <mat-label>Amount Applied #2:</mat-label>
+        <input
+        (change)="showRunningTotal()"
+            matInput
+            id="amount_applied_2" name="amount_applied_2" [(ngModel)]="data.payData['amount_applied_2']">
+        </mat-form-field>   
+        <mat-form-field 
+        [ngClass]="formFieldHelpers"
+        *ngIf="data.payData['applied_to_2']!=''"        
+        class="flex-auto gt-xs:pr-3" style="width:250px;">
+        <mat-label>Invoice Paid in Full?</mat-label>
+        <mat-select (blur)="applyInvoice2()" id="paid_in_full_2" name="paid_in_full_2" [(ngModel)]="data.payData['paid_in_full_2']">
+            <mat-option value="Yes">Yes</mat-option>
+            <mat-option value="No">No</mat-option>            
+        </mat-select>
+        </mat-form-field>                      
+        <mat-form-field 
+        [ngClass]="formFieldHelpers"
+        *ngIf="data.payData['applied_to_2']!=''"        
+        class="flex-auto gt-xs:pr-3" style="width:250px;">
+        <mat-label>Applied To #3</mat-label>
+        <mat-select (blur)="applyInvoice3()" id="applied_to_3" name="applied_to_3" [(ngModel)]="data.payData['applied_to_3']">
+            <mat-option *ngFor="let m of data.select" value="{{ m.value }}">{{ m.name }}</mat-option>
+        </mat-select>
+        </mat-form-field>       
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        *ngIf="data.payData['applied_to_3']!=''"        
+        class="flex-auto" style="width:380px;">
+        <mat-label>Amount Applied #3:</mat-label>
+        <input
+        (change)="showRunningTotal()"
+            matInput
+            id="amount_applied_3" name="amount_applied_3" [(ngModel)]="data.payData['amount_applied_3']">
+        </mat-form-field>        
+        <mat-form-field 
+        [ngClass]="formFieldHelpers"
+        *ngIf="data.payData['applied_to_3']!=''"        
+        class="flex-auto gt-xs:pr-3" style="width:250px;">
+        <mat-label>Invoice Paid in Full?</mat-label>
+        <mat-select (blur)="applyInvoice3()" id="paid_in_full_3" name="paid_in_full_3" [(ngModel)]="data.payData['paid_in_full_3']">
+            <mat-option value="Yes">Yes</mat-option>
+            <mat-option value="No">No</mat-option>            
+        </mat-select>
+        </mat-form-field>              
+        <mat-form-field 
+        [ngClass]="formFieldHelpers"
+        *ngIf="data.payData['applied_to_3']!=''"        
+        class="flex-auto gt-xs:pr-3" style="width:250px;">
+        <mat-label>Applied To #4</mat-label>
+        <mat-select (blur)="applyInvoice4()" id="applied_to_4" name="applied_to_4" [(ngModel)]="data.payData['applied_to_4']">
+            <mat-option *ngFor="let m of data.select" value="{{ m.value }}">{{ m.name }}</mat-option>
+        </mat-select>
+        </mat-form-field>       
+        <mat-form-field 
+        [ngClass]="formFieldHelpers"
+        *ngIf="data.payData['applied_to_4']!=''"        
+        class="flex-auto gt-xs:pr-3" style="width:250px;">
+        <mat-label>Invoice Paid in Full?</mat-label>
+        <mat-select (blur)="applyInvoice4()" id="paid_in_full_4" name="paid_in_full_4" [(ngModel)]="data.payData['paid_in_full_4']">
+            <mat-option value="Yes">Yes</mat-option>
+            <mat-option value="No">No</mat-option>            
+        </mat-select>
+        </mat-form-field>           
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        *ngIf="data.payData['applied_to_4']!=''"        
+        class="flex-auto" style="width:380px;">
+        <mat-label>Amount Applied #4:</mat-label>
+        <input
+        (change)="showRunningTotal()"
+            matInput
+            id="amount_applied_4" name="amount_applied_4" [(ngModel)]="data.payData['amount_applied_4']">
+        </mat-form-field>                   
+        <mat-form-field 
+        [ngClass]="formFieldHelpers"
+        *ngIf="data.payData['applied_to_4']!=''"        
+        class="flex-auto gt-xs:pr-3" style="width:250px;">
+        <mat-label>Applied To #5</mat-label>
+        <mat-select (blur)="applyInvoice5()" id="applied_to_5" name="applied_to_5" [(ngModel)]="data.payData['applied_to_5']">
+            <mat-option *ngFor="let m of data.select" value="{{ m.value }}">{{ m.name }}</mat-option>
+        </mat-select>
+        </mat-form-field>       
+        <mat-form-field
+        [ngClass]="formFieldHelpers"
+        *ngIf="data.payData['applied_to_5']!=''"        
+        class="flex-auto" style="width:380px;">
+        <mat-label>Amount Applied #5:</mat-label>
+        <input
+        (change)="showRunningTotal()"
+            matInput
+            id="amount_applied_5" name="amount_applied_5" [(ngModel)]="data.payData['amount_applied_5']">
+        </mat-form-field>   
+        <mat-form-field 
+        [ngClass]="formFieldHelpers"
+        *ngIf="data.payData['applied_to_5']!=''"        
+        class="flex-auto gt-xs:pr-3" style="width:250px;">
+        <mat-label>Invoice Paid in Full?</mat-label>
+        <mat-select (blur)="applyInvoice5()" id="paid_in_full_5" name="paid_in_full_5" [(ngModel)]="data.payData['paid_in_full_5']">
+            <mat-option value="Yes">Yes</mat-option>
+            <mat-option value="No">No</mat-option>            
+        </mat-select>
+        </mat-form-field>                  
         <mat-form-field
         [ngClass]="formFieldHelpers"
         class="flex-auto">
@@ -1160,6 +1301,7 @@
             id="note" name="note" [(ngModel)]="data.payData['note']">
         </mat-form-field>
         <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+            Total Applied: ${{ running }} - Remaining: ${{ amount_left }}
             <button (click)="showEditPayments()" mat-button>
                 Cancel
             </button>

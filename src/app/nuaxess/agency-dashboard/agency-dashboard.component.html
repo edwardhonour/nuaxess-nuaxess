@@ -88,9 +88,9 @@
         </svg>
         <!-- @formatter:on -->
         <div class="z-10 relative flex flex-col items-center" style="margin-top: 40px;">
-            <h2 class="text-xl font-semibold">Broker Dashboard</h2>
+            <h2 class="text-xl font-semibold">Sales Agency Dashboard</h2>
             <div class="mt-1 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight text-center">
-                {{ data.formData.last_name }}, {{ data.formData.first_name }}
+                {{ data.formData.org_name }}
             </div>
             <div class="max-w-2xl mt-6 sm:text-2xl text-center tracking-tight text-secondary">
                 {{ data.formData.email }}
@@ -109,7 +109,7 @@
             <div style="margin-top: 10px !important;">
                 <a class="inline-flex items-center leading-6 text-primary hover:underline" [routerLink]="['/sadmin']"><span class="inline-flex items-center"><mat-icon role="img" class="mat-icon notranslate icon-size-5 text-current mat-icon-no-color" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="arrow-sm-left" data-mat-icon-namespace="heroicons_solid"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
                     <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
-                </svg></mat-icon><span class="ml-1.5 font-medium leading-5">Back to Dashboard</span></span></a>
+                </svg></mat-icon><span class="ml-1.5 font-medium leading-5">Back to Home</span></span></a>
             </div>
         </div>
     </div>
@@ -121,7 +121,7 @@
             <div class="card card-body">            
                 <div class="row">
                     <div class="col-12">
-                        <button class="btn btn-primary" [routerLink]="['/edit-broker',data.formData.id]">Edit Broker</button>
+                        <button class="btn btn-primary" [routerLink]="['/edit-agency',data.formData.id]">Edit Sales Agency</button>
                    </div>
                 </div>
                 <div class="row">
@@ -138,36 +138,20 @@
             <th>&nbsp;</th>
             <td>&nbsp;</td>
         </tr>
-        <tr style="background-color: linen;">
-            <th>Email:</th>
-            <th>{{ data.formData['email'] }}</th>
-        </tr>         
-        <tr>
-            <th>Company Name:</th>
-            <td>
-                 {{ data.formData.company_name }}
-            </td>
-        </tr>
         <tr>
             <th>ID:</th>
             <td>{{ data.formData.id }}</td>
-        </tr>     
+        </tr>   
         <tr>
-            <th>First Name:</th>
+            <th>Company Name:</th>
             <td>
-                {{ data.formData.first_name }}
+                 {{ data.formData.org_name }}
             </td>
         </tr>
         <tr>
-            <th>Middle Name:</th>
+            <th>Contact Name:</th>
             <td>
-                {{ data.formData.middle_name }}
-            </td>
-        </tr>
-        <tr>
-            <th>Last Name:</th>
-            <td>
-                {{ data.formData.last_name }}
+                {{ data.formData.contact_full_name }}
             </td>
         </tr>
         <tr>
@@ -191,40 +175,9 @@
         <tr>
             <th>Tax ID</th>
             <td>
-                 {{ data.formData.tax_id }} 
+                 {{ data.formData.fein }} 
             </td>
         </tr>
-        <tr>
-            <th>Base Rate</th>
-            <td>
-                 {{ data.formData.base_rate }} 
-            </td>
-        </tr>
-        <tr>
-            <th>ACH Account Name</th>
-            <td>
-                 {{ data.formData.ach_company_name }} 
-            </td>
-        </tr>
-        <tr>
-            <th>Bank Name</th>
-            <td>
-                 {{ data.formData.ach_bank_name }} 
-            </td>
-        </tr>
-        <tr>
-            <th>ACH Routing</th>
-            <td>
-                 {{ data.formData.ach_routing }} 
-            </td>
-        </tr>
-        <tr>
-            <th>ACH Account</th>
-            <td>
-                 {{ data.formData.ach_account }} 
-            </td>
-        </tr>
-
     </tbody>
 </div>
 </div>
@@ -260,15 +213,7 @@
         <button  [routerLink]="['/edit-user',data.user_id]" class="btn btn-warning">Create User Account</button>
     </div>
 </div> -->
-<div *ngIf="data.formData.user_id=='0'" class="card card-body">
-    <button (click)="postForm()" class="btn btn-primary">Add User Account</button>
-    <span style="color:red; font-size: 18px;">{{ error }}</span>
-</div>
-<div *ngIf="data.formData.user_id!='0'" class="card card-body">
-    <button (click)="notifyEmail()"  class="btn btn-danger">Send Invite Email</button>
-</div>
 <div class="card card-body" style="margin-top:20px;">            
-
     <div class="row">
         <h2 class="h2" style="font-size: 24px;">Documents</h2>
     <div class="table table-responsive">
@@ -334,47 +279,139 @@
         </div>
         <!-- End Upload Grab #1 -->
 </div>
-<div class="card card-body"  style="margin-top:20px;">
-    <div class="table-responsive">
-        <h2 class="h2" style="font-size: 24px;">Companies</h2>
-        <table class="table table-responsive table-striped">
-            <thead>
-                <tr>
-                    <th>
-                        ID
-                    </th>
-                    <th>
-                        Company Name
-                    </th>
-                    <th>
-                        Status
-                    </th>
-                    <th>
-    
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-    <tr *ngFor="let m of data.companies">
-        <td>
-            {{ m.id }}
-        </td>
-        <td>
-            {{ m.company_name }}
-        </td>
-        <td>
-            {{ m.status }}
-        </td>
-        <th>
-            <button [routerLink]="['/company-dashboard',m.id]" class="btn btn-primary">View</button>
-        </th> 
-    </tr>
-            </tbody>
-        </table>
-     </div>
-</div>
 
     </div> <!-- ROW -->
+    <div class="row">
+<div class="col-xl-2"></div>
+<div class="col-xl-10">
 
+    <div class="card card-body"  style="margin-top:20px;">
+        <div class="table-responsive">
+            <h2 class="h2" style="font-size: 24px;">Companies</h2>
+            <div *ngIf="adding=='N'" class="row">
+                <div class="col-12">
+                    <button class="btn btn-primary" (click)="showAdd()">Add Company/Commission</button>
+                </div>
+            </div>
+            <div *ngIf="adding=='Y'"  class="card card-body">
+                <h2 style="font-size: 24px;"><b>Add Company / Commission Rate</b></h2>
+                <div class="row">
+                    <div class="col-xl-4"> &nbsp; </div>            
+                </div>
+                <div class="row">
+                    <div class="col-xl-4">Company ID</div>
+                    <div class="col-xl-4">
+                    <input type="text" class="form-control" [(ngModel)]="data.addData['company_id']" name="company_id" id="company_id">
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-4">Policy Type</div>
+                    <div class="col-xl-4">
+                    <select class="form-control" [(ngModel)]="data.addData['plan_type']" name="plan_type" id="plan_type">
+                        <option value="*MEDICAL*">Medical</option>
+                        <option value="*DENTAL*">Dental</option>
+                        <option value="*VISION*">Vision</option>
+                        <option value="*ADD*">ADD</option>
+                        <option value="*LIFE*">LIFE</option>
+                    </select> 
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-4">Commission Type</div>
+                    <div class="col-xl-4">
+                    <select class="form-control" [(ngModel)]="data.addData['commission_type']" name="commission_type" id="commission_type">
+                        <option value="FLAT">Flat Rate</option>
+                        <option value="PCT">Percentage Rate</option>
+                    </select> 
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-4">Commission Rate</div>
+                    <div class="col-xl-4">
+                    <input type="text" class="form-control" [(ngModel)]="data.addData['commission_rate']" name="commission_rate" id="commission_rate">
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-4">Broker Name</div>
+                    <div class="col-xl-4">
+                    <input type="text" class="form-control" [(ngModel)]="data.addData['broker_name']" name="broker_name" id="broker_name">
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-4">Note/Description</div>
+                    <div class="col-xl-4">
+                    <input type="text" class="form-control" [(ngModel)]="data.addData['dsc']" name="dsc" id="dsc">
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-4"> &nbsp; </div>            
+                </div>
+                <div class="mc">
+                    <br>
+                    <button style="margin-top:20px" (click)="postAdd()" mat-raised-button color="primary">
+                        Save
+                    </button>
+                    <button style="margin-top:20px; margin-left:20px;" (click)="showUpload()" mat-raised-button>
+                        Cancel
+                    </button>
+                </div>
+                </div>
+            <table class="table table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Company Name
+                        </th>
+                        <th>
+                            Plan Type
+                        </th>
+                        <th>
+                            Commission Type
+                        </th>
+                        <th>
+                            Commission Rate
+                        </th>
+                        <th>
+        Broker Name
+                        </th>
+                        <th>
+                            Note
+                                            </th>
+                                            <th>
+                                                
+                                                                </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let m of data.companies">
+                        <td>
+                            {{ m.company_id }} - {{ m.company_name }}
+                        </td>
+                        <td>
+                            {{ m.plan_type }}
+                        </td>
+                        <td>
+                            {{ m.commission_type }}
+                        </td>
+                        <td>
+                            {{ m.commission_rate }}
+                        </td>
+                        <td>
+                            {{ m.broker_name }}
+                        </td>
+                        <td>
+                            {{ m.dsc }}
+                        </td>
+                        <th>
+                            <button [routerLink]="['/company-dashboard',m.id]" class="btn btn-primary">View</button>
+                        </th> 
+                    </tr>
+                </tbody>
+            </table>
+            
+         </div>
+    </div>
+</div>
+</div>
 </div>   <!-- CONTAINER -->
 </div>

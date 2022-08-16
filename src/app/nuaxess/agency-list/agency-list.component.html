@@ -104,7 +104,6 @@
                                 <th>Contact Name</th>
                                 <th>Contact Email</th>
                                 <th>Contact Phone</th>
-                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -116,7 +115,6 @@
                                 <td>{{ m.contact_full_name }}</td>
                                 <td>{{ m.email }}</td>
                                 <td>{{ m.phone_mobile }}</td>
-                                <td>{{ m.status }}</td>
                                 <td><button [routerLink]="['/agency-dashboard',m.id]" class="btn btn-primary">View</button></td>
                             </tr>
                         </tbody>

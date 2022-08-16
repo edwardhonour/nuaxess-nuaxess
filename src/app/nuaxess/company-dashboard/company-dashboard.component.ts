@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation, ɵɵqueryRefresh } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ApexOptions, ApexYAxis } from 'ng-apexcharts';
@@ -11,6 +11,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NgLocalization } from '@angular/common';
+import { forEach } from 'lodash';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -22,6 +23,8 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
   isScreenSmall: boolean;
   //term: any;
   p: any;
+  total: any;
+  amount_left: any;
   formFieldHelpers: string[] = [''];
 
     data: any;
@@ -54,6 +57,7 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
     comp: any;
     payments: any;
     editPayments: any;
+    running: any;
 
     /**
      * Constructor
@@ -172,6 +176,7 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
       this.editPayments='N';
       this.docs='N';
       this.comp='N';
+      this.running=0;
 
       this._activatedRoute.data.subscribe(({ 
         data, menudata, userdata })=> { 
@@ -461,6 +466,112 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
         window.open(
           "https://myna-api.com/api/pdf1.php?display=F&id="+this.data.id+'&month_id='+this.data.month_id, "_blank");
       }
+
+      isNumber(n: any) {
+        return !isNaN(parseFloat(n)) && !isNaN(n - 0);
+      }
+
+      runningTotal() {
+        let a=0.00;
+        if (this.isNumber(this.data.payData['amount_applied_1'])) a+=Number(this.data.payData['amount_applied_1']);
+        if (this.isNumber(this.data.payData['amount_applied_2'])) a+=Number(this.data.payData['amount_applied_2']);
+        if (this.isNumber(this.data.payData['amount_applied_3'])) a+=Number(this.data.payData['amount_applied_3']);
+        if (this.isNumber(this.data.payData['amount_applied_4'])) a+=Number(this.data.payData['amount_applied_4']);
+        if (this.isNumber(this.data.payData['amount_applied_5'])) a+=Number(this.data.payData['amount_applied_5']);
+        if (this.isNumber(this.data.payData['amount_applied_6'])) a+=Number(this.data.payData['amount_applied_6']);
+        if (this.isNumber(this.data.payData['amount_applied_7'])) a+=Number(this.data.payData['amount_applied_7']);
+        if (this.isNumber(this.data.payData['amount_applied_8'])) a+=Number(this.data.payData['amount_applied_8']);
+        if (this.isNumber(this.data.payData['amount_applied_9'])) a+=Number(this.data.payData['amount_applied_9']);
+        if (this.isNumber(this.data.payData['amount_applied_10'])) a+=Number(this.data.payData['amount_applied_10']);     
+        return a;   
+      }
+
+      showRunningTotal() {
+        let dollarUSLocale = Intl.NumberFormat('en-US');
+        this.running=dollarUSLocale.format(this.runningTotal());
+        this.amount_left=dollarUSLocale.format(this.amountLeft());
+      }
+
+      amountLeft() {
+        let a=0.00;
+        if (this.isNumber(this.data.payData['amount_received'])) {
+          a+=Number(this.data.payData['amount_received']); 
+        } else {
+          a=0;
+        }
+
+        if (this.isNumber(this.data.payData['amount_applied_1'])) a-=Number(this.data.payData['amount_applied_1']);
+        if (this.isNumber(this.data.payData['amount_applied_2'])) a-=Number(this.data.payData['amount_applied_2']);
+        if (this.isNumber(this.data.payData['amount_applied_3'])) a-=Number(this.data.payData['amount_applied_3']);
+        if (this.isNumber(this.data.payData['amount_applied_4'])) a-=Number(this.data.payData['amount_applied_4']);
+        if (this.isNumber(this.data.payData['amount_applied_5'])) a-=Number(this.data.payData['amount_applied_5']);  
+        return a;   
+      }
+
+      applyInvoice1() {
+        if (this.data.payData['amount_applied_1']=='') {
+          if (this.data.id_1==this.data.payData['applied_to_1']) this.data.payData['amount_applied_1']=this.data.amt_1;
+          if (this.data.id_2==this.data.payData['applied_to_1']) this.data.payData['amount_applied_1']=this.data.amt_2;
+          if (this.data.id_3==this.data.payData['applied_to_1']) this.data.payData['amount_applied_1']=this.data.amt_3;
+          if (this.data.id_4==this.data.payData['applied_to_1']) this.data.payData['amount_applied_1']=this.data.amt_4;
+          if (this.data.id_5==this.data.payData['applied_to_1']) this.data.payData['amount_applied_1']=this.data.amt_5;
+          let dollarUSLocale = Intl.NumberFormat('en-US');
+          this.running=dollarUSLocale.format(this.runningTotal());
+          this.amount_left=dollarUSLocale.format(this.amountLeft());
+        }
+      }
+
+      applyInvoice2() {
+        if (this.data.payData['amount_applied_2']=='') {
+        if (this.data.id_1==this.data.payData['applied_to_2']) this.data.payData['amount_applied_2']=this.data.amt_1;
+        if (this.data.id_2==this.data.payData['applied_to_2']) this.data.payData['amount_applied_2']=this.data.amt_2;
+        if (this.data.id_3==this.data.payData['applied_to_2']) this.data.payData['amount_applied_2']=this.data.amt_3;
+        if (this.data.id_4==this.data.payData['applied_to_2']) this.data.payData['amount_applied_2']=this.data.amt_4;
+        if (this.data.id_5==this.data.payData['applied_to_2']) this.data.payData['amount_applied_2']=this.data.amt_5;        
+        let dollarUSLocale = Intl.NumberFormat('en-US');
+        this.running=dollarUSLocale.format(this.runningTotal());
+        this.amount_left=dollarUSLocale.format(this.amountLeft());
+        }
+}
+
+applyInvoice3() {
+  if (this.data.payData['amount_applied_3']=='') {
+  if (this.data.id_1==this.data.payData['applied_to_3']) this.data.payData['amount_applied_3']=this.data.amt_1;
+  if (this.data.id_2==this.data.payData['applied_to_3']) this.data.payData['amount_applied_3']=this.data.amt_2;
+  if (this.data.id_3==this.data.payData['applied_to_3']) this.data.payData['amount_applied_3']=this.data.amt_3;
+  if (this.data.id_4==this.data.payData['applied_to_3']) this.data.payData['amount_applied_3']=this.data.amt_4;
+  if (this.data.id_5==this.data.payData['applied_to_3']) this.data.payData['amount_applied_3']=this.data.amt_5;
+  let dollarUSLocale = Intl.NumberFormat('en-US');
+  this.running=dollarUSLocale.format(this.runningTotal());
+  this.amount_left=dollarUSLocale.format(this.amountLeft());
+  }
+}
+
+applyInvoice4() {
+  if (this.data.payData['amount_applied_4']=='') {
+  if (this.data.id_1==this.data.payData['applied_to_4']) this.data.payData['amount_applied_4']=this.data.amt_1;
+  if (this.data.id_2==this.data.payData['applied_to_4']) this.data.payData['amount_applied_4']=this.data.amt_2;
+  if (this.data.id_3==this.data.payData['applied_to_4']) this.data.payData['amount_applied_4']=this.data.amt_3;
+  if (this.data.id_4==this.data.payData['applied_to_4']) this.data.payData['amount_applied_4']=this.data.amt_4;
+  if (this.data.id_5==this.data.payData['applied_to_4']) this.data.payData['amount_applied_4']=this.data.amt_5;        
+  let dollarUSLocale = Intl.NumberFormat('en-US');
+  this.running=dollarUSLocale.format(this.runningTotal());
+  this.amount_left=dollarUSLocale.format(this.amountLeft());
+  }
+}
+
+applyInvoice5() {
+  if (this.data.payData['amount_applied_5']=='') {
+  if (this.data.id_1==this.data.payData['applied_to_5']) this.data.payData['amount_applied_5']=this.data.amt_1;
+  if (this.data.id_2==this.data.payData['applied_to_5']) this.data.payData['amount_applied_5']=this.data.amt_2;
+  if (this.data.id_3==this.data.payData['applied_to_5']) this.data.payData['amount_applied_5']=this.data.amt_3;
+  if (this.data.id_4==this.data.payData['applied_to_5']) this.data.payData['amount_applied_5']=this.data.amt_4;
+  if (this.data.id_5==this.data.payData['applied_to_5']) this.data.payData['amount_applied_5']=this.data.amt_5;    
+  let dollarUSLocale = Intl.NumberFormat('en-US');
+  this.running=dollarUSLocale.format(this.runningTotal());
+  this.amount_left=dollarUSLocale.format(this.amountLeft());
+  }
+}
 
       sendLate() {
         window.open(

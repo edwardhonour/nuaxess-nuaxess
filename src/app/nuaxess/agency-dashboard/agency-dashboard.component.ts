@@ -32,6 +32,7 @@ export class AgencyDashboardComponent implements OnInit, OnDestroy {
   adding: any;
   qedit: any;
 
+
     data: any;
     selectedProject: string = 'ACME Corp. Backend App';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -113,6 +114,7 @@ export class AgencyDashboardComponent implements OnInit, OnDestroy {
       this.uploading='N';
       this.showterm='N';
       this.error="";
+      this.adding="N";
      //===================================================
     // END UPLOAD GRAB #4
     //===================================================
@@ -270,6 +272,17 @@ export class AgencyDashboardComponent implements OnInit, OnDestroy {
       }
       }
 
+      postAdd() {
+          this._dataService.postForm("post-agency-company", this.data.addData).subscribe((data:any)=>{
+            if (data.error_code=="0") {
+              location.reload();
+  //            this._router.navigate(['/org-dashboard',data.id])
+            } else {     
+              this.error=data.error_message
+            }
+          });
+        }
+
       //------------------------------
       // Upload Form
       //------------------------------
@@ -368,6 +381,13 @@ export class AgencyDashboardComponent implements OnInit, OnDestroy {
             this.uploading="N";
           } else {
             this.uploading="Y";
+          }
+        }
+        showAdd() {
+          if (this.adding=='Y') {
+            this.adding="N";
+          } else {
+            this.adding="Y";
           }
         }
 //===================================================

@@ -124,9 +124,9 @@ export class AddAgencyComponent implements OnInit , OnDestroy {
 
   
     postForm() {
-        this._dataService.postForm("post-add-broker", this.data.formData).subscribe((data:any)=>{
+        this._dataService.postForm("post-add-agency", this.data.formData).subscribe((data:any)=>{
           if (data.error_code=="0") {
-            this._router.navigate(['/broker-dashboard',data.id])
+            this._router.navigate(['/agency-dashboard',data.id])
           } else {     
             this.error=data.error_message
           }
