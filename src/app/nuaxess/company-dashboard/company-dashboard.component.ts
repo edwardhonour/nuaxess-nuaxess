@@ -433,6 +433,39 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
       }
 
       postPayment() {
+
+        let pay_amount=+this.data['payData']['amount_received'];
+        if (this.data['payData']['amount_applied_1']=="") {
+          this.data['payData']['amount_applied_1']=0;
+        }
+        if (this.data['payData']['amount_applied_2']=="") {
+          this.data['payData']['amount_applied_2']=0;
+        }
+        if (this.data['payData']['amount_applied_3']=="") {
+          this.data['payData']['amount_applied_3']=0;
+        }
+        if (this.data['payData']['amount_applied_4']=="") {
+          this.data['payData']['amount_applied_4']=0;
+        }
+        if (this.data['payData']['amount_applied_5']=="") {
+          this.data['payData']['amount_applied_5']=0;
+        }
+
+        let total: number;
+        total=+this.data['payData']['amount_applied_1'];
+        total+=+this.data['payData']['amount_applied_2'];
+        total+=+this.data['payData']['amount_applied_3'];
+        total+=+this.data['payData']['amount_applied_4'];
+        total+=+this.data['payData']['amount_applied_5'];
+        total=Math.round(total*100)/100;
+
+        let err='N';
+        if (total>pay_amount) {
+             alert("Amount Applied is more than Payment Amount")
+             err='Y'
+        }
+        
+        if (err=='N') {
         this._dataService.postForm("post-payment", this.data['payData']).subscribe((data:any)=>{
           if (data.error_code=="0") {
             location.reload();
@@ -440,6 +473,7 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
 //            this.error=data.error_message
           }
         });
+        }
       }
       postAdjustment() {
         this._dataService.postForm("post-adjustment", this.data['adjustData']).subscribe((data:any)=>{
