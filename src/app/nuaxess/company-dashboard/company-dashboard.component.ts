@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgLocalization } from '@angular/common';
 import { forEach } from 'lodash';
 import { DatePipe } from '@angular/common';
+import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -100,6 +101,12 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
   }
   
   showEditPayments() {
+    this.data.payData['id'] = null;
+    this.data.payData['payment_date'] = null;
+    this.data.payData['bank'] = null;
+    this.data.payData['deposit_type'] = null;
+    this.data.payData['reference_number'] = null;
+    this.data.payData['amount_received'] = null;
     if (this.editPayments=='Y') {
        this.editPayments='N';
     } else {
@@ -108,12 +115,12 @@ export class CompanyDashboardComponent implements OnInit, OnDestroy {
   }
 
   showApplyPayments(vbank: String, vtype: String, vref: String, vamountremain: String, vpaymentid: String) {
-    if (this.editPayments=='Y') {
-      this.editPayments='N';
-   } else {
+  //   if (this.editPayments=='Y') {
+  //     this.editPayments='N';
+  //  } else {
      this.editPayments='Y'
-   }
-   console.log("bank=" + vbank + " type=" + vtype + " Ref# " + vref + " Amount $" + vamountremain + " PaymentId" + vpaymentid);
+   //}
+   //console.log("bank=" + vbank + " type=" + vtype + " Ref# " + vref + " Amount $" + vamountremain + " PaymentId" + vpaymentid);
    vamountremain = vamountremain.replace(/,/g, '');
    this.data.payData['payment_date'] = this.datePipe.transform(this.myDate, 'MM-dd-yyyy');
    this.data.payData['bank'] = vbank;
